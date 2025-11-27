@@ -1,13 +1,22 @@
-import './App.css'
-import Login from './modules/auth/pages/login.jsx'
+import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Login from './modules/auth/pages/login.jsx';
+import Signup from './modules/auth/pages/signup.jsx'; // Import the new Signup component
+import StudentDashboard from './modules/student/pages/StudentDashboard.jsx'; // Import the StudentDashboard component
 
 function App() {
-
   return (
-    <>
-    <Login />
-    </>
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        {/* Route for Student Dashboard with nested routes */}
+        <Route path="/student-dashboard/*" element={<StudentDashboard />} /> {/* Use * for nested routes */}
+        {/* You can add a default route or redirect here if needed */}
+        <Route path="/" element={<Signup />} /> {/* Default to signup */}
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;

@@ -1,8 +1,54 @@
 // src/modules/auth/pages/Login.jsx
-import React from "react";
+import React, { useState } from "react"; // Import useState
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import logo from "../../../assets/logos/logo.jpg";
+import mockUsers from '../../../data/users.json'; // Import mock user data
 
 const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [selectedRole, setSelectedRole] = useState(null); // State to store the selected role
+  const [error, setError] = useState('');
+
+  const navigate = useNavigate();
+
+  const handleRoleSelect = (role) => {
+    setSelectedRole(role);
+    setError(''); // Clear error when role is selected
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setError(''); // Clear previous errors
+
+    if (!selectedRole) {
+      setError('Please select your role.');
+      return;
+    }
+
+    const user = mockUsers.find(
+      (u) => u.email === email && u.password === password
+    );
+
+    if (user) {
+      if (user.role === selectedRole) {
+        // Authentication successful
+        console.log('Login successful for:', user.email, 'as', user.role);
+        // Redirect based on role, for now, all go to student-dashboard if successful
+        if (user.role === 'Student') {
+          navigate('/student-dashboard');
+        } else {
+          // For other roles, just log for now or redirect to a generic dashboard
+          navigate('/student-dashboard'); // Redirect all authenticated users to student dashboard for now
+        }
+      } else {
+        setError('Role mismatch. Please select the correct role.');
+      }
+    } else {
+      setError('Invalid email or password.');
+    }
+  };
+
   return (
     <div className="flex min-h-screen bg-gradient-to-br from-cyan-700 via-teal-600 to-cyan-500">
       {/* Left Side - Branding */}
@@ -45,7 +91,7 @@ const Login = () => {
             <div className="flex items-start text-left space-x-4 bg-white/5 backdrop-blur-sm rounded-xl p-4 hover:bg-white/10 transition-colors">
               <div className="w-2 h-2 mt-2 bg-sky-300 rounded-full flex-shrink-0"></div>
               <span className="text-base text-white/95">
-                Unified dashboard for exams, fees, and communication
+                Unified management dashboard
               </span>
             </div>
           </div>
@@ -84,8 +130,15 @@ const Login = () => {
               </p>
             </div>
 
+            {/* Error Message */}
+            {error && (
+              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-6 text-sm" role="alert">
+                {error}
+              </div>
+            )}
+
             {/* Form */}
-            <form className="space-y-6">
+            <form className="space-y-6" onSubmit={handleSubmit}>
               {/* Email Field */}
               <div>
                 <label
@@ -100,6 +153,8 @@ const Login = () => {
                   required
                   placeholder="name@school.edu"
                   className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent focus:bg-white transition-all"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
 
@@ -117,6 +172,8 @@ const Login = () => {
                   required
                   placeholder="Enter your password"
                   className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent focus:bg-white transition-all"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
 
@@ -139,6 +196,41 @@ const Login = () => {
                   Forgot password?
                 </button>
               </div>
+
+            {/* Role Selection Section */}
+            <div className="mb-6 mt-4"> {/* Adjusted margin for spacing */}
+              <h3 className="text-sm font-semibold text-gray-700 mb-2">I am a:</h3>
+              <div className="grid grid-cols-2 gap-3"> {/* Adjusted gap for spacing */}
+                <button
+                  type="button"
+                  className={`py-2.5 px-3 bg-gray-100 text-gray-800 font-semibold rounded-lg transition-colors text-sm ${selectedRole === 'Student' ? 'ring-2 ring-cyan-500 bg-cyan-100' : 'hover:bg-gray-200'}`}
+                  onClick={() => handleRoleSelect('Student')}
+                >
+                  Student
+                </button>
+                <button
+                  type="button"
+                  className={`py-2.5 px-3 bg-gray-100 text-gray-800 font-semibold rounded-lg transition-colors text-sm ${selectedRole === 'Teacher' ? 'ring-2 ring-cyan-500 bg-cyan-100' : 'hover:bg-gray-200'}`}
+                  onClick={() => handleRoleSelect('Teacher')}
+                >
+                  Teacher
+                </button>
+                <button
+                  type="button"
+                  className={`py-2.5 px-3 bg-gray-100 text-gray-800 font-semibold rounded-lg transition-colors text-sm ${selectedRole === 'Admin' ? 'ring-2 ring-cyan-500 bg-cyan-100' : 'hover:bg-gray-200'}`}
+                  onClick={() => handleRoleSelect('Admin')}
+                >
+                  Admin
+                </button>
+                <button
+                  type="button"
+                  className={`py-2.5 px-3 bg-gray-100 text-gray-800 font-semibold rounded-lg transition-colors text-sm ${selectedRole === 'Developer' ? 'ring-2 ring-cyan-500 bg-cyan-100' : 'hover:bg-gray-200'}`}
+                  onClick={() => handleRoleSelect('Developer')}
+                >
+                  Developer
+                </button>
+              </div>
+            </div>
 
               {/* Submit Button */}
               <button
