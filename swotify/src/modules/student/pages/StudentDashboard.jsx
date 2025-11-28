@@ -39,7 +39,7 @@ const StudentDashboard = () => {
   };
 
   return (
-    <div className="flex min-h-screen bg-gradient-to-br from-cyan-700 via-blue-700 to-teal-600 text-white animate-gradient-background">
+    <div className="flex min-h-screen bg-gradient-to-br from-cyan-700 via-teal-600 to-cyan-500 text-white animate-gradient-background">
       {/* Sidebar */}
       <aside className={`fixed inset-y-0 left-0 z-30 ${isSidebarOpen ? 'w-64' : 'w-20'} bg-teal-950 shadow-lg p-4 flex-col transition-all duration-300 ease-in-out overflow-hidden flex`}>
         <div className="flex items-center justify-center h-16 mb-8">
@@ -54,7 +54,7 @@ const StudentDashboard = () => {
             to="home"
             className={({ isActive }) =>
               `flex items-center p-3 rounded-lg transition-colors ${
-                isActive ? 'bg-sky-600/50 text-white' : 'hover:bg-white/10'
+                isActive ? 'bg-white/20 text-white' : 'hover:bg-white/10'
               }`
             }
             onClick={() => setIsSidebarOpen(false)} // Close sidebar on navigation
@@ -66,7 +66,7 @@ const StudentDashboard = () => {
             to="profile"
             className={({ isActive }) =>
               `flex items-center p-3 rounded-lg transition-colors ${
-                isActive ? 'bg-sky-600/50 text-white' : 'hover:bg-white/10'
+                isActive ? 'bg-white/20 text-white' : 'hover:bg-white/10'
               }`
             }
             onClick={() => setIsSidebarOpen(false)}
@@ -78,7 +78,7 @@ const StudentDashboard = () => {
             to="chatbot"
             className={({ isActive }) =>
               `flex items-center p-3 rounded-lg transition-colors ${
-                isActive ? 'bg-sky-600/50 text-white' : 'hover:bg-white/10'
+                isActive ? 'bg-white/20 text-white' : 'hover:bg-white/10'
               }`
             }
             onClick={() => setIsSidebarOpen(false)}
@@ -90,7 +90,7 @@ const StudentDashboard = () => {
             to="report"
             className={({ isActive }) =>
               `flex items-center p-3 rounded-lg transition-colors ${
-                isActive ? 'bg-sky-600/50 text-white' : 'hover:bg-white/10'
+                isActive ? 'bg-white/20 text-white' : 'hover:bg-white/10'
               }`
             }
             onClick={() => setIsSidebarOpen(false)}
@@ -102,7 +102,7 @@ const StudentDashboard = () => {
             to="events"
             className={({ isActive }) =>
               `flex items-center p-3 rounded-lg transition-colors ${
-                isActive ? 'bg-sky-600/50 text-white' : 'hover:bg-white/10'
+                isActive ? 'bg-white/20 text-white' : 'hover:bg-white/10'
               }`
             }
             onClick={() => setIsSidebarOpen(false)}
@@ -115,7 +115,7 @@ const StudentDashboard = () => {
 
       <div className={`flex-1 flex flex-col transition-all duration-300 ease-in-out ${isSidebarOpen ? 'lg:ml-64' : 'lg:ml-20'}`}>
         {/* Header/Navbar for the dashboard */}
-        <header className="w-full p-4 bg-blue-800/50 backdrop-blur-sm shadow-md flex justify-between items-center">
+        <header className="w-full p-4 bg-teal-700/50 backdrop-blur-sm shadow-md flex justify-between items-center">
           {/* Hamburger Icon */}
           <button onClick={toggleSidebar} className="p-2 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-opacity-50">
             <svg
