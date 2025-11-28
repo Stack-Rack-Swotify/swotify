@@ -168,7 +168,7 @@ const StudentDashboard = () => {
                 </span>
               </button>
               {isNotificationOpen && (
-                <div className="absolute right-0 mt-2 w-64 bg-black/50 backdrop-blur-lg rounded-md shadow-lg py-1 z-20 text-gray-100">
+                <div className="absolute right-0 mt-2 w-64 bg-gray-800 rounded-md shadow-lg py-1 z-20 text-gray-100">
                   <div className="px-4 py-2 text-sm">
                     <p className="font-semibold">Important Update!</p>
                     <p className="text-gray-300">Your Math assignment is due tomorrow.</p>
@@ -195,7 +195,7 @@ const StudentDashboard = () => {
               </svg>
             </button>
             {isDropdownOpen && (
-              <div className="absolute right-0 mt-2 w-48 bg-black/50 backdrop-blur-lg rounded-md shadow-lg py-1 z-20">
+              <div className="absolute right-0 mt-2 w-48 bg-gray-800 rounded-md shadow-lg py-1 z-20">
                 <NavLink
                   to="profile"
                   onClick={() => setIsDropdownOpen(false)}
