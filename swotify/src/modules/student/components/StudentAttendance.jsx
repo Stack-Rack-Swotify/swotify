@@ -12,7 +12,7 @@ const StudentAttendance = () => {
   };
 
   return (
-    <div className="p-4 bg-teal-900 rounded-xl shadow-lg">
+    <div className="p-4 bg-teal-900 rounded-xl shadow-lg transform hover:scale-105 hover:shadow-2xl transition-all duration-300">
       <h3 className="text-2xl font-bold text-gray-100 mb-4">Student Attendance</h3>
       <p className="text-gray-300 mb-6">Your attendance record and statistics are summarized below.</p>
       
