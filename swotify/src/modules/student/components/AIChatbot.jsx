@@ -3,9 +3,9 @@ import React from 'react';
 
 const AIChatbot = () => {
   return (
-    <div className="p-4 bg-teal-900 rounded-xl shadow-lg h-full flex flex-col">
+    <div className="p-4 bg-teal-900 rounded-xl shadow-lg h-full flex flex-col transform hover:scale-105 hover:shadow-2xl transition-all duration-300">
       <h3 className="text-2xl font-bold text-gray-100 mb-4">AI Chatbot</h3>
-      <div className="flex-1 overflow-y-auto border border-gray-200 rounded-lg bg-white p-4 mb-4 transform hover:scale-105 transition-transform duration-300">
+      <div className="flex-1 overflow-y-auto border border-gray-200 rounded-lg bg-white p-4 mb-4">
         {/* Placeholder for chat messages */}
         <p className="text-gray-600">AI Chatbot conversation will appear here.</p>
         <p className="text-gray-500 text-sm mt-2">... (previous messages)</p>
