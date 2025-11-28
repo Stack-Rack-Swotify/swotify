@@ -140,7 +140,7 @@ const StudentDashboard = () => {
             </svg>
           </button>
 
-          <div className="flex items-center space-x-4"> {/* Container for notification and profile */}
+          <div className="flex items-center space-x-4 overflow-visible"> {/* Container for notification and profile */}
             {/* Notification Icon */}
             <div className="relative">
               <button
