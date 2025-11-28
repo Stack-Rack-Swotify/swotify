@@ -8,7 +8,7 @@ import StudentMarks from '../components/StudentMarks';
 import StudentAttendance from '../components/StudentAttendance';
 import AIChatbot from '../components/AIChatbot';
 import ReportPage from './ReportPage'; // Import the ReportPage
-import StudentProfile from '../components/StudentProfile'; // Import the new StudentProfile component
+import StudentProfile from './StudentProfile'; // Corrected Import the new StudentProfile component
 import SettingsPage from './SettingsPage'; // Import the new SettingsPage component
 import HomePage from './HomePage'; // Import the new HomePage component
 import EventsPage from './EventsPage'; // Import the new EventsPage component
