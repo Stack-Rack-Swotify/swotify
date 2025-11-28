@@ -23,9 +23,6 @@ const ClassPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 p-8">
-      <Link to="/teacher-dashboard" className="text-blue-600 hover:underline mb-4 block">
-        &larr; Back to Dashboard
-      </Link>
       <h1 className="text-4xl font-bold text-gray-800 mb-6">
         Class Management
       </h1>

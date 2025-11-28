@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import mockClasses from '../../../data/mockClasses';
+import { Link } from 'react-router-dom';
+import mockClasses from '../../../data/mockClasses'; // Import the mock data
 
-const StudentDetailPage = () => {
-  const { studentId } = useParams();
+const StudentProfile = () => {
+  // For demonstration, let's assume a student with ID 's1' is logged in
+  // In a real application, this ID would come from user authentication context
+  const studentId = 's1'; 
   const [student, setStudent] = useState(null);
-  const [grades, setGrades] = useState({});
-  const [saveStatus, setSaveStatus] = useState('');
 
   useEffect(() => {
-    // Find the student across all classes
     let foundStudent = null;
     for (const classData of mockClasses) {
       foundStudent = classData.students.find(s => s.id === studentId);
@@ -17,45 +16,23 @@ const StudentDetailPage = () => {
         break;
       }
     }
-
-    if (foundStudent) {
-      setStudent(foundStudent);
-      const initialGrades = {};
-      foundStudent.assignments.forEach(assignment => {
-        initialGrades[assignment.id] = assignment.grade !== null ? assignment.grade : '';
-      });
-      setGrades(initialGrades);
-    }
+    setStudent(foundStudent);
   }, [studentId]);
-
-  const handleGradeChange = (assignmentId, value) => {
-    setGrades(prevGrades => ({
-      ...prevGrades,
-      [assignmentId]: value,
-    }));
-  };
-
-  const handleSaveGrades = () => {
-    setSaveStatus('Saving...');
-    // Simulate API call or data update
-    setTimeout(() => {
-      console.log('Grades saved for student', studentId, ':', grades);
-      setSaveStatus('Grades saved successfully!');
-      // In a real app, you would update the backend and potentially refresh local data
-    }, 1500);
-  };
 
   if (!student) {
     return (
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-        <p className="text-xl text-gray-700">Student not found.</p>
+        <p className="text-xl text-gray-700">Student profile not found or you are not logged in.</p>
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-gray-100 p-8">
-      <h1 className="text-4xl font-bold text-gray-800 mb-6">Student Details</h1>
+      <Link to="/student-dashboard" className="text-blue-600 hover:underline mb-4 block">
+        &larr; Back to Dashboard
+      </Link>
+      <h1 className="text-4xl font-bold text-gray-800 mb-6">My Profile</h1>
 
       <div className="bg-white rounded-lg shadow-md p-6 mb-8 flex flex-col md:flex-row items-center md:items-start space-y-6 md:space-y-0 md:space-x-8">
         <img
@@ -79,7 +56,7 @@ const StudentDetailPage = () => {
       </div>
 
       <div className="bg-white rounded-lg shadow-md p-6">
-        <h2 className="text-2xl font-semibold text-gray-700 mb-4">Assignments & Grades</h2>
+        <h2 className="text-2xl font-semibold text-gray-700 mb-4">My Assignments & Grades</h2>
         <div className="overflow-x-auto">
           <table className="min-w-full bg-white">
             <thead>
@@ -91,10 +68,7 @@ const StudentDetailPage = () => {
                   Due Date
                 </th>
                 <th className="px-4 py-2 border-b-2 border-gray-200 bg-gray-50 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                  Current Grade
-                </th>
-                <th className="px-4 py-2 border-b-2 border-gray-200 bg-gray-50 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                  Enter Grade
+                  My Grade
                 </th>
               </tr>
             </thead>
@@ -108,39 +82,16 @@ const StudentDetailPage = () => {
                     {assignment.dueDate}
                   </td>
                   <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-600">
-                    {assignment.grade !== null ? `${assignment.grade}/${assignment.maxGrade}` : 'N/A'}
-                  </td>
-                  <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-600">
-                    <input
-                      type="number"
-                      min="0"
-                      max={assignment.maxGrade}
-                      value={grades[assignment.id]}
-                      onChange={(e) => handleGradeChange(assignment.id, e.target.value)}
-                      className="w-24 px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
+                    {assignment.grade !== null ? `${assignment.grade}/${assignment.maxGrade}` : 'Awaiting Grade'}
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        <div className="mt-6 flex items-center space-x-4">
-          <button
-            onClick={handleSaveGrades}
-            className="px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
-          >
-            Save Grades
-          </button>
-          {saveStatus && (
-            <p className={`text-sm ${saveStatus.includes('successfully') ? 'text-green-600' : 'text-gray-600'}`}>
-              {saveStatus}
-            </p>
-          )}
-        </div>
       </div>
     </div>
   );
 };
 
-export default StudentDetailPage;
+export default StudentProfile;
