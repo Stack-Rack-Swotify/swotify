@@ -53,7 +53,7 @@ const StudentDashboard = () => {
           <NavLink
             to="home"
             className={({ isActive }) =>
-              `flex items-center p-3 rounded-lg transition-colors ${
+              `flex items-center p-3 rounded-lg transition-colors transform hover:scale-105 hover:translate-x-2 transition-transform duration-200 ${
                 isActive ? 'bg-white/20 text-white' : 'hover:bg-white/10'
               }`
             }
@@ -65,7 +65,7 @@ const StudentDashboard = () => {
           <NavLink
             to="profile"
             className={({ isActive }) =>
-              `flex items-center p-3 rounded-lg transition-colors ${
+              `flex items-center p-3 rounded-lg transition-colors transform hover:scale-105 hover:translate-x-2 transition-transform duration-200 ${
                 isActive ? 'bg-white/20 text-white' : 'hover:bg-white/10'
               }`
             }
@@ -77,7 +77,7 @@ const StudentDashboard = () => {
           <NavLink
             to="chatbot"
             className={({ isActive }) =>
-              `flex items-center p-3 rounded-lg transition-colors ${
+              `flex items-center p-3 rounded-lg transition-colors transform hover:scale-105 hover:translate-x-2 transition-transform duration-200 ${
                 isActive ? 'bg-white/20 text-white' : 'hover:bg-white/10'
               }`
             }
@@ -89,7 +89,7 @@ const StudentDashboard = () => {
           <NavLink
             to="report"
             className={({ isActive }) =>
-              `flex items-center p-3 rounded-lg transition-colors ${
+              `flex items-center p-3 rounded-lg transition-colors transform hover:scale-105 hover:translate-x-2 transition-transform duration-200 ${
                 isActive ? 'bg-white/20 text-white' : 'hover:bg-white/10'
               }`
             }
@@ -101,7 +101,7 @@ const StudentDashboard = () => {
           <NavLink
             to="events"
             className={({ isActive }) =>
-              `flex items-center p-3 rounded-lg transition-colors ${
+              `flex items-center p-3 rounded-lg transition-colors transform hover:scale-105 hover:translate-x-2 transition-transform duration-200 ${
                 isActive ? 'bg-white/20 text-white' : 'hover:bg-white/10'
               }`
             }
@@ -117,7 +117,7 @@ const StudentDashboard = () => {
         {/* Header/Navbar for the dashboard */}
         <header className="w-full p-4 bg-teal-700/50 backdrop-blur-sm shadow-md flex justify-between items-center">
           {/* Hamburger Icon */}
-          <button onClick={toggleSidebar} className="p-2 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-opacity-50">
+          <button onClick={toggleSidebar} className="p-2 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-opacity-50 transform hover:scale-110 transition-transform duration-200">
             <svg
               className="w-6 h-6"
               fill="none"
@@ -139,7 +139,7 @@ const StudentDashboard = () => {
             <div className="relative">
               <button
                 onClick={toggleNotification}
-                className="p-2 rounded-full hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-opacity-50"
+                className="p-2 rounded-full hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-opacity-50 transform hover:scale-110 transition-transform duration-200"
               >
                 {/* Bell Icon (example SVG) */}
                 <svg
