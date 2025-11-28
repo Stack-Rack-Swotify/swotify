@@ -1,7 +1,7 @@
 // swotify/src/modules/auth/pages/signup.jsx
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom"; // Import useNavigate and Link
-import logo from "../../../assets/logos/logo.jpg";
+
 import mockUsers from '../../../data/users.json'; // Import mock user data
 
 const Signup = () => {
@@ -65,15 +65,15 @@ const Signup = () => {
           {/* Logo */}
           <div className="w-56 h-56 mx-auto bg-white/10 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
             <img
-              src={logo}
-              alt="EduAI Campus Logo"
+              src="/logo.jpg"
+              alt="Swotify Logo"
               className="w-full h-full object-contain"
             />
           </div>
 
           {/* App Name */}
           <h1 className="text-5xl font-bold text-white tracking-tight">
-            EduAI Campus
+            Swotify
           </h1>
 
           {/* Tagline */}
@@ -113,13 +113,13 @@ const Signup = () => {
           <div className="lg:hidden text-center mb-10">
             <div className="w-32 h-32 mx-auto bg-white/10 backdrop-blur-sm rounded-2xl p-6 mb-4">
               <img
-                src={logo}
-                alt="EduAI Campus Logo"
+                src="/logo.jpg"
+                alt="Swotify Logo"
                 className="w-full h-full object-contain"
               />
             </div>
             <h1 className="text-3xl font-bold text-white mb-2">
-              EduAI Campus
+              Swotify
             </h1>
             <p className="text-white/80 text-sm">
               Your intelligent school management platform
@@ -246,7 +246,7 @@ const Signup = () => {
                 type="submit"
                 className="w-full py-3.5 px-4 bg-gradient-to-r from-cyan-600 to-teal-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl hover:from-cyan-700 hover:to-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 transform hover:-translate-y-0.5 transition-all"
               >
-                Sign Up for EduAI Campus
+                Sign Up for Swotify
               </button>
             </form>
 
