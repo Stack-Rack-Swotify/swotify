@@ -178,6 +178,7 @@ const StudentDashboard = () => {
             </div>
 
             <div className="relative z-10">
+            <button onClick={toggleDropdown} className="flex items-center space-x-2 focus:outline-none">
               <img
                 className="h-10 w-10 rounded-full object-cover border-2 border-white/50"
                 src={userAvatar}
