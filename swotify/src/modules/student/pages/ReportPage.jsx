@@ -45,15 +45,15 @@ const ReportPage = () => {
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold text-white">Student Report</h1>
+        <h1 className="text-3xl font-extrabold text-primary">Student Report</h1>
                   <button
                     onClick={handleDownloadReport}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:ring-offset-2"
+                    className="px-4 py-2 bg-info text-primary rounded-md hover:bg-info/80 focus:outline-none focus:ring-2 focus:ring-info focus:ring-offset-2"
                   >          Download Report
         </button>
       </div>
 
-      <div ref={reportRef} className="space-y-8">
+      <div ref={reportRef} className="space-y-8 p-8 bg-white rounded-2xl shadow-2xl text-gray-900 border border-gray-200 mt-6">
         <StudentAttendance />
         <StudentMarks />
         <PerformanceAnalysis />

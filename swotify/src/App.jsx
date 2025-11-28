@@ -21,7 +21,7 @@ function App() {
         <Route path="/teacher/student/:studentId" element={<StudentDetailPage />} />
         <Route path="/student/profile" element={<StudentProfile />} />
         {/* You can add a default route or redirect here if needed */}
-        <Route path="/" element={<Signup />} /> {/* Default to signup */}
+        <Route path="/" element={<Login />} /> {/* Default to signup */}
       </Routes>
     </BrowserRouter>
   );

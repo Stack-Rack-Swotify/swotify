@@ -2,74 +2,250 @@ import React, { useState } from 'react';
 
 const SettingsPage = () => {
   const [notificationEnabled, setNotificationEnabled] = useState(true);
-  const [theme, setTheme] = useState('dark'); // Default to dark for premium theme
+  const [theme, setTheme] = useState('light');
   const [emailUpdates, setEmailUpdates] = useState(true);
+  const [language, setLanguage] = useState('english');
+  const [autoSave, setAutoSave] = useState(true);
 
   const handleSaveSettings = () => {
-    alert('Settings saved! (Dummy functionality)');
-    console.log({ notificationEnabled, theme, emailUpdates });
-    // In a real application, you would send these settings to a backend API
+    // Show success message
+    const message = document.createElement('div');
+    message.className = 'fixed top-4 right-4 bg-gradient-to-r from-[#ff7300] to-[#9000ff] text-white px-6 py-3 rounded-xl shadow-lg z-50 animate-fade-in';
+    message.textContent = '✓ Settings saved successfully!';
+    document.body.appendChild(message);
+    
+    setTimeout(() => {
+      message.remove();
+    }, 3000);
+
+    console.log({ notificationEnabled, theme, emailUpdates, language, autoSave });
   };
 
   return (
-    <div className="p-4">
-      <h3 className="text-2xl font-bold text-white mb-6">User Settings</h3>
-
-      <div className="space-y-6">
-        <div className="flex items-center justify-between p-4 border border-white/10 rounded-lg bg-black/20">
-          <label htmlFor="notifications" className="text-lg font-medium text-white">
-            Enable Notifications
-          </label>
-          <input
-            type="checkbox"
-            id="notifications"
-            className="toggle toggle-info" // Using DaisyUI's info color for a premium blue
-            checked={notificationEnabled}
-            onChange={(e) => setNotificationEnabled(e.target.checked)}
-          />
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6">
+      <div className="max-w-4xl mx-auto">
+        {/* Header */}
+        <div className="mb-8">
+          <h3 className="text-3xl font-bold text-gray-800 mb-2">Settings</h3>
+          <p className="text-[#827979] text-sm">Manage your account preferences and settings</p>
         </div>
 
-        {/* Theme Setting */}
-        <div className="flex items-center justify-between p-4 border border-white/10 rounded-lg bg-black/20">
-          <label htmlFor="theme" className="text-lg font-medium text-white">
-            App Theme
-          </label>
-          <select
-            id="theme"
-            className="select select-bordered w-full max-w-xs bg-gray-800 text-white border-gray-700"
-            value={theme}
-            onChange={(e) => setTheme(e.target.value)}
-          >
-            <option value="light">Light</option>
-            <option value="dark">Dark</option>
-            <option value="system">System Default</option>
-          </select>
-        </div>
+        <div className="space-y-6">
+          {/* Notifications Section */}
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-lg transition-all duration-300">
+            <h4 className="text-xl font-semibold text-gray-800 mb-5 flex items-center">
+              <span className="w-1 h-6 bg-gradient-to-b from-[#ff7300] to-[#9000ff] rounded-full mr-3"></span>
+              Notifications
+            </h4>
+            
+            <div className="space-y-4">
+              {/* Enable Notifications Toggle */}
+              <div className="flex items-center justify-between p-4 bg-gradient-to-br from-gray-50 to-white rounded-xl border border-gray-200">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-[#ff7300]/10 rounded-lg flex items-center justify-center">
+                    <svg className="w-5 h-5 text-[#ff7300]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                    </svg>
+                  </div>
+                  <div>
+                    <label htmlFor="notifications" className="text-base font-semibold text-gray-800 block">
+                      Enable Notifications
+                    </label>
+                    <p className="text-xs text-[#827979]">Get alerts about important updates</p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setNotificationEnabled(!notificationEnabled)}
+                  className={`relative inline-flex h-7 w-14 items-center rounded-full transition-colors duration-300 ${
+                    notificationEnabled ? 'bg-gradient-to-r from-[#ff7300] to-[#9000ff]' : 'bg-gray-300'
+                  }`}
+                >
+                  <span
+                    className={`inline-block h-5 w-5 transform rounded-full bg-white transition-transform duration-300 shadow-lg ${
+                      notificationEnabled ? 'translate-x-8' : 'translate-x-1'
+                    }`}
+                  />
+                </button>
+              </div>
 
-        {/* Email Updates Setting */}
-        <div className="flex items-center justify-between p-4 border border-white/10 rounded-lg bg-black/20">
-          <label htmlFor="emailUpdates" className="text-lg font-medium text-white">
-            Receive Email Updates
-          </label>
-          <input
-            type="checkbox"
-            id="emailUpdates"
-            className="toggle toggle-info" // Using DaisyUI's info color for a premium blue
-            checked={emailUpdates}
-            onChange={(e) => setEmailUpdates(e.target.checked)}
-          />
-        </div>
+              {/* Email Updates Toggle */}
+              <div className="flex items-center justify-between p-4 bg-gradient-to-br from-gray-50 to-white rounded-xl border border-gray-200">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-[#9000ff]/10 rounded-lg flex items-center justify-center">
+                    <svg className="w-5 h-5 text-[#9000ff]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <label htmlFor="emailUpdates" className="text-base font-semibold text-gray-800 block">
+                      Email Updates
+                    </label>
+                    <p className="text-xs text-[#827979]">Receive weekly summary emails</p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setEmailUpdates(!emailUpdates)}
+                  className={`relative inline-flex h-7 w-14 items-center rounded-full transition-colors duration-300 ${
+                    emailUpdates ? 'bg-gradient-to-r from-[#9000ff] to-[#ff7300]' : 'bg-gray-300'
+                  }`}
+                >
+                  <span
+                    className={`inline-block h-5 w-5 transform rounded-full bg-white transition-transform duration-300 shadow-lg ${
+                      emailUpdates ? 'translate-x-8' : 'translate-x-1'
+                    }`}
+                  />
+                </button>
+              </div>
+            </div>
+          </div>
 
-        {/* Save Button */}
-        <div className="pt-4">
-          <button
-            onClick={handleSaveSettings}
-            className="px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:ring-offset-2 text-lg font-medium"
-          >
-            Save Settings
-          </button>
+          {/* Appearance Section */}
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-lg transition-all duration-300">
+            <h4 className="text-xl font-semibold text-gray-800 mb-5 flex items-center">
+              <span className="w-1 h-6 bg-gradient-to-b from-[#9000ff] to-[#ff7300] rounded-full mr-3"></span>
+              Appearance
+            </h4>
+            
+            <div className="space-y-4">
+              {/* Theme Setting */}
+              <div className="p-4 bg-gradient-to-br from-gray-50 to-white rounded-xl border border-gray-200">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 bg-[#ff7300]/10 rounded-lg flex items-center justify-center">
+                    <svg className="w-5 h-5 text-[#ff7300]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                    </svg>
+                  </div>
+                  <div>
+                    <label htmlFor="theme" className="text-base font-semibold text-gray-800 block">
+                      App Theme
+                    </label>
+                    <p className="text-xs text-[#827979]">Choose your preferred color scheme</p>
+                  </div>
+                </div>
+                <select
+                  id="theme"
+                  className="w-full px-4 py-3 text-sm border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#ff7300]/50 focus:border-[#ff7300] bg-white text-gray-800 rounded-xl transition-all duration-200 hover:border-[#ff7300]/50"
+                  value={theme}
+                  onChange={(e) => setTheme(e.target.value)}
+                >
+                  <option value="light">Light Mode</option>
+                  <option value="dark">Dark Mode</option>
+                  <option value="system">System Default</option>
+                </select>
+              </div>
+
+              {/* Language Setting */}
+              <div className="p-4 bg-gradient-to-br from-gray-50 to-white rounded-xl border border-gray-200">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 bg-[#9000ff]/10 rounded-lg flex items-center justify-center">
+                    <svg className="w-5 h-5 text-[#9000ff]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+                    </svg>
+                  </div>
+                  <div>
+                    <label htmlFor="language" className="text-base font-semibold text-gray-800 block">
+                      Language
+                    </label>
+                    <p className="text-xs text-[#827979]">Select your preferred language</p>
+                  </div>
+                </div>
+                <select
+                  id="language"
+                  className="w-full px-4 py-3 text-sm border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#9000ff]/50 focus:border-[#9000ff] bg-white text-gray-800 rounded-xl transition-all duration-200 hover:border-[#9000ff]/50"
+                  value={language}
+                  onChange={(e) => setLanguage(e.target.value)}
+                >
+                  <option value="english">English</option>
+                  <option value="spanish">Español</option>
+                  <option value="french">Français</option>
+                  <option value="german">Deutsch</option>
+                  <option value="hindi">हिन्दी</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          {/* Preferences Section */}
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-lg transition-all duration-300">
+            <h4 className="text-xl font-semibold text-gray-800 mb-5 flex items-center">
+              <span className="w-1 h-6 bg-gradient-to-b from-[#827979] to-[#9000ff] rounded-full mr-3"></span>
+              Preferences
+            </h4>
+            
+            <div className="space-y-4">
+              {/* Auto Save Toggle */}
+              <div className="flex items-center justify-between p-4 bg-gradient-to-br from-gray-50 to-white rounded-xl border border-gray-200">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-[#827979]/10 rounded-lg flex items-center justify-center">
+                    <svg className="w-5 h-5 text-[#827979]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+                    </svg>
+                  </div>
+                  <div>
+                    <label htmlFor="autoSave" className="text-base font-semibold text-gray-800 block">
+                      Auto-Save
+                    </label>
+                    <p className="text-xs text-[#827979]">Automatically save your progress</p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setAutoSave(!autoSave)}
+                  className={`relative inline-flex h-7 w-14 items-center rounded-full transition-colors duration-300 ${
+                    autoSave ? 'bg-gradient-to-r from-[#827979] to-[#9000ff]' : 'bg-gray-300'
+                  }`}
+                >
+                  <span
+                    className={`inline-block h-5 w-5 transform rounded-full bg-white transition-transform duration-300 shadow-lg ${
+                      autoSave ? 'translate-x-8' : 'translate-x-1'
+                    }`}
+                  />
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Save Button */}
+          <div className="flex gap-4">
+            <button
+              onClick={handleSaveSettings}
+              className="flex-1 px-6 py-4 bg-gradient-to-r from-[#ff7300] to-[#9000ff] text-white rounded-xl hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5 font-semibold text-base flex items-center justify-center gap-2"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+              </svg>
+              Save Settings
+            </button>
+            <button
+              onClick={() => {
+                setNotificationEnabled(true);
+                setTheme('light');
+                setEmailUpdates(true);
+                setLanguage('english');
+                setAutoSave(true);
+              }}
+              className="px-6 py-4 bg-white text-[#827979] border-2 border-gray-200 rounded-xl hover:shadow-md transition-all duration-300 hover:border-[#827979] font-semibold text-base"
+            >
+              Reset to Default
+            </button>
+          </div>
         </div>
       </div>
+
+      <style jsx>{`
+        @keyframes fade-in {
+          from {
+            opacity: 0;
+            transform: translateY(-10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .animate-fade-in {
+          animation: fade-in 0.3s ease-out;
+        }
+      `}</style>
     </div>
   );
 };

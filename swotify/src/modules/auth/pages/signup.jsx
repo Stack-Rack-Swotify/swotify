@@ -1,8 +1,7 @@
 // swotify/src/modules/auth/pages/signup.jsx
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom"; // Import useNavigate and Link
-
-import mockUsers from '../../../data/users.json'; // Import mock user data
+import { useNavigate, Link } from "react-router-dom";
+import mockUsers from '../../../data/users.json';
 
 const Signup = () => {
   const [email, setEmail] = useState('');
@@ -32,38 +31,34 @@ const Signup = () => {
       return;
     }
 
-    // Check if email already exists
     if (mockUsers.some(user => user.email === email)) {
       setError('Email already registered.');
       return;
     }
 
-    // Generate a simple unique ID (for mock purposes)
     const newId = (mockUsers.length + 1).toString();
 
     const newUser = {
       id: newId,
       email,
-      password, // In a real app, hash this password!
+      password,
       role: selectedRole,
     };
 
-    // Add new user to our mock data (this only happens in memory for this mock)
     mockUsers.push(newUser); 
     console.log('New user registered (mock):', newUser);
     console.log('Current mock users:', mockUsers);
 
-    // Redirect to login page after successful signup
     navigate('/login');
   };
 
   return (
-    <div className="flex min-h-screen bg-gradient-to-br from-cyan-700 via-teal-600 to-cyan-500">
+    <div className="flex min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-sky-50">
       {/* Left Side - Branding */}
-      <div className="hidden lg:flex lg:w-1/2 items-center justify-center p-12">
+      <div className="hidden lg:flex lg:w-1/2 items-center justify-center p-12 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
         <div className="text-center space-y-8 max-w-xl">
           {/* Logo */}
-          <div className="w-56 h-56 mx-auto bg-white/10 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
+          <div className="w-56 h-56 mx-auto bg-white/10 backdrop-blur-sm rounded-3xl p-8 shadow-2xl border border-white/20">
             <img
               src="/logo.jpg"
               alt="Swotify Logo"
@@ -77,28 +72,28 @@ const Signup = () => {
           </h1>
 
           {/* Tagline */}
-          <p className="text-xl text-white/90 font-medium leading-relaxed max-w-md mx-auto">
+          <p className="text-xl text-slate-100 font-medium leading-relaxed max-w-md mx-auto">
             AI-powered school management with smart insights for principals,
             teachers, students, and parents
           </p>
 
           {/* Feature highlights */}
           <div className="space-y-4 pt-8">
-            <div className="flex items-start text-left space-x-4 bg-white/5 backdrop-blur-sm rounded-xl p-4 hover:bg-white/10 transition-colors">
-              <div className="w-2 h-2 mt-2 bg-cyan-300 rounded-full flex-shrink-0"></div>
-              <span className="text-base text-white/95">
+            <div className="flex items-start text-left space-x-4 bg-white/5 backdrop-blur-sm rounded-xl p-4 hover:bg-white/10 transition-colors border border-white/10">
+              <div className="w-2 h-2 mt-2 bg-sky-400 rounded-full flex-shrink-0"></div>
+              <span className="text-base text-slate-100">
                 AI-driven attendance and performance analytics
               </span>
             </div>
-            <div className="flex items-start text-left space-x-4 bg-white/5 backdrop-blur-sm rounded-xl p-4 hover:bg-white/10 transition-colors">
-              <div className="w-2 h-2 mt-2 bg-teal-300 rounded-full flex-shrink-0"></div>
-              <span className="text-base text-white/95">
+            <div className="flex items-start text-left space-x-4 bg-white/5 backdrop-blur-sm rounded-xl p-4 hover:bg-white/10 transition-colors border border-white/10">
+              <div className="w-2 h-2 mt-2 bg-rose-400 rounded-full flex-shrink-0"></div>
+              <span className="text-base text-slate-100">
                 Smart alerts for at-risk students and trends
               </span>
             </div>
-            <div className="flex items-start text-left space-x-4 bg-white/5 backdrop-blur-sm rounded-xl p-4 hover:bg-white/10 transition-colors">
+            <div className="flex items-start text-left space-x-4 bg-white/5 backdrop-blur-sm rounded-xl p-4 hover:bg-white/10 transition-colors border border-white/10">
               <div className="w-2 h-2 mt-2 bg-sky-300 rounded-full flex-shrink-0"></div>
-              <span className="text-base text-white/95">
+              <span className="text-base text-slate-100">
                 Unified management dashboard
               </span>
             </div>
@@ -111,36 +106,36 @@ const Signup = () => {
         <div className="w-full max-w-md">
           {/* Mobile Logo */}
           <div className="lg:hidden text-center mb-10">
-            <div className="w-32 h-32 mx-auto bg-white/10 backdrop-blur-sm rounded-2xl p-6 mb-4">
+            <div className="w-32 h-32 mx-auto bg-slate-900/10 backdrop-blur-sm rounded-2xl p-6 mb-4 border border-slate-200">
               <img
                 src="/logo.jpg"
                 alt="Swotify Logo"
                 className="w-full h-full object-contain"
               />
             </div>
-            <h1 className="text-3xl font-bold text-white mb-2">
+            <h1 className="text-3xl font-bold text-slate-900 mb-2">
               Swotify
             </h1>
-            <p className="text-white/80 text-sm">
+            <p className="text-slate-600 text-sm">
               Your intelligent school management platform
             </p>
           </div>
 
           {/* Signup Card */}
-          <div className="bg-white rounded-2xl shadow-2xl p-8 lg:p-10">
+          <div className="bg-white rounded-2xl shadow-xl border border-slate-200 p-8 lg:p-10">
             {/* Welcome Header */}
             <div className="mb-8">
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">
+              <h2 className="text-3xl font-bold text-slate-900 mb-2">
                 Create Your Account
               </h2>
-              <p className="text-gray-600">
-                Join EduAI Campus and start your journey
+              <p className="text-slate-600">
+                Join Swotify and start your journey
               </p>
             </div>
 
             {/* Error Message */}
             {error && (
-              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-6 text-sm" role="alert">
+              <div className="bg-rose-50 border border-rose-400 text-rose-700 px-4 py-3 rounded-lg mb-6 text-sm" role="alert">
                 {error}
               </div>
             )}
@@ -151,7 +146,7 @@ const Signup = () => {
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm font-semibold text-gray-700 mb-2"
+                  className="block text-sm font-semibold text-slate-900 mb-2"
                 >
                   School email
                 </label>
@@ -160,7 +155,7 @@ const Signup = () => {
                   type="email"
                   required
                   placeholder="name@school.edu"
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent focus:bg-white transition-all"
+                  className="w-full px-4 py-3 rounded-lg border border-slate-300 bg-slate-50 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent focus:bg-white transition-all"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -170,7 +165,7 @@ const Signup = () => {
               <div>
                 <label
                   htmlFor="password"
-                  className="block text-sm font-semibold text-gray-700 mb-2"
+                  className="block text-sm font-semibold text-slate-900 mb-2"
                 >
                   Password
                 </label>
@@ -179,7 +174,7 @@ const Signup = () => {
                   type="password"
                   required
                   placeholder="Enter your password"
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent focus:bg-white transition-all"
+                  className="w-full px-4 py-3 rounded-lg border border-slate-300 bg-slate-50 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent focus:bg-white transition-all"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
@@ -189,7 +184,7 @@ const Signup = () => {
               <div>
                 <label
                   htmlFor="confirm-password"
-                  className="block text-sm font-semibold text-gray-700 mb-2"
+                  className="block text-sm font-semibold text-slate-900 mb-2"
                 >
                   Confirm Password
                 </label>
@@ -198,7 +193,7 @@ const Signup = () => {
                   type="password"
                   required
                   placeholder="Confirm your password"
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent focus:bg-white transition-all"
+                  className="w-full px-4 py-3 rounded-lg border border-slate-300 bg-slate-50 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent focus:bg-white transition-all"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                 />
@@ -206,34 +201,34 @@ const Signup = () => {
 
               {/* Role Selection Section */}
               <div className="mb-6 mt-4">
-                <h3 className="text-sm font-semibold text-gray-700 mb-2">
+                <h3 className="text-sm font-semibold text-slate-900 mb-2">
                   I am a:
                 </h3>
                 <div className="grid grid-cols-2 gap-3">
                   <button
                     type="button"
-                    className={`py-2.5 px-3 bg-gray-100 text-gray-800 font-semibold rounded-lg transition-colors text-sm ${selectedRole === 'Student' ? 'ring-2 ring-cyan-500 bg-cyan-100' : 'hover:bg-gray-200'}`}
+                    className={`py-2.5 px-3 bg-slate-100 text-slate-800 font-semibold rounded-lg transition-colors text-sm border ${selectedRole === 'Student' ? 'ring-2 ring-sky-500 bg-sky-50 border-sky-300' : 'border-slate-200 hover:bg-slate-200'}`}
                     onClick={() => handleRoleSelect('Student')}
                   >
                     Student
                   </button>
                   <button
                     type="button"
-                    className={`py-2.5 px-3 bg-gray-100 text-gray-800 font-semibold rounded-lg transition-colors text-sm ${selectedRole === 'Teacher' ? 'ring-2 ring-cyan-500 bg-cyan-100' : 'hover:bg-gray-200'}`}
+                    className={`py-2.5 px-3 bg-slate-100 text-slate-800 font-semibold rounded-lg transition-colors text-sm border ${selectedRole === 'Teacher' ? 'ring-2 ring-sky-500 bg-sky-50 border-sky-300' : 'border-slate-200 hover:bg-slate-200'}`}
                     onClick={() => handleRoleSelect('Teacher')}
                   >
                     Teacher
                   </button>
                   <button
                     type="button"
-                    className={`py-2.5 px-3 bg-gray-100 text-gray-800 font-semibold rounded-lg transition-colors text-sm ${selectedRole === 'Admin' ? 'ring-2 ring-cyan-500 bg-cyan-100' : 'hover:bg-gray-200'}`}
+                    className={`py-2.5 px-3 bg-slate-100 text-slate-800 font-semibold rounded-lg transition-colors text-sm border ${selectedRole === 'Admin' ? 'ring-2 ring-sky-500 bg-sky-50 border-sky-300' : 'border-slate-200 hover:bg-slate-200'}`}
                     onClick={() => handleRoleSelect('Admin')}
                   >
                     Admin
                   </button>
                   <button
                     type="button"
-                    className={`py-2.5 px-3 bg-gray-100 text-gray-800 font-semibold rounded-lg transition-colors text-sm ${selectedRole === 'Developer' ? 'ring-2 ring-cyan-500 bg-cyan-100' : 'hover:bg-gray-200'}`}
+                    className={`py-2.5 px-3 bg-slate-100 text-slate-800 font-semibold rounded-lg transition-colors text-sm border ${selectedRole === 'Developer' ? 'ring-2 ring-sky-500 bg-sky-50 border-sky-300' : 'border-slate-200 hover:bg-slate-200'}`}
                     onClick={() => handleRoleSelect('Developer')}
                   >
                     Developer
@@ -241,10 +236,10 @@ const Signup = () => {
                 </div>
               </div>
 
-              {/* Submit Button */}
+              {/* Submit Button - Primary CTA Gradient */}
               <button
                 type="submit"
-                className="w-full py-3.5 px-4 bg-gradient-to-r from-cyan-600 to-teal-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl hover:from-cyan-700 hover:to-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 transform hover:-translate-y-0.5 transition-all"
+                className="w-full py-3.5 px-4 bg-gradient-to-r from-slate-900 to-sky-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl hover:from-slate-800 hover:to-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 transform hover:-translate-y-0.5 transition-all"
               >
                 Sign Up for Swotify
               </button>
@@ -252,11 +247,11 @@ const Signup = () => {
 
             {/* Link to Login */}
             <div className="mt-6 text-center">
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-slate-600">
                 Already have an account?{" "}
                 <Link
-                  to="/login" // Use Link for navigation
-                  className="font-semibold text-cyan-700 hover:text-cyan-800 transition-colors"
+                  to="/login"
+                  className="font-semibold text-sky-600 hover:text-sky-700 transition-colors"
                 >
                   Sign in
                 </Link>
@@ -264,10 +259,10 @@ const Signup = () => {
             </div>
 
             {/* Security Badge */}
-            <div className="mt-8 pt-6 border-t border-gray-200">
-              <div className="flex items-center justify-center gap-2 text-sm text-gray-500">
+            <div className="mt-8 pt-6 border-t border-slate-200">
+              <div className="flex items-center justify-center gap-2 text-sm text-slate-500">
                 <svg
-                  className="w-5 h-5 text-emerald-500"
+                  className="w-5 h-5 text-green-500"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -284,16 +279,16 @@ const Signup = () => {
 
           {/* Mobile Features */}
           <div className="lg:hidden mt-8 space-y-3">
-            <div className="flex items-center gap-3 text-white/90 text-sm bg-white/10 backdrop-blur-sm rounded-lg p-3">
-              <div className="w-1.5 h-1.5 bg-cyan-300 rounded-full"></div>
+            <div className="flex items-center gap-3 text-slate-700 text-sm bg-white/60 backdrop-blur-sm rounded-lg p-3 border border-slate-200">
+              <div className="w-1.5 h-1.5 bg-sky-500 rounded-full"></div>
               <span>AI analytics & insights</span>
             </div>
-            <div className="flex items-center gap-3 text-white/90 text-sm bg-white/10 backdrop-blur-sm rounded-lg p-3">
-              <div className="w-1.5 h-1.5 bg-teal-300 rounded-full"></div>
+            <div className="flex items-center gap-3 text-slate-700 text-sm bg-white/60 backdrop-blur-sm rounded-lg p-3 border border-slate-200">
+              <div className="w-1.5 h-1.5 bg-rose-400 rounded-full"></div>
               <span>Smart alerts & notifications</span>
             </div>
-            <div className="flex items-center gap-3 text-white/90 text-sm bg-white/10 backdrop-blur-sm rounded-lg p-3">
-              <div className="w-1.5 h-1.5 bg-sky-300 rounded-full"></div>
+            <div className="flex items-center gap-3 text-slate-700 text-sm bg-white/60 backdrop-blur-sm rounded-lg p-3 border border-slate-200">
+              <div className="w-1.5 h-1.5 bg-sky-400 rounded-full"></div>
               <span>Unified management dashboard</span>
             </div>
           </div>
@@ -304,3 +299,4 @@ const Signup = () => {
 };
 
 export default Signup;
+
