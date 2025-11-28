@@ -195,7 +195,7 @@ const StudentDashboard = () => {
               </svg>
             </button>
             {isDropdownOpen && (
-              <div className="absolute right-0 mt-2 w-48 bg-gray-800 rounded-md shadow-lg py-1 z-40">
+              <div className="absolute right-0 mt-2 w-56 bg-gray-800 rounded-md shadow-lg py-1 z-40">
                 <NavLink
                   to="profile"
                   onClick={() => setIsDropdownOpen(false)}
