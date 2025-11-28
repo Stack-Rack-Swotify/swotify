@@ -1,5 +1,6 @@
 import React from 'react';
-
+import StudentMarks from './StudentMarks'; // Import StudentMarks
+import PerformanceAnalysis from './PerformanceAnalysis'; // Import PerformanceAnalysis
 
 const StudentProfile = () => {
   const dummyStudentData = {
@@ -63,13 +64,14 @@ const StudentProfile = () => {
       </div>
 
       <div className="mt-8 border-t border-gray-200 pt-8">
-        <h4 className="text-xl font-semibold mb-4">Performance Summary</h4>
-        <p className="text-gray-600">
-          Based on recent data, {dummyStudentData.name} consistently performs well in core subjects, particularly with a strong GPA of {dummyStudentData.gpa}.
-          Attendance has been excellent, maintaining a high percentage throughout the semester, contributing positively to overall engagement.
-          While there was a slight dip in Physics last month, a strong upward trend is observed in Mathematics and Chemistry.
-          The overall academic trajectory is positive, indicating consistent effort and good grasp of subject matter.
+        <h4 className="text-xl font-semibold mb-4">Academic Overview</h4>
+        <p className="text-gray-600 mb-6">
+          Here's a comprehensive overview of {dummyStudentData.name}'s academic performance and marks.
         </p>
+        <div className="space-y-8">
+          <StudentMarks />
+          <PerformanceAnalysis />
+        </div>
       </div>
     </div>
   );
