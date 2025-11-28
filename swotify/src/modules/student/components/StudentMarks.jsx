@@ -13,36 +13,36 @@ const StudentMarks = () => {
   ];
 
   return (
-    <div className="p-4 bg-white rounded-xl shadow-lg transform hover:scale-105 hover:shadow-2xl transition-all duration-300">
-      <h3 className="text-2xl font-bold text-gray-800 mb-4">Student Marks</h3>
-      <p className="text-gray-600 mb-6">All your academic marks and grades will be listed here.</p>
+    <div className="p-4 bg-black/20 backdrop-blur-lg rounded-xl shadow-lg transform hover:scale-105 hover:shadow-2xl transition-all duration-300">
+      <h3 className="text-2xl font-bold text-white mb-4">Student Marks</h3>
+      <p className="text-gray-300 mb-6">All your academic marks and grades will be listed here.</p>
       
       {dummyMarks.length > 0 ? (
         <div className="overflow-x-auto">
-          <table className="min-w-full bg-white border border-gray-200 rounded-lg">
+          <table className="min-w-full bg-gray-800 border border-gray-700 rounded-lg">
             <thead>
-              <tr className="bg-gray-100 border-b border-gray-200">
-                <th className="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Subject</th>
-                <th className="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Score</th>
-                <th className="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Grade</th>
-                <th className="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Semester</th>
+              <tr className="bg-gray-700 border-b border-gray-600">
+                <th className="py-3 px-4 text-left text-xs font-medium text-gray-200 uppercase tracking-wider">Subject</th>
+                <th className="py-3 px-4 text-left text-xs font-medium text-gray-200 uppercase tracking-wider">Score</th>
+                <th className="py-3 px-4 text-left text-xs font-medium text-gray-200 uppercase tracking-wider">Grade</th>
+                <th className="py-3 px-4 text-left text-xs font-medium text-gray-200 uppercase tracking-wider">Semester</th>
               </tr>
             </thead>
             <tbody>
               {dummyMarks.map((mark) => (
-                <tr key={mark.id} className="border-b border-gray-200 last:border-b-0 hover:bg-gray-50">
-                  <td className="py-3 px-4 whitespace-nowrap text-gray-800">{mark.subject}</td>
-                  <td className="py-3 px-4 whitespace-nowrap text-gray-800">{mark.score}</td>
-                  <td className="py-3 px-4 whitespace-nowrap text-gray-800">{mark.grade}</td>
-                  <td className="py-3 px-4 whitespace-nowrap text-gray-800">{mark.semester}</td>
+                <tr key={mark.id} className="border-b border-gray-700 last:border-b-0 hover:bg-gray-700">
+                  <td className="py-3 px-4 whitespace-nowrap text-white">{mark.subject}</td>
+                  <td className="py-3 px-4 whitespace-nowrap text-white">{mark.score}</td>
+                  <td className="py-3 px-4 whitespace-nowrap text-white">{mark.grade}</td>
+                  <td className="py-3 px-4 whitespace-nowrap text-white">{mark.semester}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
       ) : (
-        <div className="mt-6 p-4 border border-gray-200 rounded-lg bg-gray-50">
-          <p className="text-gray-600">No marks data available yet.</p>
+        <div className="mt-6 p-4 border border-gray-700 rounded-lg bg-gray-800">
+          <p className="text-gray-300">No marks data available yet.</p>
         </div>
       )}
     </div>

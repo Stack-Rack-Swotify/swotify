@@ -49,41 +49,41 @@ const EventsPage = () => {
 
   return (
     <div className="p-4">
-      <h3 className="text-2xl font-bold text-gray-800 mb-6">Events</h3>
+      <h3 className="text-2xl font-bold text-white mb-6">Events</h3>
 
-      <div className="mb-8 p-4 border border-gray-200 rounded-lg bg-white">
-        <h4 className="text-xl font-bold text-gray-800 mb-4">School Events</h4>
+      <div className="mb-8 p-4 border border-white/10 rounded-lg bg-black/20">
+        <h4 className="text-xl font-bold text-white mb-4">School Events</h4>
         {schoolEvents.length > 0 ? (
           <div className="space-y-4">
             {schoolEvents.map((event) => (
-              <div key={event.id} className="bg-gray-50 p-4 rounded-lg shadow-sm border border-gray-200">
-                <p className="text-lg font-semibold text-gray-800">{event.title}</p>
-                <p className="text-sm text-gray-600">{event.date} at {event.time}</p>
-                <p className="text-sm text-gray-600">Location: {event.location}</p>
-                <p className="mt-2 text-gray-700">{event.description}</p>
+              <div key={event.id} className="bg-black/20 p-4 rounded-lg shadow-sm border border-white/10">
+                <p className="text-lg font-semibold text-white">{event.title}</p>
+                <p className="text-sm text-gray-300">{event.date} at {event.time}</p>
+                <p className="text-sm text-gray-300">Location: {event.location}</p>
+                <p className="mt-2 text-gray-200">{event.description}</p>
               </div>
             ))}
           </div>
         ) : (
-          <p className="text-gray-500">No school events scheduled at the moment.</p>
+          <p className="text-gray-400">No school events scheduled at the moment.</p>
         )}
       </div>
 
-      <div className="p-4 border border-gray-200 rounded-lg bg-white">
-        <h4 className="text-xl font-bold text-gray-800 mb-4">PTM Meetings</h4>
+      <div className="p-4 border border-white/10 rounded-lg bg-black/20">
+        <h4 className="text-xl font-bold text-white mb-4">PTM Meetings</h4>
         {ptmMeetings.length > 0 ? (
           <div className="space-y-4">
             {ptmMeetings.map((meeting) => (
-              <div key={meeting.id} className="bg-gray-50 p-4 rounded-lg shadow-sm border border-gray-200">
-                <p className="text-lg font-semibold text-gray-800">{meeting.title}</p>
-                <p className="text-sm text-gray-600">{meeting.date} at {meeting.time}</p>
-                <p className="text-sm text-gray-600">Location: {meeting.location}</p>
-                <p className="mt-2 text-gray-700">{meeting.description}</p>
+              <div key={meeting.id} className="bg-black/20 p-4 rounded-lg shadow-sm border border-white/10">
+                <p className="text-lg font-semibold text-white">{meeting.title}</p>
+                <p className="text-sm text-gray-300">{meeting.date} at {meeting.time}</p>
+                <p className="text-sm text-gray-300">Location: {meeting.location}</p>
+                <p className="mt-2 text-gray-200">{meeting.description}</p>
               </div>
             ))}
           </div>
         ) : (
-          <p className="text-gray-500">No PTM meetings scheduled at the moment.</p>
+          <p className="text-gray-400">No PTM meetings scheduled at the moment.</p>
         )}
       </div>
     </div>

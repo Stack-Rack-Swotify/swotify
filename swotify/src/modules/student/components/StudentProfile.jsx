@@ -17,7 +17,7 @@ const StudentProfile = () => {
   };
 
   return (
-    <div className="p-4 bg-white rounded-xl shadow-lg text-gray-800">
+    <div className="p-4 bg-black/20 backdrop-blur-lg rounded-xl shadow-lg text-white">
       <h3 className="text-2xl font-bold mb-6">Student Profile</h3>
       
       <div className="flex flex-col md:flex-row items-center md:items-start space-y-4 md:space-y-0 md:space-x-6">
@@ -30,41 +30,41 @@ const StudentProfile = () => {
         </div>
         <div className="flex-1 text-center md:text-left">
           <h4 className="text-xl font-semibold">{dummyStudentData.name}</h4>
-          <p className="text-gray-600">Student ID: {dummyStudentData.studentId}</p>
-          <p className="text-gray-600">Program: {dummyStudentData.program} ({dummyStudentData.year})</p>
-          <p className="text-gray-600">GPA: {dummyStudentData.gpa}</p>
+          <p className="text-gray-300">Student ID: {dummyStudentData.studentId}</p>
+          <p className="text-gray-300">Program: {dummyStudentData.program} ({dummyStudentData.year})</p>
+          <p className="text-gray-300">GPA: {dummyStudentData.gpa}</p>
         </div>
       </div>
 
-      <div className="mt-8 border-t border-gray-200 pt-8">
+      <div className="mt-8 border-t border-white/10 pt-8">
         <h4 className="text-xl font-semibold mb-4">Contact Information</h4>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <p className="font-medium">Email:</p>
-            <p className="text-gray-600">{dummyStudentData.email}</p>
+            <p className="text-gray-300">{dummyStudentData.email}</p>
           </div>
           <div>
             <p className="font-medium">Phone:</p>
-            <p className="text-gray-600">{dummyStudentData.contact}</p>
+            <p className="text-gray-300">{dummyStudentData.contact}</p>
           </div>
           <div className="md:col-span-2">
             <p className="font-medium">Address:</p>
-            <p className="text-gray-600">{dummyStudentData.address}</p>
+            <p className="text-gray-300">{dummyStudentData.address}</p>
           </div>
         </div>
       </div>
 
-      <div className="mt-8 border-t border-gray-200 pt-8">
+      <div className="mt-8 border-t border-white/10 pt-8">
         <h4 className="text-xl font-semibold mb-4">Additional Information</h4>
         <p className="font-medium">Enrollment Date:</p>
-        <p className="text-gray-600">{dummyStudentData.enrollmentDate}</p>
+        <p className="text-gray-300">{dummyStudentData.enrollmentDate}</p>
         <p className="font-medium mt-4">Bio:</p>
-        <p className="text-gray-600">{dummyStudentData.bio}</p>
+        <p className="text-gray-300">{dummyStudentData.bio}</p>
       </div>
 
-      <div className="mt-8 border-t border-gray-200 pt-8">
+      <div className="mt-8 border-t border-white/10 pt-8">
         <h4 className="text-xl font-semibold mb-4">Performance Summary</h4>
-        <p className="text-gray-600">
+        <p className="text-gray-300">
           Based on recent data, {dummyStudentData.name} consistently performs well in core subjects, particularly with a strong GPA of {dummyStudentData.gpa}.
           Attendance has been excellent, maintaining a high percentage throughout the semester, contributing positively to overall engagement.
           While there was a slight dip in Physics last month, a strong upward trend is observed in Mathematics and Chemistry.

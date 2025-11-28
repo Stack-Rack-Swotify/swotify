@@ -39,12 +39,12 @@ const StudentDashboard = () => {
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-100 text-gray-800">
+    <div className="flex min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-blue-900 text-white">
       {/* Sidebar */}
-      <aside className={`fixed inset-y-0 left-0 z-30 ${isSidebarOpen ? 'w-64' : 'w-20'} bg-white shadow-lg p-4 flex-col transition-all duration-300 ease-in-out overflow-hidden flex`}>
+      <aside className={`fixed inset-y-0 left-0 z-30 ${isSidebarOpen ? 'w-64' : 'w-20'} bg-black/20 backdrop-blur-lg border-r border-white/10 p-4 flex-col transition-all duration-300 ease-in-out overflow-hidden flex`}>
         <div className="flex items-center justify-center h-16 mb-8">
           {isSidebarOpen ? (
-            <div className="text-2xl font-bold text-gray-800">Swotify</div>
+            <div className="text-2xl font-bold text-white">Swotify</div>
           ) : (
             <img src="/logo.jpg" alt="Swotify" className="h-10 w-10 object-contain" />
           )}
@@ -53,8 +53,8 @@ const StudentDashboard = () => {
           <NavLink
             to="home"
             className={({ isActive }) =>
-              `flex items-center p-3 rounded-lg transition-colors transform hover:scale-105 hover:translate-x-2 transition-transform duration-200 text-gray-600 ${
-                isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-gray-100'
+              `flex items-center p-3 rounded-lg transition-colors transform hover:scale-105 hover:translate-x-2 transition-transform duration-200 text-gray-300 ${
+                isActive ? 'bg-blue-600/50 text-white' : 'hover:bg-white/10'
               }`
             }
             onClick={() => setIsSidebarOpen(false)} // Close sidebar on navigation
@@ -65,8 +65,8 @@ const StudentDashboard = () => {
           <NavLink
             to="profile"
             className={({ isActive }) =>
-              `flex items-center p-3 rounded-lg transition-colors transform hover:scale-105 hover:translate-x-2 transition-transform duration-200 text-gray-600 ${
-                isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-gray-100'
+              `flex items-center p-3 rounded-lg transition-colors transform hover:scale-105 hover:translate-x-2 transition-transform duration-200 text-gray-300 ${
+                isActive ? 'bg-blue-600/50 text-white' : 'hover:bg-white/10'
               }`
             }
             onClick={() => setIsSidebarOpen(false)}
@@ -77,8 +77,8 @@ const StudentDashboard = () => {
           <NavLink
             to="chatbot"
             className={({ isActive }) =>
-              `flex items-center p-3 rounded-lg transition-colors transform hover:scale-105 hover:translate-x-2 transition-transform duration-200 text-gray-600 ${
-                isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-gray-100'
+              `flex items-center p-3 rounded-lg transition-colors transform hover:scale-105 hover:translate-x-2 transition-transform duration-200 text-gray-300 ${
+                isActive ? 'bg-blue-600/50 text-white' : 'hover:bg-white/10'
               }`
             }
             onClick={() => setIsSidebarOpen(false)}
@@ -89,8 +89,8 @@ const StudentDashboard = () => {
           <NavLink
             to="report"
             className={({ isActive }) =>
-              `flex items-center p-3 rounded-lg transition-colors transform hover:scale-105 hover:translate-x-2 transition-transform duration-200 text-gray-600 ${
-                isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-gray-100'
+              `flex items-center p-3 rounded-lg transition-colors transform hover:scale-105 hover:translate-x-2 transition-transform duration-200 text-gray-300 ${
+                isActive ? 'bg-blue-600/50 text-white' : 'hover:bg-white/10'
               }`
             }
             onClick={() => setIsSidebarOpen(false)}
@@ -101,8 +101,8 @@ const StudentDashboard = () => {
           <NavLink
             to="events"
             className={({ isActive }) =>
-              `flex items-center p-3 rounded-lg transition-colors transform hover:scale-105 hover:translate-x-2 transition-transform duration-200 text-gray-600 ${
-                isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-gray-100'
+              `flex items-center p-3 rounded-lg transition-colors transform hover:scale-105 hover:translate-x-2 transition-transform duration-200 text-gray-300 ${
+                isActive ? 'bg-blue-600/50 text-white' : 'hover:bg-white/10'
               }`
             }
             onClick={() => setIsSidebarOpen(false)}
@@ -115,7 +115,7 @@ const StudentDashboard = () => {
 
       <div className={`flex-1 flex flex-col transition-all duration-300 ease-in-out ${isSidebarOpen ? 'lg:ml-64' : 'lg:ml-20'}`}>
         {/* Header/Navbar for the dashboard */}
-        <header className="w-full p-4 bg-white shadow-md flex justify-between items-center">
+        <header className="w-full p-4 bg-black/20 backdrop-blur-lg flex justify-between items-center">
           {/* Hamburger Icon */}
           <button onClick={toggleSidebar} className="p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transform hover:scale-110 transition-transform duration-200">
             <svg
@@ -139,7 +139,7 @@ const StudentDashboard = () => {
             <div className="relative">
               <button
                 onClick={toggleNotification}
-                className="p-2 rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transform hover:scale-110 transition-transform duration-200"
+                className="p-2 rounded-full hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transform hover:scale-110 transition-transform duration-200"
               >
                 {/* Bell Icon (example SVG) */}
                 <svg
@@ -162,10 +162,10 @@ const StudentDashboard = () => {
                 </span>
               </button>
               {isNotificationOpen && (
-                <div className="absolute right-0 mt-2 w-64 bg-white rounded-md shadow-lg py-1 z-20 text-gray-800">
+                <div className="absolute right-0 mt-2 w-64 bg-black/50 backdrop-blur-lg rounded-md shadow-lg py-1 z-20 text-gray-100">
                   <div className="px-4 py-2 text-sm">
                     <p className="font-semibold">Important Update!</p>
-                    <p className="text-gray-600">Your Math assignment is due tomorrow.</p>
+                    <p className="text-gray-300">Your Math assignment is due tomorrow.</p>
                   </div>
                 </div>
               )}
@@ -174,7 +174,7 @@ const StudentDashboard = () => {
             <div className="relative">
             <button onClick={toggleDropdown} className="flex items-center space-x-2 focus:outline-none">
               <img
-                className="h-10 w-10 rounded-full object-cover border-2 border-gray-300"
+                className="h-10 w-10 rounded-full object-cover border-2 border-white/50"
                 src={userAvatar}
                 alt="User Avatar"
               />
@@ -189,25 +189,25 @@ const StudentDashboard = () => {
               </svg>
             </button>
             {isDropdownOpen && (
-              <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-20">
+              <div className="absolute right-0 mt-2 w-48 bg-black/50 backdrop-blur-lg rounded-md shadow-lg py-1 z-20">
                 <NavLink
                   to="profile"
                   onClick={() => setIsDropdownOpen(false)}
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  className="block px-4 py-2 text-sm text-gray-300 hover:bg-white/10"
                 >
                   Manage Profile
                 </NavLink>
                 <NavLink
                   to="settings" // Changed to NavLink and relative path
                   onClick={() => setIsDropdownOpen(false)}
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  className="block px-4 py-2 text-sm text-gray-300 hover:bg-white/10"
                 >
                   Manage Settings
                 </NavLink>
                 <a
                   href="#"
                   onClick={handleLogout}
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  className="block px-4 py-2 text-sm text-gray-300 hover:bg-white/10"
                 >
                   Logout
                 </a>
@@ -219,7 +219,7 @@ const StudentDashboard = () => {
 
         {/* Main Content Area */}
         <main className="flex-1 p-6">
-          <div className="bg-white rounded-2xl shadow-xl p-8 lg:p-10 text-gray-800 h-full">
+          <div className="bg-black/20 backdrop-blur-lg rounded-2xl shadow-xl p-8 lg:p-10 text-white h-full">
             {/* The routed content will be rendered here */}
             <Routes>
               <Route path="/" element={<Navigate to="home" replace />} /> {/* Default child route changed to home */}
