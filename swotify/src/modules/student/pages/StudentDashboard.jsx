@@ -39,7 +39,13 @@ const StudentDashboard = () => {
   };
 
   return (
-    <div className="flex min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-blue-900 text-white">
+    <div className="flex min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-blue-900 text-white relative overflow-hidden">
+      {/* Moving background objects */}
+      <div className="moving-object"></div>
+      <div className="moving-object"></div>
+      <div className="moving-object"></div>
+      <div className="moving-object"></div>
+      <div className="moving-object"></div>
       {/* Sidebar */}
       <aside className={`fixed inset-y-0 left-0 z-30 ${isSidebarOpen ? 'w-64' : 'w-20'} bg-black/20 backdrop-blur-lg border-r border-white/10 p-4 flex-col transition-all duration-300 ease-in-out overflow-hidden flex`}>
         <div className="flex items-center justify-center h-16 mb-8">

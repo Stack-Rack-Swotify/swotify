@@ -10,7 +10,7 @@ html, body, #root {
 
 }
 
-/* Background animation */
+/* Background gradient animation */
 @keyframes gradient-animation {
   0% {
     background-position: 0% 50%;
@@ -27,3 +27,92 @@ html, body, #root {
   background-size: 400% 400%;
   animation: gradient-animation 15s ease infinite;
 }
+
+/* Moving objects animation */
+@keyframes move-around {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+    opacity: 0.6;
+  }
+  20% {
+    transform: translate(20vw, 10vh) rotate(60deg) scale(1.1);
+    opacity: 0.7;
+  }
+  40% {
+    transform: translate(10vw, 30vh) rotate(120deg) scale(0.9);
+    opacity: 0.5;
+  }
+  60% {
+    transform: translate(30vw, 20vh) rotate(180deg) scale(1.2);
+    opacity: 0.8;
+  }
+  80% {
+    transform: translate(25vw, 5vh) rotate(240deg) scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translate(0, 0) rotate(360deg) scale(1);
+    opacity: 0.6;
+  }
+}
+
+.moving-object {
+  position: absolute;
+  background: linear-gradient(45deg, rgba(0,255,255,0.3), rgba(128,0,128,0.3)); /* Cyan to Purple gradient */
+  border-radius: 50%;
+  filter: blur(50px);
+  animation: move-around 20s infinite alternate ease-in-out;
+  z-index: -1; /* Ensure it stays behind content */
+}
+
+/* Variations for different sizes and speeds */
+.moving-object:nth-child(1) {
+  width: 150px;
+  height: 150px;
+  top: 10%;
+  left: 5%;
+  animation-duration: 25s;
+  animation-delay: 0s;
+}
+
+.moving-object:nth-child(2) {
+  width: 200px;
+  height: 200px;
+  top: 50%;
+  left: 40%;
+  animation-duration: 30s;
+  animation-delay: 5s;
+  background: linear-gradient(45deg, rgba(255,255,0,0.3), rgba(0,0,255,0.3)); /* Yellow to Blue */
+}
+
+.moving-object:nth-child(3) {
+  width: 100px;
+  height: 100px;
+  top: 80%;
+  left: 20%;
+  animation-duration: 20s;
+  animation-delay: 10s;
+  background: linear-gradient(45deg, rgba(255,0,0,0.3), rgba(0,255,0,0.3)); /* Red to Green */
+  border-radius: 30%; /* Make it square-ish */
+}
+
+.moving-object:nth-child(4) {
+  width: 180px;
+  height: 180px;
+  top: 20%;
+  right: 15%;
+  animation-duration: 28s;
+  animation-delay: 3s;
+  background: linear-gradient(45deg, rgba(255,165,0,0.3), rgba(255,0,255,0.3)); /* Orange to Magenta */
+}
+
+.moving-object:nth-child(5) {
+  width: 120px;
+  height: 120px;
+  top: 60%;
+  right: 5%;
+  animation-duration: 22s;
+  animation-delay: 7s;
+  background: linear-gradient(45deg, rgba(0,255,255,0.3), rgba(255,0,255,0.3)); /* Cyan to Magenta */
+}
+
