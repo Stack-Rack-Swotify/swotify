@@ -139,7 +139,7 @@ const StudentDashboard = () => {
               ></path>
             </svg>
           </button>
-          <h1 className="text-2xl font-bold">Student Dashboard</h1>
+
           <div className="flex items-center space-x-4"> {/* Container for notification and profile */}
             {/* Notification Icon */}
             <div className="relative">

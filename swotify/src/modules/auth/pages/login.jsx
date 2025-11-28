@@ -37,6 +37,8 @@ const Login = () => {
         // Redirect based on role, for now, all go to student-dashboard if successful
         if (user.role === 'Student') {
           navigate('/student-dashboard');
+        } else if (user.role === 'Teacher') {
+          navigate('/teacher-dashboard');
         } else {
           // For other roles, just log for now or redirect to a generic dashboard
           navigate('/student-dashboard'); // Redirect all authenticated users to student dashboard for now
