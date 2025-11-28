@@ -5,6 +5,8 @@ import { NavLink, Outlet, Routes, Route, Navigate } from 'react-router-dom';
 import TeacherHomePage from './TeacherHomePage';
 import ClassPage from './ClassPage';
 import AllStudentsPage from './AllStudentsPage'; // Import the new AllStudentsPage
+import TeacherEventsPage from './TeacherEventsPage'; // Import the TeacherEventsPage
+import CreateEventPage from './CreateEventPage'; // Import the CreateEventPage
 
 const TeacherDashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true); // State for sidebar visibility
@@ -73,6 +75,18 @@ const TeacherDashboard = () => {
             <svg className="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h2a2 2 0 002-2V7a2 2 0 00-2-2h-2v12M5 5V3a2 2 0 012-2h10a2 2 0 012 2v2H5zm0 13a2 2 0 002 2h10a2 2 0 002-2v-3h-4.586a1 1 0 00-.707.293l-1.414 1.414a1 1 0 01-1.414 0l-1.414-1.414a1 1 0 00-.707-.293H5v3z"></path></svg>
             {isSidebarOpen && <span className="ml-3">All Students</span>}
           </NavLink>
+          <NavLink
+            to="events"
+            className={({ isActive }) =>
+              `flex items-center p-3 rounded-lg transition-colors transform hover:scale-105 hover:translate-x-2 transition-transform duration-200 text-gray-300 ${
+                isActive ? 'bg-blue-600/50 text-white' : 'hover:bg-white/10'
+              }`
+            }
+            onClick={() => setIsSidebarOpen(false)}
+          >
+            <svg className="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+            {isSidebarOpen && <span className="ml-3">Events</span>}
+          </NavLink>
           {/* Add more teacher-related navigation links here */}
         </nav>
         <div className="mt-auto">
@@ -121,6 +135,8 @@ const TeacherDashboard = () => {
               <Route path="home" element={<TeacherHomePage />} />
               <Route path="class" element={<ClassPage />} />
               <Route path="all-students" element={<AllStudentsPage />} />
+              <Route path="events" element={<TeacherEventsPage />} />
+              <Route path="events/create" element={<CreateEventPage />} />
               {/* Other teacher-related routes will be nested here */}
             </Routes>
             <Outlet />

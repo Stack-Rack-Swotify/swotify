@@ -16,7 +16,7 @@ const StudentProfile = () => {
 
   if (!student) {
     return (
-      <div className="min-h-screen bg-black/20 backdrop-blur-lg flex items-center justify-center rounded-xl p-4">
+      <div className="bg-black/20 backdrop-blur-lg flex items-center justify-center rounded-xl p-4">
         <p className="text-xl text-white">
           Student profile not found or you are not logged in.
         </p>
@@ -25,7 +25,7 @@ const StudentProfile = () => {
   }
 
   return (
-    <div className="min-h-screen bg-transparent p-4">
+      <div className="p-4 bg-black/20 backdrop-blur-lg rounded-xl shadow-lg">
       {/* Header */}
       <h1 className="text-4xl font-bold text-white mb-6">My Profile</h1>
 
