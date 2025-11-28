@@ -2,6 +2,8 @@
 const mockClasses = [
   {
     id: 'class1',
+    grade: 'Grade 10',
+    section: 'A',
     className: 'Grade 10 - Section A',
     totalStudents: 4,
     classPerformance: {
@@ -77,6 +79,8 @@ const mockClasses = [
   },
   {
     id: 'class2',
+    grade: 'Grade 10',
+    section: 'B',
     className: 'Grade 10 - Section B',
     totalStudents: 3,
     classPerformance: {
@@ -129,6 +133,51 @@ const mockClasses = [
         assignments: [
           { id: 'a1', name: 'Math Homework 1', dueDate: '2025-10-20', grade: 90, maxGrade: 100 },
           { id: 'a2', name: 'Science Project', dueDate: '2025-11-05', grade: 85, maxGrade: 100 },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'class3',
+    grade: 'Grade 11',
+    section: 'A',
+    className: 'Grade 11 - Section A',
+    totalStudents: 2,
+    classPerformance: {
+      averageScore: 88.0,
+      highestScore: 98,
+      lowestScore: 75,
+      passRate: '95%',
+    },
+    students: [
+      {
+        id: 's8',
+        name: 'Henry King',
+        photo: 'https://via.placeholder.com/150/FF4500/FFFFFF?text=HK',
+        details: {
+          email: 'henry.k@school.com',
+          grade: 'A',
+          attendance: '96%',
+          parents: 'Mr. King',
+        },
+        assignments: [
+          { id: 'a4', name: 'Physics Lab 1', dueDate: '2025-10-25', grade: 95, maxGrade: 100 },
+          { id: 'a5', name: 'Chemistry Project', dueDate: '2025-11-10', grade: null, maxGrade: 100 },
+        ],
+      },
+      {
+        id: 's9',
+        name: 'Ivy Queen',
+        photo: 'https://via.placeholder.com/150/800080/FFFFFF?text=IQ',
+        details: {
+          email: 'ivy.q@school.com',
+          grade: 'A-',
+          attendance: '94%',
+          parents: 'Ms. Queen',
+        },
+        assignments: [
+          { id: 'a4', name: 'Physics Lab 1', dueDate: '2025-10-25', grade: 90, maxGrade: 100 },
+          { id: 'a5', name: 'Chemistry Project', dueDate: '2025-11-10', grade: 88, maxGrade: 100 },
         ],
       },
     ],
