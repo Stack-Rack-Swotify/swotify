@@ -168,10 +168,10 @@ const StudentDashboard = () => {
                 </span>
               </button>
               {isNotificationOpen && (
-                <div className="absolute right-0 mt-2 w-64 bg-gray-800 rounded-md shadow-lg py-1 z-20 text-gray-100">
+                <div className="absolute right-0 mt-2 w-64 bg-gray-800 rounded-md shadow-lg py-1 z-20 text-white">
                   <div className="px-4 py-2 text-sm">
                     <p className="font-semibold">Important Update!</p>
-                    <p className="text-gray-300">Your Math assignment is due tomorrow.</p>
+                    <p className="text-gray-200">Your Math assignment is due tomorrow.</p>
                   </div>
                 </div>
               )}
@@ -199,21 +199,21 @@ const StudentDashboard = () => {
                 <NavLink
                   to="profile"
                   onClick={() => setIsDropdownOpen(false)}
-                  className="block px-4 py-2 text-sm text-gray-300 hover:bg-white/10"
+                  className="block px-4 py-2 text-sm text-white hover:bg-blue-600"
                 >
                   Manage Profile
                 </NavLink>
                 <NavLink
                   to="settings" // Changed to NavLink and relative path
                   onClick={() => setIsDropdownOpen(false)}
-                  className="block px-4 py-2 text-sm text-gray-300 hover:bg-white/10"
+                  className="block px-4 py-2 text-sm text-white hover:bg-blue-600"
                 >
                   Manage Settings
                 </NavLink>
                 <a
                   href="#"
                   onClick={handleLogout}
-                  className="block px-4 py-2 text-sm text-gray-300 hover:bg-white/10"
+                  className="block px-4 py-2 text-sm text-white hover:bg-blue-600"
                 >
                   Logout
                 </a>

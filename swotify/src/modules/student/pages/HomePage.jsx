@@ -33,7 +33,7 @@ const HomePage = () => {
       <h3 className="text-2xl font-bold text-white mb-6">Student Home Overview</h3>
 
       {/* Attendance Overview */}
-      <div className="mb-8 p-4 border border-white/10 rounded-lg bg-black/20 transform hover:scale-105 hover:shadow-2xl transition-all duration-300">
+      <div className="mb-8 p-4 border border-white/10 rounded-lg bg-black/20 relative z-0 transform hover:scale-108 hover:shadow-2xl transition-all duration-300 hover:z-10">
         <h4 className="text-xl font-bold text-white mb-3">Attendance Overview</h4>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="bg-blue-900/50 p-3 rounded-lg shadow-sm">
@@ -52,7 +52,7 @@ const HomePage = () => {
       </div>
 
       {/* Performance Analysis with Subject Dropdown */}
-      <div className="p-4 border border-white/10 rounded-lg bg-black/20 transform hover:scale-105 hover:shadow-2xl transition-all duration-300">
+      <div className="p-4 border border-white/10 rounded-lg bg-black/20 relative z-0 transform hover:scale-108 hover:shadow-2xl transition-all duration-300 hover:z-10">
         <h4 className="text-xl font-bold text-white mb-3">Subject Performance Analysis</h4>
         
         <div className="mb-4">
@@ -84,7 +84,7 @@ const HomePage = () => {
       </div>
 
       {/* Quick Actions */}
-      <div className="mt-8 p-4 border border-white/10 rounded-lg bg-black/20 transform hover:scale-105 hover:shadow-2xl transition-all duration-300">
+      <div className="mt-8 p-4 border border-white/10 rounded-lg bg-black/20 relative z-0 transform hover:scale-108 hover:shadow-2xl transition-all duration-300 hover:z-10">
         <h4 className="text-xl font-bold text-white mb-3">Quick Actions</h4>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <Link to="../report" className="bg-blue-600/50 p-4 rounded-lg shadow-sm text-center transform hover:scale-105 hover:bg-blue-500/50 transition-all duration-200">

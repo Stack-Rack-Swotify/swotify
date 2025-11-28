@@ -3,7 +3,7 @@ import React from 'react';
 
 const AIChatbot = () => {
   return (
-    <div className="p-4 bg-black/20 backdrop-blur-lg rounded-xl shadow-lg h-full flex flex-col">
+    <div className="p-4 bg-black/20 backdrop-blur-lg rounded-xl shadow-lg h-full flex flex-col relative z-0 transform hover:scale-108 hover:shadow-2xl transition-all duration-300 hover:z-10">
       <h3 className="text-2xl font-bold text-white mb-4">AI Chatbot</h3>
       <div className="flex-1 overflow-y-auto border border-gray-700 rounded-lg bg-gray-800 p-4 mb-4">
         {/* Placeholder for chat messages */}
@@ -27,13 +27,13 @@ const AIChatbot = () => {
       <div className="mt-6">
         <h4 className="text-lg font-bold text-white mb-3">Suggested Prompts</h4>
         <div className="flex flex-wrap gap-2">
-          <button className="px-3 py-1 bg-blue-800/50 text-blue-100 rounded-full text-sm transform hover:scale-105 hover:bg-blue-700/50 transition-all duration-200">
+          <button className="px-3 py-1 bg-blue-800/50 text-blue-100 rounded-full text-sm relative z-0 transform hover:scale-108 hover:bg-blue-700/50 transition-all duration-200 hover:z-10">
             What's my attendance?
           </button>
-          <button className="px-3 py-1 bg-green-800/50 text-green-100 rounded-full text-sm transform hover:scale-105 hover:bg-green-700/50 transition-all duration-200">
+          <button className="px-3 py-1 bg-green-800/50 text-green-100 rounded-full text-sm relative z-0 transform hover:scale-108 hover:bg-green-700/50 transition-all duration-200 hover:z-10">
             Summarize my performance
           </button>
-          <button className="px-3 py-1 bg-purple-800/50 text-purple-100 rounded-full text-sm transform hover:scale-105 hover:bg-purple-700/50 transition-all duration-200">
+          <button className="px-3 py-1 bg-purple-800/50 text-purple-100 rounded-full text-sm relative z-0 transform hover:scale-108 hover:bg-purple-700/50 transition-all duration-200 hover:z-10">
             When is my next assignment due?
           </button>
         </div>

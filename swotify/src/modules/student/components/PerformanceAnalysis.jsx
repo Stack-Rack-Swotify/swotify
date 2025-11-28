@@ -30,7 +30,7 @@ const PerformanceAnalysis = () => {
   const currentSubjectPerformance = subjectPerformanceData[selectedSubject];
 
   return (
-    <div className="p-4 bg-black/20 backdrop-blur-lg rounded-xl shadow-lg transform hover:scale-105 hover:shadow-2xl transition-all duration-300">
+    <div className="p-4 bg-black/20 backdrop-blur-lg rounded-xl shadow-lg relative z-0 transform hover:scale-108 hover:shadow-2xl transition-all duration-300 hover:z-10">
       <h3 className="text-2xl font-bold text-white mb-4">Performance Analysis</h3>
       
       {/* Summary of Key Performance Indicators */}
