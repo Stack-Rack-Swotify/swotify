@@ -5,6 +5,7 @@ import Signup from './modules/auth/pages/signup.jsx'; // Import the new Signup c
 import StudentDashboard from './modules/student/pages/StudentDashboard.jsx'; // Import the StudentDashboard component
 import TeacherDashboard from './modules/teacher/pages/TeacherDashboard.jsx'; // Import the TeacherDashboard component
 import StudentProfile from './modules/student/pages/StudentProfile.jsx'; // Import the StudentProfile component
+import AdminDashboard from './modules/admin/pages/AdminDashboard.jsx'; // Import the AdminDashboard component
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         {/* Route for Student Dashboard with nested routes */}
         <Route path="/student-dashboard/*" element={<StudentDashboard />} /> {/* Use * for nested routes */}
         <Route path="/teacher-dashboard/*" element={<TeacherDashboard />} />
+        <Route path="/admin-dashboard/*" element={<AdminDashboard />} /> {/* Route for Admin Dashboard */}
         <Route path="/student/profile" element={<StudentProfile />} />
         {/* You can add a default route or redirect here if needed */}
         <Route path="/" element={<Login />} /> {/* Default to signup */}

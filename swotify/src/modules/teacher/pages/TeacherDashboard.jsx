@@ -12,6 +12,7 @@ import PTMHistoryPage from './PTMHistoryPage';
 import TeacherDashboardOverview from './TeacherDashboardOverview'; // Import TeacherDashboardOverview
 import ReportPage from '../../student/pages/ReportPage'; // Import ReportPage
 import TeacherSettingsPage from './TeacherSettingsPage'; // Import TeacherSettingsPage
+import PerformanceReportPage from '../../admin/pages/PerformanceReportPage'; // Import PerformanceReportPage
 
 
 // Initialise theme from localStorage (client‑side only)
@@ -132,6 +133,7 @@ const TeacherDashboard = () => {
             <Route path="/ptm-history" element={<PTMHistoryPage />} />
             <Route path="/report" element={<ReportPage />} />
             <Route path="/settings" element={<TeacherSettingsPage />} />
+            <Route path="/performance-report" element={<PerformanceReportPage />} />
           </Routes>
         </main>
       </div>
