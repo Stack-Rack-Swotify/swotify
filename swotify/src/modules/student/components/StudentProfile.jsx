@@ -2,20 +2,14 @@ import React from 'react';
 import StudentMarks from './StudentMarks';
 import PerformanceAnalysis from './PerformanceAnalysis';
 
-const StudentProfile = () => {
-  const dummyStudentData = {
-    name: "John Doe",
-    studentId: "SWT-001-2025",
-    email: "john.doe@example.com",
-    program: "Computer Science",
-    year: "3rd Year",
-    gpa: 3.8,
-    enrollmentDate: "September 1, 2023",
-    contact: "123-456-7890",
-    address: "123 Main St, Anytown, USA",
-    profilePicture: "https://images.unsplash.com/photo-1542838188-f5e6a0d4a9f2?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    bio: "A motivated computer science student with a passion for web development and artificial intelligence. Enjoys problem-solving and collaborating on innovative projects.",
-  };
+const StudentProfile = ({ student }) => {
+  if (!student) {
+    return (
+      <div className="text-center py-12">
+        <p className="text-gray-600">No student data provided.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6">
@@ -34,8 +28,8 @@ const StudentProfile = () => {
               <div className="w-32 h-32 rounded-full bg-gradient-to-br from-[#ff7300] to-[#9000ff] p-1">
                 <img
                   className="w-full h-full rounded-full object-cover bg-white"
-                  src={dummyStudentData.profilePicture}
-                  alt="Student Profile"
+                  src={student.photo}
+                  alt={student.name}
                 />
               </div>
               <div className="absolute -bottom-2 -right-2 bg-[#9000ff] text-white rounded-full p-2 shadow-lg">
@@ -47,22 +41,22 @@ const StudentProfile = () => {
 
             {/* Basic Info */}
             <div className="flex-1 text-center md:text-left">
-              <h4 className="text-2xl font-bold text-gray-800 mb-2">{dummyStudentData.name}</h4>
+              <h4 className="text-2xl font-bold text-gray-800 mb-2">{student.name}</h4>
               <div className="flex flex-wrap gap-2 justify-center md:justify-start mb-4">
                 <span className="bg-gradient-to-r from-[#ff7300]/10 to-[#ff7300]/5 text-[#ff7300] px-3 py-1 rounded-lg text-sm font-semibold border border-[#ff7300]/20">
-                  {dummyStudentData.studentId}
+                  {student.id}
                 </span>
                 <span className="bg-gradient-to-r from-[#9000ff]/10 to-[#9000ff]/5 text-[#9000ff] px-3 py-1 rounded-lg text-sm font-semibold border border-[#9000ff]/20">
-                  {dummyStudentData.year}
+                  {student.details.grade}
                 </span>
               </div>
               <div className="space-y-1 text-sm">
                 <p className="text-gray-700">
-                  <span className="font-semibold text-[#827979]">Program:</span> {dummyStudentData.program}
+                  <span className="font-semibold text-[#827979]">Program:</span> {student.details.program || 'N/A'}
                 </p>
                 <p className="text-gray-700">
                   <span className="font-semibold text-[#827979]">GPA:</span> 
-                  <span className="text-[#ff7300] font-bold ml-1">{dummyStudentData.gpa}</span>
+                  <span className="text-[#ff7300] font-bold ml-1">{student.details.gpa || 'N/A'}</span>
                 </p>
               </div>
             </div>
@@ -85,7 +79,7 @@ const StudentProfile = () => {
                 </div>
                 <span className="text-xs font-medium text-[#827979] uppercase tracking-wide">Email</span>
               </div>
-              <p className="text-sm font-semibold text-gray-800">{dummyStudentData.email}</p>
+              <p className="text-sm font-semibold text-gray-800">{student.details.email}</p>
             </div>
 
             <div className="bg-gradient-to-br from-[#9000ff]/10 to-[#9000ff]/5 p-5 rounded-xl border border-[#9000ff]/20 hover:shadow-md transition-all duration-300">
@@ -97,7 +91,7 @@ const StudentProfile = () => {
                 </div>
                 <span className="text-xs font-medium text-[#827979] uppercase tracking-wide">Phone</span>
               </div>
-              <p className="text-sm font-semibold text-gray-800">{dummyStudentData.contact}</p>
+              <p className="text-sm font-semibold text-gray-800">{student.details.contact || 'N/A'}</p>
             </div>
 
             <div className="bg-gradient-to-br from-[#827979]/10 to-[#827979]/5 p-5 rounded-xl border border-[#827979]/20 md:col-span-2 hover:shadow-md transition-all duration-300">
@@ -110,7 +104,7 @@ const StudentProfile = () => {
                 </div>
                 <span className="text-xs font-medium text-[#827979] uppercase tracking-wide">Address</span>
               </div>
-              <p className="text-sm font-semibold text-gray-800">{dummyStudentData.address}</p>
+              <p className="text-sm font-semibold text-gray-800">{student.details.address || 'N/A'}</p>
             </div>
           </div>
         </div>
@@ -132,7 +126,7 @@ const StudentProfile = () => {
                 </div>
                 <div className="flex-1">
                   <p className="text-xs font-medium text-[#827979] uppercase tracking-wide mb-1">Enrollment Date</p>
-                  <p className="text-sm font-semibold text-gray-800">{dummyStudentData.enrollmentDate}</p>
+                  <p className="text-sm font-semibold text-gray-800">{student.details.enrollmentDate || 'N/A'}</p>
                 </div>
               </div>
             </div>
@@ -146,7 +140,7 @@ const StudentProfile = () => {
                 </div>
                 <div className="flex-1">
                   <p className="text-xs font-medium text-[#827979] uppercase tracking-wide mb-2">Bio</p>
-                  <p className="text-sm text-gray-700 leading-relaxed">{dummyStudentData.bio}</p>
+                  <p className="text-sm text-gray-700 leading-relaxed">{student.details.bio || 'N/A'}</p>
                 </div>
               </div>
             </div>
@@ -165,7 +159,7 @@ const StudentProfile = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
               </svg>
               <p className="text-sm text-gray-700 leading-relaxed">
-                A concise summary of <span className="font-semibold text-[#9000ff]">{dummyStudentData.name}</span>'s academic performance. Detailed analysis can be found in the dedicated reports section.
+                A concise summary of <span className="font-semibold text-[#9000ff]">{student.name}</span>'s academic performance. Detailed analysis can be found in the dedicated reports section.
               </p>
             </div>
           </div>

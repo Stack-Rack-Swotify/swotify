@@ -82,7 +82,7 @@ const EventsPage = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {schoolEvents.map((event) => (
                 <Link 
-                  to={`/events/${event.id}`} 
+                  to={`${event.id}`} 
                   key={event.id} 
                   className="group block bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
                 >
@@ -170,7 +170,7 @@ const EventsPage = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {ptmMeetings.map((meeting) => (
                 <Link 
-                  to={`/events/${meeting.id}`} 
+                  to={`${meeting.id}`} 
                   key={meeting.id} 
                   className="group block bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
                 >

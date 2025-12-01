@@ -16,7 +16,7 @@ const mockClasses = [
       {
         id: 's1',
         name: 'Alice Johnson',
-        photo: 'https://via.placeholder.com/150/FF69B4/FFFFFF?text=AJ',
+        photo: 'https://placehold.co/150/FF69B4/FFFFFF?text=AJ',
         details: {
           email: 'alice.j@school.com',
           grade: 'A',
@@ -32,7 +32,7 @@ const mockClasses = [
       {
         id: 's2',
         name: 'Bob Williams',
-        photo: 'https://via.placeholder.com/150/8A2BE2/FFFFFF?text=BW',
+        photo: 'https://placehold.co/150/8A2BE2/FFFFFF?text=BW',
         details: {
           email: 'bob.w@school.com',
           grade: 'B+',
@@ -47,7 +47,7 @@ const mockClasses = [
       {
         id: 's3',
         name: 'Charlie Brown',
-        photo: 'https://via.placeholder.com/150/3CB371/FFFFFF?text=CB',
+        photo: 'https://placehold.co/150/3CB371/FFFFFF?text=CB',
         details: {
           email: 'charlie.b@school.com',
           grade: 'C',
@@ -62,7 +62,7 @@ const mockClasses = [
       {
         id: 's4',
         name: 'Diana Prince',
-        photo: 'https://via.placeholder.com/150/FFD700/FFFFFF?text=DP',
+        photo: 'https://placehold.co/150/FFD700/FFFFFF?text=DP',
         details: {
           email: 'diana.p@school.com',
           grade: 'A-',
@@ -93,7 +93,7 @@ const mockClasses = [
       {
         id: 's5',
         name: 'Eve Adams',
-        photo: 'https://via.placeholder.com/150/DA70D6/FFFFFF?text=EA',
+        photo: 'https://placehold.co/150/DA70D6/FFFFFF?text=EA',
         details: {
           email: 'eve.a@school.com',
           grade: 'B',
@@ -108,7 +108,7 @@ const mockClasses = [
       {
         id: 's6',
         name: 'Frank White',
-        photo: 'https://via.placeholder.com/150/4682B4/FFFFFF?text=FW',
+        photo: 'https://placehold.co/150/4682B4/FFFFFF?text=FW',
         details: {
           email: 'frank.w@school.com',
           grade: 'C+',
@@ -123,7 +123,7 @@ const mockClasses = [
       {
         id: 's7',
         name: 'Grace Lee',
-        photo: 'https://via.placeholder.com/150/FFA07A/FFFFFF?text=GL',
+        photo: 'https://placehold.co/150/FFA07A/FFFFFF?text=GL',
         details: {
           email: 'grace.l@school.com',
           grade: 'A',
@@ -153,7 +153,7 @@ const mockClasses = [
       {
         id: 's8',
         name: 'Henry King',
-        photo: 'https://via.placeholder.com/150/FF4500/FFFFFF?text=HK',
+        photo: 'https://placehold.co/150/FF4500/FFFFFF?text=HK',
         details: {
           email: 'henry.k@school.com',
           grade: 'A',
@@ -168,7 +168,7 @@ const mockClasses = [
       {
         id: 's9',
         name: 'Ivy Queen',
-        photo: 'https://via.placeholder.com/150/800080/FFFFFF?text=IQ',
+        photo: 'https://placehold.co/150/800080/FFFFFF?text=IQ',
         details: {
           email: 'ivy.q@school.com',
           grade: 'A-',

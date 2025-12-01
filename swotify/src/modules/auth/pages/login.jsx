@@ -35,7 +35,7 @@ const Login = () => {
         if (user.role === 'Student') {
           navigate('/student-dashboard');
         } else if (user.role === 'Teacher') {
-          navigate('/teacher/class');
+          navigate('/teacher-dashboard');
         } else {
           navigate('/student-dashboard');
         }

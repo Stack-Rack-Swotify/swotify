@@ -53,9 +53,9 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-sky-50">
+    <div className="flex min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-sky-50">
       {/* Left Side - Branding */}
-      <div className="hidden lg:flex lg:w-1/2 items-center justify-center p-12 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+      <div className="hidden lg:flex lg:w-1/2 items-center justify-center p-12 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
         <div className="text-center space-y-8 max-w-xl">
           {/* Logo */}
           <div className="w-56 h-56 mx-auto bg-white/10 backdrop-blur-sm rounded-3xl p-8 shadow-2xl border border-white/20">
@@ -67,12 +67,12 @@ const Signup = () => {
           </div>
 
           {/* App Name */}
-          <h1 className="text-5xl font-bold text-white tracking-tight">
+          <h1 className="text-4xl font-bold text-gray-100 tracking-tight">
             Swotify
           </h1>
 
           {/* Tagline */}
-          <p className="text-xl text-slate-100 font-medium leading-relaxed max-w-md mx-auto">
+          <p className="text-xl text-gray-300 font-medium leading-relaxed max-w-md mx-auto">
             AI-powered school management with smart insights for principals,
             teachers, students, and parents
           </p>
@@ -81,19 +81,19 @@ const Signup = () => {
           <div className="space-y-4 pt-8">
             <div className="flex items-start text-left space-x-4 bg-white/5 backdrop-blur-sm rounded-xl p-4 hover:bg-white/10 transition-colors border border-white/10">
               <div className="w-2 h-2 mt-2 bg-sky-400 rounded-full flex-shrink-0"></div>
-              <span className="text-base text-slate-100">
+              <span className="text-base text-gray-300">
                 AI-driven attendance and performance analytics
               </span>
             </div>
             <div className="flex items-start text-left space-x-4 bg-white/5 backdrop-blur-sm rounded-xl p-4 hover:bg-white/10 transition-colors border border-white/10">
               <div className="w-2 h-2 mt-2 bg-rose-400 rounded-full flex-shrink-0"></div>
-              <span className="text-base text-slate-100">
+              <span className="text-base text-gray-300">
                 Smart alerts for at-risk students and trends
               </span>
             </div>
             <div className="flex items-start text-left space-x-4 bg-white/5 backdrop-blur-sm rounded-xl p-4 hover:bg-white/10 transition-colors border border-white/10">
               <div className="w-2 h-2 mt-2 bg-sky-300 rounded-full flex-shrink-0"></div>
-              <span className="text-base text-slate-100">
+              <span className="text-base text-gray-300">
                 Unified management dashboard
               </span>
             </div>
@@ -106,29 +106,29 @@ const Signup = () => {
         <div className="w-full max-w-md">
           {/* Mobile Logo */}
           <div className="lg:hidden text-center mb-10">
-            <div className="w-32 h-32 mx-auto bg-slate-900/10 backdrop-blur-sm rounded-2xl p-6 mb-4 border border-slate-200">
+            <div className="w-32 h-32 mx-auto bg-gray-900/10 backdrop-blur-sm rounded-2xl p-6 mb-4 border border-gray-200">
               <img
                 src="/logo.jpg"
                 alt="Swotify Logo"
                 className="w-full h-full object-contain"
               />
             </div>
-            <h1 className="text-3xl font-bold text-slate-900 mb-2">
+            <h1 className="text-3xl font-bold text-gray-800 mb-2">
               Swotify
             </h1>
-            <p className="text-slate-600 text-sm">
+            <p className="text-gray-500 text-sm">
               Your intelligent school management platform
             </p>
           </div>
 
           {/* Signup Card */}
-          <div className="bg-white rounded-2xl shadow-xl border border-slate-200 p-8 lg:p-10">
+          <div className="bg-white rounded-2xl shadow-xl border border-gray-200 p-8 lg:p-10">
             {/* Welcome Header */}
             <div className="mb-8">
-              <h2 className="text-3xl font-bold text-slate-900 mb-2">
+              <h2 className="text-3xl font-bold text-gray-800 mb-2">
                 Create Your Account
               </h2>
-              <p className="text-slate-600">
+              <p className="text-gray-500">
                 Join Swotify and start your journey
               </p>
             </div>
@@ -146,7 +146,7 @@ const Signup = () => {
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm font-semibold text-slate-900 mb-2"
+                  className="block text-sm font-semibold text-gray-800 mb-2"
                 >
                   School email
                 </label>
@@ -155,7 +155,7 @@ const Signup = () => {
                   type="email"
                   required
                   placeholder="name@school.edu"
-                  className="w-full px-4 py-3 rounded-lg border border-slate-300 bg-slate-50 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent focus:bg-white transition-all"
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent focus:bg-white transition-all"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -165,7 +165,7 @@ const Signup = () => {
               <div>
                 <label
                   htmlFor="password"
-                  className="block text-sm font-semibold text-slate-900 mb-2"
+                  className="block text-sm font-semibold text-gray-800 mb-2"
                 >
                   Password
                 </label>
@@ -174,7 +174,7 @@ const Signup = () => {
                   type="password"
                   required
                   placeholder="Enter your password"
-                  className="w-full px-4 py-3 rounded-lg border border-slate-300 bg-slate-50 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent focus:bg-white transition-all"
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent focus:bg-white transition-all"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
@@ -184,7 +184,7 @@ const Signup = () => {
               <div>
                 <label
                   htmlFor="confirm-password"
-                  className="block text-sm font-semibold text-slate-900 mb-2"
+                  className="block text-sm font-semibold text-gray-800 mb-2"
                 >
                   Confirm Password
                 </label>
@@ -193,7 +193,7 @@ const Signup = () => {
                   type="password"
                   required
                   placeholder="Confirm your password"
-                  className="w-full px-4 py-3 rounded-lg border border-slate-300 bg-slate-50 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent focus:bg-white transition-all"
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent focus:bg-white transition-all"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                 />
@@ -201,34 +201,34 @@ const Signup = () => {
 
               {/* Role Selection Section */}
               <div className="mb-6 mt-4">
-                <h3 className="text-sm font-semibold text-slate-900 mb-2">
+                <h3 className="text-sm font-semibold text-gray-800 mb-2">
                   I am a:
                 </h3>
                 <div className="grid grid-cols-2 gap-3">
                   <button
                     type="button"
-                    className={`py-2.5 px-3 bg-slate-100 text-slate-800 font-semibold rounded-lg transition-colors text-sm border ${selectedRole === 'Student' ? 'ring-2 ring-sky-500 bg-sky-50 border-sky-300' : 'border-slate-200 hover:bg-slate-200'}`}
+                    className={`py-2.5 px-3 bg-gray-100 text-gray-700 font-semibold rounded-lg transition-colors text-sm border ${selectedRole === 'Student' ? 'ring-2 ring-sky-500 bg-sky-50 border-sky-300' : 'border-gray-200 hover:bg-gray-200'}`}
                     onClick={() => handleRoleSelect('Student')}
                   >
                     Student
                   </button>
                   <button
                     type="button"
-                    className={`py-2.5 px-3 bg-slate-100 text-slate-800 font-semibold rounded-lg transition-colors text-sm border ${selectedRole === 'Teacher' ? 'ring-2 ring-sky-500 bg-sky-50 border-sky-300' : 'border-slate-200 hover:bg-slate-200'}`}
+                    className={`py-2.5 px-3 bg-gray-100 text-gray-700 font-semibold rounded-lg transition-colors text-sm border ${selectedRole === 'Teacher' ? 'ring-2 ring-sky-500 bg-sky-50 border-sky-300' : 'border-gray-200 hover:bg-gray-200'}`}
                     onClick={() => handleRoleSelect('Teacher')}
                   >
                     Teacher
                   </button>
                   <button
                     type="button"
-                    className={`py-2.5 px-3 bg-slate-100 text-slate-800 font-semibold rounded-lg transition-colors text-sm border ${selectedRole === 'Admin' ? 'ring-2 ring-sky-500 bg-sky-50 border-sky-300' : 'border-slate-200 hover:bg-slate-200'}`}
+                    className={`py-2.5 px-3 bg-gray-100 text-gray-700 font-semibold rounded-lg transition-colors text-sm border ${selectedRole === 'Admin' ? 'ring-2 ring-sky-500 bg-sky-50 border-sky-300' : 'border-gray-200 hover:bg-gray-200'}`}
                     onClick={() => handleRoleSelect('Admin')}
                   >
                     Admin
                   </button>
                   <button
                     type="button"
-                    className={`py-2.5 px-3 bg-slate-100 text-slate-800 font-semibold rounded-lg transition-colors text-sm border ${selectedRole === 'Developer' ? 'ring-2 ring-sky-500 bg-sky-50 border-sky-300' : 'border-slate-200 hover:bg-slate-200'}`}
+                    className={`py-2.5 px-3 bg-gray-100 text-gray-700 font-semibold rounded-lg transition-colors text-sm border ${selectedRole === 'Developer' ? 'ring-2 ring-sky-500 bg-sky-50 border-sky-300' : 'border-gray-200 hover:bg-gray-200'}`}
                     onClick={() => handleRoleSelect('Developer')}
                   >
                     Developer
@@ -239,7 +239,7 @@ const Signup = () => {
               {/* Submit Button - Primary CTA Gradient */}
               <button
                 type="submit"
-                className="w-full py-3.5 px-4 bg-gradient-to-r from-slate-900 to-sky-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl hover:from-slate-800 hover:to-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 transform hover:-translate-y-0.5 transition-all"
+                className="w-full py-3.5 px-4 bg-gradient-to-r from-gray-900 to-sky-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl hover:from-gray-800 hover:to-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 transform hover:-translate-y-0.5 transition-all"
               >
                 Sign Up for Swotify
               </button>
@@ -247,7 +247,7 @@ const Signup = () => {
 
             {/* Link to Login */}
             <div className="mt-6 text-center">
-              <p className="text-sm text-slate-600">
+              <p className="text-sm text-gray-500">
                 Already have an account?{" "}
                 <Link
                   to="/login"
@@ -259,8 +259,8 @@ const Signup = () => {
             </div>
 
             {/* Security Badge */}
-            <div className="mt-8 pt-6 border-t border-slate-200">
-              <div className="flex items-center justify-center gap-2 text-sm text-slate-500">
+            <div className="mt-8 pt-6 border-t border-gray-200">
+              <div className="flex items-center justify-center gap-2 text-sm text-gray-500">
                 <svg
                   className="w-5 h-5 text-green-500"
                   fill="currentColor"
@@ -272,24 +272,24 @@ const Signup = () => {
                     clipRule="evenodd"
                   />
                 </svg>
-                <span>Secure 256-bit encrypted access</span>
+                <span className="text-sm text-gray-500">Secure 256-bit encrypted access</span>
               </div>
             </div>
           </div>
 
           {/* Mobile Features */}
           <div className="lg:hidden mt-8 space-y-3">
-            <div className="flex items-center gap-3 text-slate-700 text-sm bg-white/60 backdrop-blur-sm rounded-lg p-3 border border-slate-200">
+            <div className="flex items-center gap-3 text-gray-600 text-sm bg-white/60 backdrop-blur-sm rounded-lg p-3 border border-gray-200">
               <div className="w-1.5 h-1.5 bg-sky-500 rounded-full"></div>
-              <span>AI analytics & insights</span>
+              <span className="text-sm text-gray-600">AI analytics & insights</span>
             </div>
-            <div className="flex items-center gap-3 text-slate-700 text-sm bg-white/60 backdrop-blur-sm rounded-lg p-3 border border-slate-200">
+            <div className="flex items-center gap-3 text-gray-600 text-sm bg-white/60 backdrop-blur-sm rounded-lg p-3 border border-gray-200">
               <div className="w-1.5 h-1.5 bg-rose-400 rounded-full"></div>
-              <span>Smart alerts & notifications</span>
+              <span className="text-sm text-gray-600">Smart alerts & notifications</span>
             </div>
-            <div className="flex items-center gap-3 text-slate-700 text-sm bg-white/60 backdrop-blur-sm rounded-lg p-3 border border-slate-200">
+            <div className="flex items-center gap-3 text-gray-600 text-sm bg-white/60 backdrop-blur-sm rounded-lg p-3 border border-gray-200">
               <div className="w-1.5 h-1.5 bg-sky-400 rounded-full"></div>
-              <span>Unified management dashboard</span>
+              <span className="text-sm text-gray-600">Unified management dashboard</span>
             </div>
           </div>
         </div>

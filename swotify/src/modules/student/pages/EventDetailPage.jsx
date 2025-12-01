@@ -124,7 +124,7 @@ const EventDetailPage = () => {
         </div>
 
         {/* Event Pictures */}
-        {event.pictures && event.pictures.length > 0 && (
+        {event.pictures && event.pictures.length > 0 && !event.title.includes('PTM') && (
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 mb-6 hover:shadow-lg transition-all duration-300">
             <h4 className="text-xl font-semibold text-gray-800 mb-5 flex items-center">
               <span className="w-1 h-6 bg-gradient-to-b from-[#9000ff] to-[#ff7300] rounded-full mr-3"></span>
@@ -145,23 +145,112 @@ const EventDetailPage = () => {
           </div>
         )}
 
-        {/* Instructions for Students */}
-        {event.instructions && (
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 hover:shadow-lg transition-all duration-300">
+        {event.title.includes('PTM') && (
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 mb-6 hover:shadow-lg transition-all duration-300">
             <h4 className="text-xl font-semibold text-gray-800 mb-5 flex items-center">
-              <span className="w-1 h-6 bg-gradient-to-b from-[#827979] to-[#9000ff] rounded-full mr-3"></span>
-              Instructions for Students
+              <span className="w-1 h-6 bg-gradient-to-b from-[#9000ff] to-[#ff7300] rounded-full mr-3"></span>
+              Student Talent Summary
             </h4>
-            <div className="bg-gradient-to-br from-[#ff7300]/5 to-[#9000ff]/5 p-5 rounded-xl border border-[#ff7300]/20">
-              <div className="flex gap-3">
-                <svg className="w-6 h-6 text-[#ff7300] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <p className="text-gray-700 leading-relaxed">{event.instructions}</p>
+            <div className="bg-gray-50 p-5 rounded-xl border border-gray-200">
+              <p className="text-gray-600 mb-4">
+                Upload or record a short audio of the student showcasing their talent. Our AI will analyze the audio and provide a summary of their skills.
+              </p>
+              <div className="flex items-center gap-4 mb-4">
+                <button className="flex-1 px-6 py-3 bg-gradient-to-r from-[#ff7300] to-[#ff7300]/90 text-white rounded-xl hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5 font-medium flex items-center justify-center gap-2">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
+                  </svg>
+                  <span>Upload Recording</span>
+                </button>
+                <button className="flex-1 px-6 py-3 bg-gray-200 text-gray-800 rounded-xl hover:bg-gray-300 transition-all duration-300 font-medium flex items-center justify-center gap-2">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path>
+                  </svg>
+                  <span>Record Audio</span>
+                </button>
+              </div>
+              <div>
+                <h5 className="text-lg font-semibold text-gray-800 mb-3">AI-Generated Summary</h5>
+                <div className="bg-gray-50 p-5 rounded-xl border border-gray-200 min-h-[100px]">
+                  <p className="text-gray-700 italic">The AI summary will appear here after the audio is processed...</p>
+                </div>
               </div>
             </div>
           </div>
         )}
+
+<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2">
+            {/* Event Registration Form */}
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 mb-6 hover:shadow-lg transition-all duration-300">
+              <h4 className="text-xl font-semibold text-gray-800 mb-5 flex items-center">
+                <span className="w-1 h-6 bg-gradient-to-b from-[#9000ff] to-[#ff7300] rounded-full mr-3"></span>
+                Event Registration
+              </h4>
+              <form>
+                <div className="mb-4">
+                  <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                  <input type="text" id="fullName" className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#ff7300] focus:border-transparent transition-all duration-300" placeholder="Enter your full name" />
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                    <input type="email" id="email" className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#ff7300] focus:border-transparent transition-all duration-300" placeholder="Enter your email address" />
+                  </div>
+                  <div>
+                    <label htmlFor="contact" className="block text-sm font-medium text-gray-700 mb-1">Contact Number</label>
+                    <input type="tel" id="contact" className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#ff7300] focus:border-transparent transition-all duration-300" placeholder="Enter your contact number" />
+                  </div>
+                </div>
+                <div className="flex justify-end mt-6">
+                  <button type="submit" className="px-8 py-3 bg-gradient-to-r from-[#ff7300] to-[#ff7300]/90 text-white rounded-xl hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5 font-medium flex items-center gap-2">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                    <span>Register Now</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+          
+          <div>
+            {/* Instructions for Students */}
+            {event.instructions && (
+              <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 mb-6 hover:shadow-lg transition-all duration-300">
+                <h4 className="text-xl font-semibold text-gray-800 mb-5 flex items-center">
+                  <span className="w-1 h-6 bg-gradient-to-b from-[#827979] to-[#9000ff] rounded-full mr-3"></span>
+                  Instructions for Students
+                </h4>
+                <div className="bg-gradient-to-br from-[#ff7300]/5 to-[#9000ff]/5 p-5 rounded-xl border border-[#ff7300]/20">
+                  <div className="flex gap-3">
+                    <svg className="w-6 h-6 text-[#ff7300] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <p className="text-gray-700 leading-relaxed">{event.instructions}</p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Event Location */}
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 hover:shadow-lg transition-all duration-300">
+              <h4 className="text-xl font-semibold text-gray-800 mb-5 flex items-center">
+                <span className="w-1 h-6 bg-gradient-to-b from-[#ff7300] to-[#9000ff] rounded-full mr-3"></span>
+                Event Location
+              </h4>
+              <div className="relative h-60 rounded-xl overflow-hidden border border-gray-200">
+                <iframe
+                  className="absolute top-0 left-0 w-full h-full"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.22588789948!2d-122.4194155846813!3d37.77492927975823!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80858064f95d1d6d%3A0x2e6f3b4f659d5e3a!2sSan%20Francisco%20City%20Hall!5e0!3m2!1sen!2sus!4v1620207869680!5m2!1sen!2sus"
+                  allowFullScreen=""
+                  loading="lazy"
+                  title="Event Location Map"
+                ></iframe>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
