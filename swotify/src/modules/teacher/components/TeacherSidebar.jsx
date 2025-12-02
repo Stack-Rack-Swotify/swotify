@@ -12,8 +12,8 @@ const TeacherSidebar = ({ isSidebarOpen, toggleSidebar }) => {
       end: true 
     },
     { 
-      to: '/teacher-dashboard/all-students', 
-      label: 'All Students', 
+      to: '/teacher-dashboard/students', 
+      label: 'Students', 
       icon: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z' 
     },
     { 
@@ -58,7 +58,7 @@ const TeacherSidebar = ({ isSidebarOpen, toggleSidebar }) => {
       {/* Overlay for mobile */}
       {isSidebarOpen && (
         <div 
-          className="fixed inset-0 bg-black/20 z-20 lg:hidden"
+          className="fixed inset-0 bg-[#0F172A]/20 z-20 lg:hidden backdrop-blur-sm"
           onClick={() => toggleSidebar(false)}
         />
       )}
@@ -67,24 +67,24 @@ const TeacherSidebar = ({ isSidebarOpen, toggleSidebar }) => {
       <aside
         className={`fixed inset-y-0 left-0 z-30 ${
           isSidebarOpen ? 'w-72' : 'w-20'
-        } bg-white border-r border-gray-200 flex flex-col transition-all duration-300 ease-in-out shadow-lg`}
+        } bg-white border-r border-gray-100 flex flex-col transition-all duration-300 ease-in-out shadow-sm`}
       >
         {/* Logo Section */}
-        <div className="h-16 flex items-center justify-center border-b border-gray-200 px-4">
+        <div className="h-16 flex items-center justify-center border-b border-gray-100 px-4">
           {isSidebarOpen ? (
             <div className="flex items-center gap-3">
-              <img src="/logo.jpg" alt="Swotify" className="h-10 w-10 object-contain rounded-lg" />
+              <img src="/logo.jpg" alt="Swotify" className="h-10 w-10 object-contain rounded-xl" />
               <div className="flex flex-col">
-                <span className="text-xl font-bold bg-gradient-to-r from-[#ff7300] to-[#9000ff] bg-clip-text text-transparent">
+                <span className="text-xl font-bold bg-gradient-to-r from-[#0EA5E9] to-[#0F172A] bg-clip-text text-transparent">
                   Swotify
                 </span>
-                <span className="text-xs text-[#827979]">Teacher Portal</span>
+                <span className="text-xs text-[#64748B]">Teacher Portal</span>
               </div>
             </div>
           ) : (
             <div className="relative">
-              <img src="/logo.jpg" alt="Swotify" className="h-10 w-10 object-contain rounded-lg" />
-              <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-gradient-to-r from-[#ff7300] to-[#9000ff] rounded-full border-2 border-white"></div>
+              <img src="/logo.jpg" alt="Swotify" className="h-10 w-10 object-contain rounded-xl" />
+              <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-gradient-to-r from-[#0EA5E9] to-[#22C55E] rounded-full border-2 border-white"></div>
             </div>
           )}
         </div>
@@ -99,8 +99,8 @@ const TeacherSidebar = ({ isSidebarOpen, toggleSidebar }) => {
               className={({ isActive }) =>
                 `group flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
                   isActive 
-                    ? 'bg-gradient-to-r from-[#ff7300] to-[#9000ff] text-white shadow-md' 
-                    : 'text-gray-700 hover:bg-gradient-to-r hover:from-gray-50 hover:to-gray-100 hover:text-[#ff7300]'
+                    ? 'bg-gradient-to-r from-[#0EA5E9] to-[#22C55E] text-white shadow-md' 
+                    : 'text-[#64748B] hover:bg-gray-50 hover:text-[#0F172A]'
                 }`
               }
               onClick={() => {
@@ -111,7 +111,7 @@ const TeacherSidebar = ({ isSidebarOpen, toggleSidebar }) => {
             >
               {({ isActive }) => (
                 <>
-                  <div className={`flex-shrink-0 ${isActive ? 'text-white' : 'text-[#827979] group-hover:text-[#ff7300]'}`}>
+                  <div className={`flex-shrink-0 ${isActive ? 'text-white' : 'text-[#64748B] group-hover:text-[#0EA5E9]'}`}>
                     <svg 
                       className="w-6 h-6 transition-transform duration-200 group-hover:scale-110" 
                       fill="none" 
@@ -127,9 +127,9 @@ const TeacherSidebar = ({ isSidebarOpen, toggleSidebar }) => {
                     </span>
                   )}
                   {!isSidebarOpen && (
-                    <div className="absolute left-full ml-6 px-3 py-2 bg-gray-900 text-white text-sm rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50 shadow-lg">
+                    <div className="absolute left-full ml-6 px-3 py-2 bg-[#0F172A] text-white text-sm rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50 shadow-lg">
                       {item.label}
-                      <div className="absolute top-1/2 -left-1 -translate-y-1/2 border-4 border-transparent border-r-gray-900"></div>
+                      <div className="absolute top-1/2 -left-1 -translate-y-1/2 border-4 border-transparent border-r-[#0F172A]"></div>
                     </div>
                   )}
                 </>
@@ -139,15 +139,15 @@ const TeacherSidebar = ({ isSidebarOpen, toggleSidebar }) => {
         </nav>
 
         {/* Footer Section */}
-        <div className="p-4 border-t border-gray-200 space-y-2">
+        <div className="p-4 border-t border-gray-100 space-y-2">
           {/* Settings */}
           <NavLink
             to="/teacher-dashboard/settings"
             className={({ isActive }) =>
               `group flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
                 isActive 
-                  ? 'bg-gradient-to-r from-[#827979] to-[#9000ff] text-white shadow-md' 
-                  : 'text-gray-700 hover:bg-gradient-to-r hover:from-gray-50 hover:to-gray-100 hover:text-[#827979]'
+                  ? 'bg-gradient-to-r from-[#0F172A] to-[#64748B] text-white shadow-md' 
+                  : 'text-[#64748B] hover:bg-gray-50 hover:text-[#0F172A]'
               }`
             }
             onClick={() => {
@@ -158,7 +158,7 @@ const TeacherSidebar = ({ isSidebarOpen, toggleSidebar }) => {
           >
             {({ isActive }) => (
               <>
-                <div className={`flex-shrink-0 ${isActive ? 'text-white' : 'text-[#827979] group-hover:text-[#827979]'}`}>
+                <div className={`flex-shrink-0 ${isActive ? 'text-white' : 'text-[#64748B] group-hover:text-[#0F172A]'}`}>
                   <svg 
                     className="w-6 h-6 transition-transform duration-200 group-hover:rotate-90" 
                     fill="none" 
@@ -175,9 +175,9 @@ const TeacherSidebar = ({ isSidebarOpen, toggleSidebar }) => {
                   </span>
                 )}
                 {!isSidebarOpen && (
-                  <div className="absolute left-full ml-6 px-3 py-2 bg-gray-900 text-white text-sm rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50 shadow-lg">
+                  <div className="absolute left-full ml-6 px-3 py-2 bg-[#0F172A] text-white text-sm rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50 shadow-lg">
                     Settings
-                    <div className="absolute top-1/2 -left-1 -translate-y-1/2 border-4 border-transparent border-r-gray-900"></div>
+                    <div className="absolute top-1/2 -left-1 -translate-y-1/2 border-4 border-transparent border-r-[#0F172A]"></div>
                   </div>
                 )}
               </>
@@ -187,9 +187,9 @@ const TeacherSidebar = ({ isSidebarOpen, toggleSidebar }) => {
           {/* Logout */}
           <button
             onClick={handleLogout}
-            className="group w-full flex items-center gap-3 px-4 py-3 rounded-xl text-gray-700 hover:bg-gradient-to-r hover:from-red-50 hover:to-red-100 hover:text-red-600 transition-all duration-200"
+            className="group w-full flex items-center gap-3 px-4 py-3 rounded-xl text-[#64748B] hover:bg-red-50 hover:text-[#E11D48] transition-all duration-200"
           >
-            <div className="flex-shrink-0 text-[#827979] group-hover:text-red-600">
+            <div className="flex-shrink-0 text-[#64748B] group-hover:text-[#E11D48]">
               <svg 
                 className="w-6 h-6 transition-transform duration-200 group-hover:scale-110" 
                 fill="none" 
@@ -205,16 +205,16 @@ const TeacherSidebar = ({ isSidebarOpen, toggleSidebar }) => {
               </span>
             )}
             {!isSidebarOpen && (
-              <div className="absolute left-full ml-6 px-3 py-2 bg-gray-900 text-white text-sm rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50 shadow-lg">
+              <div className="absolute left-full ml-6 px-3 py-2 bg-[#0F172A] text-white text-sm rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50 shadow-lg">
                 Logout
-                <div className="absolute top-1/2 -left-1 -translate-y-1/2 border-4 border-transparent border-r-gray-900"></div>
+                <div className="absolute top-1/2 -left-1 -translate-y-1/2 border-4 border-transparent border-r-[#0F172A]"></div>
               </div>
             )}
           </button>
         </div>
       </aside>
 
-      <style jsx>{`
+      <style>{`
         .custom-scrollbar::-webkit-scrollbar {
           width: 4px;
         }
@@ -222,11 +222,11 @@ const TeacherSidebar = ({ isSidebarOpen, toggleSidebar }) => {
           background: transparent;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: linear-gradient(180deg, #ff7300 0%, #9000ff 100%);
+          background: linear-gradient(180deg, #0EA5E9 0%, #22C55E 100%);
           border-radius: 10px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: linear-gradient(180deg, #9000ff 0%, #ff7300 100%);
+          background: linear-gradient(180deg, #22C55E 0%, #0EA5E9 100%);
         }
       `}</style>
     </>

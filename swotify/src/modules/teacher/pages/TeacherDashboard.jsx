@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { NavLink, Routes, Route, useNavigate } from 'react-router-dom';
 import TeacherSidebar from '../components/TeacherSidebar';
 
-import AllStudentsPage from './AllStudentsPage';
+import StudentsPage from './StudentsPage';
 import ClassPage from './ClassPage';
 import TeacherEventsPage from './TeacherEventsPage';
 import TeacherStudentProfilePage from './TeacherStudentProfilePage';
@@ -124,7 +124,7 @@ const TeacherDashboard = () => {
         <main className="flex-1 p-6 bg-gray-50">
           <Routes>
             <Route path="/" element={<TeacherDashboardOverview />} />
-            <Route path="/students" element={<AllStudentsPage />} />
+            <Route path="/students" element={<StudentsPage />} />
             <Route path="/class" element={<ClassPage />} />
             <Route path="/events" element={<TeacherEventsPage />} />
             <Route path="/student-profile/:studentId" element={<TeacherStudentProfilePage />} />

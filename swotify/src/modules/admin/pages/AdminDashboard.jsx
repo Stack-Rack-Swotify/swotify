@@ -27,6 +27,14 @@ const AdminDashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(5); // Add this line
+  const [notifications, setNotifications] = useState([ // Add this line
+    { id: 1, title: 'New student registration', message: 'John Doe has been registered.', time: '5 minutes ago', unread: true },
+    { id: 2, title: 'Staff member updated profile', message: 'Jane Smith updated her profile.', time: '15 minutes ago', unread: true },
+    { id: 3, title: 'New class created', message: 'A new class "Grade 10 Maths" has been created.', time: '1 hour ago', unread: false },
+    { id: 4, title: 'Performance report generated', message: 'The weekly performance report is ready.', time: '2 hours ago', unread: true },
+    { id: 5, title: 'System update', message: 'The system will be updated tonight at 10 PM.', time: '1 day ago', unread: false },
+  ]);
 
   const userAvatar =
     'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=2960&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
