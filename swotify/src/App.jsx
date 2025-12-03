@@ -6,6 +6,7 @@ import StudentDashboard from './modules/student/pages/StudentDashboard.jsx'; // 
 import TeacherDashboard from './modules/teacher/pages/TeacherDashboard.jsx'; // Import the TeacherDashboard component
 import StudentProfile from './modules/student/pages/StudentProfile.jsx'; // Import the StudentProfile component
 import AdminDashboard from './modules/admin/pages/AdminDashboard.jsx'; // Import the AdminDashboard component
+import SuperAdminDashboard from './modules/superAdmin/pages/SuperAdminDashboard.jsx'; // Import the SuperAdminDashboard component
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/student-dashboard/*" element={<StudentDashboard />} /> {/* Use * for nested routes */}
         <Route path="/teacher-dashboard/*" element={<TeacherDashboard />} />
         <Route path="/admin-dashboard/*" element={<AdminDashboard />} /> {/* Route for Admin Dashboard */}
+        <Route path="/super-admin-dashboard/*" element={<SuperAdminDashboard />} /> {/* Route for Super Admin Dashboard */}
         <Route path="/student/profile" element={<StudentProfile />} />
         {/* You can add a default route or redirect here if needed */}
         <Route path="/" element={<Signup />} /> {/* Default to signup */}

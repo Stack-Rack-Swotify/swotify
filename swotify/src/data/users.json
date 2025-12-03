@@ -22,5 +22,11 @@
     "email": "dev@example.com",
     "password": "password",
     "role": "Developer"
+  },
+  {
+    "id": "5",
+    "email": "superadmin@example.com",
+    "password": "password",
+    "role": "Super Admin"
   }
 ]

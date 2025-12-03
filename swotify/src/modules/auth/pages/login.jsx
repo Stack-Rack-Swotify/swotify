@@ -38,6 +38,8 @@ const Login = () => {
           navigate('/teacher-dashboard');
         } else if (user.role === 'Admin') {
           navigate('/admin-dashboard');
+        } else if (user.role === 'Super Admin') {
+          navigate('/super-admin-dashboard');
         } else {
           navigate('/student-dashboard');
         }
@@ -228,6 +230,13 @@ const Login = () => {
                     onClick={() => handleRoleSelect('Developer')}
                   >
                     Developer
+                  </button>
+                   <button
+                    type="button"
+                    className={`col-span-2 py-3 px-4 bg-gray-50 text-[#64748B] font-semibold rounded-xl transition-all text-sm border ${selectedRole === 'Super Admin' ? 'ring-2 ring-[#8B5CF6] bg-[#8B5CF6]/10 border-[#8B5CF6] text-[#8B5CF6]' : 'border-gray-100 hover:bg-gray-100 hover:text-[#0F172A]'}`}
+                    onClick={() => handleRoleSelect('Super Admin')}
+                  >
+                    Super Admin
                   </button>
                 </div>
               </div>
