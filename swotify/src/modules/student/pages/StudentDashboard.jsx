@@ -93,11 +93,11 @@ const StudentDashboard = () => {
   const unreadCount = notifications.filter(n => n.unread).length;
 
   return (
-    <div className="flex min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 relative overflow-hidden">
+    <div className="flex min-h-screen bg-gradient-to-br from-white via-gray-50 to-white relative overflow-hidden">
       {/* Mobile Overlay */}
       {isSidebarOpen && (
         <div 
-          className="fixed inset-0 bg-black/20 z-20 lg:hidden"
+          className="fixed inset-0 bg-[#0F172A]/20 z-20 lg:hidden backdrop-blur-sm"
           onClick={() => setIsSidebarOpen(false)}
         />
       )}
@@ -106,24 +106,27 @@ const StudentDashboard = () => {
       <aside
         className={`fixed inset-y-0 left-0 z-30 ${
           isSidebarOpen ? 'w-72' : 'w-20'
-        } bg-white border-r border-gray-200 flex flex-col transition-all duration-300 ease-in-out shadow-lg`}
+        } bg-white border-r border-gray-100 flex flex-col transition-all duration-300 ease-in-out shadow-sm`}
       >
         {/* Logo Section */}
-        <div className="h-16 flex items-center justify-center border-b border-gray-200 px-4">
+        <div className="h-16 flex items-center justify-center border-b border-gray-100 px-4">
           {isSidebarOpen ? (
             <div className="flex items-center gap-3">
-              <img src="/logo.jpg" alt="Swotify" className="h-10 w-10 object-contain rounded-lg" />
+              <div className="relative">
+                <img src="/logo.jpg" alt="Swotify" className="h-10 w-10 object-contain rounded-xl ring-2 ring-[#0EA5E9]/20" />
+                <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-gradient-to-r from-[#0EA5E9] to-[#22C55E] rounded-full border-2 border-white"></div>
+              </div>
               <div className="flex flex-col">
-                <span className="text-xl font-bold bg-gradient-to-r from-[#ff7300] to-[#9000ff] bg-clip-text text-transparent">
+                <span className="text-xl font-bold bg-gradient-to-r from-[#0EA5E9] to-[#22C55E] bg-clip-text text-transparent">
                   Swotify
                 </span>
-                <span className="text-xs text-[#827979]">Student Portal</span>
+                <span className="text-xs text-[#64748B] font-medium">Student Portal</span>
               </div>
             </div>
           ) : (
             <div className="relative">
-              <img src="/logo.jpg" alt="Swotify" className="h-10 w-10 object-contain rounded-lg" />
-              <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-gradient-to-r from-[#ff7300] to-[#9000ff] rounded-full border-2 border-white"></div>
+              <img src="/logo.jpg" alt="Swotify" className="h-10 w-10 object-contain rounded-xl ring-2 ring-[#0EA5E9]/20" />
+              <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-gradient-to-r from-[#0EA5E9] to-[#22C55E] rounded-full border-2 border-white"></div>
             </div>
           )}
         </div>
@@ -135,10 +138,10 @@ const StudentDashboard = () => {
               key={item.to}
               to={item.to}
               className={({ isActive }) =>
-                `group flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
+                `group relative flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
                   isActive 
-                    ? 'bg-gradient-to-r from-[#ff7300] to-[#9000ff] text-white shadow-md' 
-                    : 'text-gray-700 hover:bg-gradient-to-r hover:from-gray-50 hover:to-gray-100 hover:text-[#ff7300]'
+                    ? 'bg-gradient-to-r from-[#0EA5E9] to-[#22C55E] text-white shadow-md' 
+                    : 'text-[#64748B] hover:bg-gray-50 hover:text-[#0F172A]'
                 }`
               }
               onClick={() => {
@@ -149,7 +152,7 @@ const StudentDashboard = () => {
             >
               {({ isActive }) => (
                 <>
-                  <div className={`flex-shrink-0 ${isActive ? 'text-white' : 'text-[#827979] group-hover:text-[#ff7300]'}`}>
+                  <div className={`flex-shrink-0 ${isActive ? 'text-white' : 'text-[#64748B] group-hover:text-[#0EA5E9]'}`}>
                     <svg 
                       className="w-6 h-6 transition-transform duration-200 group-hover:scale-110" 
                       fill="none" 
@@ -160,14 +163,14 @@ const StudentDashboard = () => {
                     </svg>
                   </div>
                   {isSidebarOpen && (
-                    <span className="font-medium text-sm whitespace-nowrap">
+                    <span className="font-semibold text-sm whitespace-nowrap">
                       {item.label}
                     </span>
                   )}
                   {!isSidebarOpen && (
-                    <div className="absolute left-full ml-6 px-3 py-2 bg-gray-900 text-white text-sm rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50 shadow-lg">
+                    <div className="absolute left-full ml-6 px-3 py-2 bg-[#0F172A] text-white text-sm rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50 shadow-lg">
                       {item.label}
-                      <div className="absolute top-1/2 -left-1 -translate-y-1/2 border-4 border-transparent border-r-gray-900"></div>
+                      <div className="absolute top-1/2 -left-1 -translate-y-1/2 border-4 border-transparent border-r-[#0F172A]"></div>
                     </div>
                   )}
                 </>
@@ -177,15 +180,15 @@ const StudentDashboard = () => {
         </nav>
 
         {/* Footer Section */}
-        <div className="p-4 border-t border-gray-200 space-y-2">
+        <div className="p-4 border-t border-gray-100 space-y-2">
           {/* Settings */}
           <NavLink
             to="settings"
             className={({ isActive }) =>
-              `group flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
+              `group relative flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
                 isActive 
-                  ? 'bg-gradient-to-r from-[#827979] to-[#9000ff] text-white shadow-md' 
-                  : 'text-gray-700 hover:bg-gradient-to-r hover:from-gray-50 hover:to-gray-100 hover:text-[#827979]'
+                  ? 'bg-gradient-to-r from-[#64748B] to-[#94A3B8] text-white shadow-md' 
+                  : 'text-[#64748B] hover:bg-gray-50 hover:text-[#0F172A]'
               }`
             }
             onClick={() => {
@@ -196,7 +199,7 @@ const StudentDashboard = () => {
           >
             {({ isActive }) => (
               <>
-                <div className={`flex-shrink-0 ${isActive ? 'text-white' : 'text-[#827979] group-hover:text-[#827979]'}`}>
+                <div className={`flex-shrink-0 ${isActive ? 'text-white' : 'text-[#64748B] group-hover:text-[#0F172A]'}`}>
                   <svg 
                     className="w-6 h-6 transition-transform duration-200 group-hover:rotate-90" 
                     fill="none" 
@@ -208,14 +211,14 @@ const StudentDashboard = () => {
                   </svg>
                 </div>
                 {isSidebarOpen && (
-                  <span className="font-medium text-sm whitespace-nowrap">
+                  <span className="font-semibold text-sm whitespace-nowrap">
                     Settings
                   </span>
                 )}
                 {!isSidebarOpen && (
-                  <div className="absolute left-full ml-6 px-3 py-2 bg-gray-900 text-white text-sm rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50 shadow-lg">
+                  <div className="absolute left-full ml-6 px-3 py-2 bg-[#0F172A] text-white text-sm rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50 shadow-lg">
                     Settings
-                    <div className="absolute top-1/2 -left-1 -translate-y-1/2 border-4 border-transparent border-r-gray-900"></div>
+                    <div className="absolute top-1/2 -left-1 -translate-y-1/2 border-4 border-transparent border-r-[#0F172A]"></div>
                   </div>
                 )}
               </>
@@ -225,9 +228,9 @@ const StudentDashboard = () => {
           {/* Logout */}
           <button
             onClick={handleLogout}
-            className="group w-full flex items-center gap-3 px-4 py-3 rounded-xl text-gray-700 hover:bg-gradient-to-r hover:from-red-50 hover:to-red-100 hover:text-red-600 transition-all duration-200"
+            className="group relative w-full flex items-center gap-3 px-4 py-3 rounded-xl text-[#64748B] hover:bg-[#E11D48]/10 hover:text-[#E11D48] transition-all duration-200"
           >
-            <div className="flex-shrink-0 text-[#827979] group-hover:text-red-600">
+            <div className="flex-shrink-0 text-[#64748B] group-hover:text-[#E11D48]">
               <svg 
                 className="w-6 h-6 transition-transform duration-200 group-hover:scale-110" 
                 fill="none" 
@@ -238,14 +241,14 @@ const StudentDashboard = () => {
               </svg>
             </div>
             {isSidebarOpen && (
-              <span className="font-medium text-sm whitespace-nowrap">
+              <span className="font-semibold text-sm whitespace-nowrap">
                 Logout
               </span>
             )}
             {!isSidebarOpen && (
-              <div className="absolute left-full ml-6 px-3 py-2 bg-gray-900 text-white text-sm rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50 shadow-lg">
+              <div className="absolute left-full ml-6 px-3 py-2 bg-[#0F172A] text-white text-sm rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50 shadow-lg">
                 Logout
-                <div className="absolute top-1/2 -left-1 -translate-y-1/2 border-4 border-transparent border-r-gray-900"></div>
+                <div className="absolute top-1/2 -left-1 -translate-y-1/2 border-4 border-transparent border-r-[#0F172A]"></div>
               </div>
             )}
           </button>
@@ -255,12 +258,12 @@ const StudentDashboard = () => {
       {/* Main area */}
       <div className={`flex-1 flex flex-col transition-all duration-300 ${isSidebarOpen ? 'lg:ml-72' : 'lg:ml-20'}`}>
         {/* Header */}
-        <header className="sticky top-0 z-10 w-full p-4 bg-white/80 backdrop-blur-lg flex justify-between items-center border-b border-gray-200 shadow-sm">
+        <header className="sticky top-0 z-10 w-full p-4 bg-white/80 backdrop-blur-lg flex justify-between items-center border-b border-gray-100 shadow-sm">
           <button
             onClick={toggleSidebar}
-            className="p-2 rounded-xl hover:bg-gradient-to-r hover:from-[#ff7300]/10 hover:to-[#9000ff]/10 focus:outline-none focus:ring-2 focus:ring-[#ff7300]/50 transition-all duration-200 group"
+            className="p-2 rounded-xl hover:bg-[#0EA5E9]/10 focus:outline-none focus:ring-2 focus:ring-[#0EA5E9]/50 transition-all duration-200 group"
           >
-            <svg className="w-6 h-6 text-[#827979] group-hover:text-[#ff7300] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-6 h-6 text-[#64748B] group-hover:text-[#0EA5E9] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </button>
@@ -270,20 +273,20 @@ const StudentDashboard = () => {
             <div className="relative">
               <button
                 onClick={toggleNotification}
-                className="relative p-2 rounded-xl hover:bg-gradient-to-r hover:from-[#ff7300]/10 hover:to-[#9000ff]/10 focus:outline-none focus:ring-2 focus:ring-[#ff7300]/50 transition-all duration-200 group"
+                className="relative p-2 rounded-xl hover:bg-[#0EA5E9]/10 focus:outline-none focus:ring-2 focus:ring-[#0EA5E9]/50 transition-all duration-200 group"
               >
-                <svg className="w-6 h-6 text-[#827979] group-hover:text-[#ff7300] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-6 h-6 text-[#64748B] group-hover:text-[#0EA5E9] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                 </svg>
                 {unreadCount > 0 && (
-                  <span className="absolute top-0 right-0 inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-gradient-to-r from-[#ff7300] to-[#9000ff] rounded-full border-2 border-white">
+                  <span className="absolute top-0 right-0 inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-gradient-to-r from-[#E11D48] to-[#F97316] rounded-full border-2 border-white">
                     {unreadCount}
                   </span>
                 )}
               </button>
               {isNotificationOpen && (
-                <div className="absolute right-0 mt-3 w-80 bg-white rounded-2xl shadow-xl border border-gray-200 z-50 overflow-hidden">
-                  <div className="bg-gradient-to-r from-[#ff7300] to-[#9000ff] px-4 py-3">
+                <div className="absolute right-0 mt-3 w-80 bg-white rounded-2xl shadow-xl border border-gray-100 z-50 overflow-hidden">
+                  <div className="bg-gradient-to-r from-[#0EA5E9] to-[#22C55E] px-4 py-3">
                     <h3 className="text-white font-semibold text-sm">Notifications</h3>
                   </div>
                   <div className="max-h-96 overflow-y-auto custom-scrollbar">
@@ -291,22 +294,22 @@ const StudentDashboard = () => {
                       <div 
                         key={notif.id} 
                         className={`px-4 py-3 border-b border-gray-100 last:border-b-0 hover:bg-gray-50 transition-colors cursor-pointer ${
-                          notif.unread ? 'bg-[#ff7300]/5' : ''
+                          notif.unread ? 'bg-[#0EA5E9]/5' : ''
                         }`}
                       >
                         <div className="flex items-start gap-3">
-                          <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${notif.unread ? 'bg-[#ff7300]' : 'bg-gray-300'}`}></div>
+                          <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${notif.unread ? 'bg-[#0EA5E9]' : 'bg-gray-300'}`}></div>
                           <div className="flex-1 min-w-0">
-                            <p className="text-sm font-semibold text-gray-800 mb-1">{notif.title}</p>
-                            <p className="text-xs text-[#827979] mb-1">{notif.message}</p>
-                            <p className="text-xs text-[#827979]">{notif.time}</p>
+                            <p className="text-sm font-semibold text-[#0F172A] mb-1">{notif.title}</p>
+                            <p className="text-xs text-[#64748B] mb-1">{notif.message}</p>
+                            <p className="text-xs text-[#94A3B8]">{notif.time}</p>
                           </div>
                         </div>
                       </div>
                     ))}
                   </div>
-                  <div className="px-4 py-3 bg-gray-50 text-center">
-                    <button className="text-sm font-medium text-[#ff7300] hover:text-[#9000ff] transition-colors">
+                  <div className="px-4 py-3 bg-gray-50 text-center border-t border-gray-100">
+                    <button className="text-sm font-medium text-[#0EA5E9] hover:text-[#0F172A] transition-colors">
                       View All Notifications
                     </button>
                   </div>
@@ -317,7 +320,7 @@ const StudentDashboard = () => {
             {/* Dark Mode Toggle */}
             <button
               onClick={toggleDarkMode}
-              className="p-2 rounded-xl bg-gradient-to-r from-[#ff7300] to-[#9000ff] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#ff7300]/50 transition-all duration-200 group"
+              className="p-2 rounded-xl bg-gradient-to-r from-[#0EA5E9] to-[#22C55E] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#0EA5E9]/50 transition-all duration-200 group"
               aria-label="Toggle dark mode"
             >
               <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
@@ -329,21 +332,21 @@ const StudentDashboard = () => {
             <div className="relative">
               <button 
                 onClick={toggleDropdown} 
-                className="flex items-center gap-2 p-1 rounded-xl hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#ff7300]/50 transition-all duration-200"
+                className="flex items-center gap-2 p-1 rounded-xl hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#0EA5E9]/50 transition-all duration-200"
               >
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#ff7300] to-[#9000ff] p-0.5">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#0EA5E9] to-[#22C55E] p-0.5">
                   <img className="w-full h-full rounded-full object-cover" src={userAvatar} alt="User Avatar" />
                 </div>
-                <svg className={`w-4 h-4 text-[#827979] transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className={`w-4 h-4 text-[#64748B] transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
               {isDropdownOpen && (
-                <div className="absolute right-0 mt-3 w-56 bg-white rounded-2xl shadow-xl border border-gray-200 py-2 z-50 overflow-hidden">
+                <div className="absolute right-0 mt-3 w-56 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-50 overflow-hidden">
                   <NavLink 
                     to="my-profile" 
                     onClick={() => setIsDropdownOpen(false)} 
-                    className="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-gradient-to-r hover:from-[#ff7300]/10 hover:to-[#9000ff]/10 hover:text-[#ff7300] transition-all"
+                    className="flex items-center gap-3 px-4 py-3 text-sm text-[#64748B] hover:bg-[#0EA5E9]/10 hover:text-[#0EA5E9] transition-all font-medium"
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -353,7 +356,7 @@ const StudentDashboard = () => {
                   <NavLink 
                     to="settings" 
                     onClick={() => setIsDropdownOpen(false)} 
-                    className="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-gradient-to-r hover:from-[#ff7300]/10 hover:to-[#9000ff]/10 hover:text-[#ff7300] transition-all"
+                    className="flex items-center gap-3 px-4 py-3 text-sm text-[#64748B] hover:bg-[#0EA5E9]/10 hover:text-[#0EA5E9] transition-all font-medium"
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
@@ -361,10 +364,10 @@ const StudentDashboard = () => {
                     </svg>
                     Manage Settings
                   </NavLink>
-                  <hr className="my-2 border-gray-200" />
+                  <hr className="my-2 border-gray-100" />
                   <button
                     onClick={handleLogout}
-                    className="w-full flex items-center gap-3 px-4 py-3 text-sm text-red-600 hover:bg-red-50 transition-all"
+                    className="w-full flex items-center gap-3 px-4 py-3 text-sm text-[#E11D48] hover:bg-[#E11D48]/10 transition-all font-medium"
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -400,11 +403,11 @@ const StudentDashboard = () => {
           background: transparent;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: linear-gradient(180deg, #ff7300 0%, #9000ff 100%);
+          background: linear-gradient(180deg, #0EA5E9 0%, #22C55E 100%);
           border-radius: 10px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: linear-gradient(180deg, #9000ff 0%, #ff7300 100%);
+          background: linear-gradient(180deg, #22C55E 0%, #0EA5E9 100%);
         }
       `}</style>
     </div>

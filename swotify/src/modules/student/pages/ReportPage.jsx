@@ -43,20 +43,92 @@ const ReportPage = () => {
   };
 
   return (
-    <div>
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-extrabold text-primary">Student Report</h1>
-                  <button
-                    onClick={handleDownloadReport}
-                    className="px-4 py-2 bg-info text-primary rounded-md hover:bg-info/80 focus:outline-none focus:ring-2 focus:ring-info focus:ring-offset-2"
-                  >          Download Report
-        </button>
-      </div>
+    <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-white p-6">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+          <div>
+            <h1 className="text-3xl font-bold text-[#0F172A] mb-2">Student Report</h1>
+            <p className="text-[#64748B] text-sm">Comprehensive academic performance summary</p>
+          </div>
+          <button
+            onClick={handleDownloadReport}
+            className="px-6 py-3 bg-gradient-to-r from-[#0EA5E9] to-[#22C55E] text-white rounded-xl hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5 font-medium flex items-center gap-2"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            Download Report
+          </button>
+        </div>
 
-      <div ref={reportRef} className="space-y-8 p-8 bg-white rounded-2xl shadow-2xl text-gray-900 border border-gray-200 mt-6">
-        <StudentAttendance />
-        <StudentMarks />
-        <PerformanceAnalysis />
+        {/* Report Content */}
+        <div ref={reportRef} className="space-y-6 p-8 bg-white rounded-2xl shadow-sm border border-gray-100">
+          {/* Report Header (will appear in PDF) */}
+          <div className="mb-8 pb-6 border-b border-gray-100">
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h2 className="text-2xl font-bold text-[#0F172A] mb-1">Academic Performance Report</h2>
+                <p className="text-sm text-[#64748B]">Generated on {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+              </div>
+              <div className="w-16 h-16 bg-gradient-to-br from-[#0EA5E9]/10 to-[#0F172A]/10 rounded-xl flex items-center justify-center">
+                <svg className="w-10 h-10 text-[#0EA5E9]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          {/* Report Sections */}
+          <StudentAttendance />
+          <StudentMarks />
+          <PerformanceAnalysis />
+
+          {/* Report Footer (will appear in PDF) */}
+          <div className="mt-8 pt-6 border-t border-gray-100">
+            <div className="flex items-center justify-between text-xs text-[#64748B]">
+              <p>© 2025 Student Management System. All rights reserved.</p>
+              <p>Report ID: #{Math.random().toString(36).substr(2, 9).toUpperCase()}</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Instructions */}
+        <div className="mt-6 p-6 bg-white rounded-2xl shadow-sm border border-gray-100">
+          <div className="flex items-start gap-4">
+            <div className="w-10 h-10 bg-[#0EA5E9]/10 rounded-xl flex items-center justify-center flex-shrink-0">
+              <svg className="w-5 h-5 text-[#0EA5E9]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <div className="flex-1">
+              <h4 className="text-base font-semibold text-[#0F172A] mb-2">Report Information</h4>
+              <p className="text-sm text-[#64748B] leading-relaxed mb-3">
+                This comprehensive report includes your attendance records, academic marks, and performance analysis across all subjects. Click the "Download Report" button above to save a PDF copy for your records.
+              </p>
+              <div className="flex flex-wrap gap-2">
+                <span className="inline-flex items-center gap-1 px-3 py-1 bg-[#22C55E]/10 text-[#22C55E] rounded-full text-xs font-semibold border border-[#22C55E]/20">
+                  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                  </svg>
+                  PDF Format
+                </span>
+                <span className="inline-flex items-center gap-1 px-3 py-1 bg-[#0EA5E9]/10 text-[#0EA5E9] rounded-full text-xs font-semibold border border-[#0EA5E9]/20">
+                  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                  </svg>
+                  High Quality
+                </span>
+                <span className="inline-flex items-center gap-1 px-3 py-1 bg-[#F97316]/10 text-[#F97316] rounded-full text-xs font-semibold border border-[#F97316]/20">
+                  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  Real-time Data
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

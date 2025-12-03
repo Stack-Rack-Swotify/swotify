@@ -59,23 +59,23 @@ const EventsPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-white p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h3 className="text-3xl font-bold text-gray-800 mb-2">Events & Meetings</h3>
-          <p className="text-[#827979] text-sm">Stay updated with upcoming school activities</p>
+          <h3 className="text-3xl font-bold text-[#0F172A] mb-2">Events & Meetings</h3>
+          <p className="text-[#64748B] text-sm">Stay updated with upcoming school activities</p>
         </div>
 
         {/* School Events Section */}
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-5">
-            <div className="w-10 h-10 bg-gradient-to-br from-[#ff7300]/20 to-[#9000ff]/20 rounded-lg flex items-center justify-center">
-              <svg className="w-6 h-6 text-[#ff7300]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="w-10 h-10 bg-gradient-to-br from-[#0EA5E9]/20 to-[#22C55E]/20 rounded-xl flex items-center justify-center">
+              <svg className="w-6 h-6 text-[#0EA5E9]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
               </svg>
             </div>
-            <h4 className="text-2xl font-bold text-gray-800">School Events</h4>
+            <h4 className="text-2xl font-bold text-[#0F172A]">School Events</h4>
           </div>
           
           {schoolEvents.length > 0 ? (
@@ -94,8 +94,8 @@ const EventsPage = () => {
                         alt={event.title} 
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
-                      <div className="absolute top-4 right-4 bg-[#ff7300] text-white px-3 py-1 rounded-full text-xs font-semibold">
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0F172A]/60 via-[#0F172A]/20 to-transparent"></div>
+                      <div className="absolute top-4 right-4 bg-[#0EA5E9] text-white px-3 py-1 rounded-full text-xs font-semibold">
                         Event
                       </div>
                     </div>
@@ -103,25 +103,25 @@ const EventsPage = () => {
                   
                   {/* Event Content */}
                   <div className="p-5">
-                    <h5 className="text-lg font-bold text-gray-800 mb-3 group-hover:text-[#ff7300] transition-colors">
+                    <h5 className="text-lg font-bold text-[#0F172A] mb-3 group-hover:text-[#0EA5E9] transition-colors">
                       {event.title}
                     </h5>
                     
                     <div className="space-y-2 mb-3">
-                      <div className="flex items-center gap-2 text-sm text-[#827979]">
-                        <svg className="w-4 h-4 text-[#ff7300]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="flex items-center gap-2 text-sm text-[#64748B]">
+                        <svg className="w-4 h-4 text-[#0EA5E9]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
                         <span>{event.date}</span>
                       </div>
-                      <div className="flex items-center gap-2 text-sm text-[#827979]">
-                        <svg className="w-4 h-4 text-[#9000ff]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="flex items-center gap-2 text-sm text-[#64748B]">
+                        <svg className="w-4 h-4 text-[#22C55E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                         <span>{event.time}</span>
                       </div>
-                      <div className="flex items-center gap-2 text-sm text-[#827979]">
-                        <svg className="w-4 h-4 text-[#827979]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="flex items-center gap-2 text-sm text-[#64748B]">
+                        <svg className="w-4 h-4 text-[#F97316]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                         </svg>
@@ -129,9 +129,9 @@ const EventsPage = () => {
                       </div>
                     </div>
                     
-                    <p className="text-sm text-gray-600 line-clamp-2 mb-4">{event.description}</p>
+                    <p className="text-sm text-[#64748B] line-clamp-2 mb-4">{event.description}</p>
                     
-                    <div className="flex items-center gap-2 text-[#ff7300] font-semibold text-sm group-hover:gap-3 transition-all">
+                    <div className="flex items-center gap-2 text-[#0EA5E9] font-semibold text-sm group-hover:gap-3 transition-all">
                       <span>View Details</span>
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
@@ -144,12 +144,12 @@ const EventsPage = () => {
           ) : (
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-12">
               <div className="flex flex-col items-center justify-center">
-                <div className="w-16 h-16 bg-gradient-to-br from-[#ff7300]/10 to-[#9000ff]/10 rounded-full flex items-center justify-center mb-4">
-                  <svg className="w-8 h-8 text-[#827979]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-16 h-16 bg-gradient-to-br from-[#0EA5E9]/10 to-[#22C55E]/10 rounded-full flex items-center justify-center mb-4">
+                  <svg className="w-8 h-8 text-[#64748B]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
                 </div>
-                <p className="text-[#827979] font-medium">No school events scheduled at the moment.</p>
+                <p className="text-[#64748B] font-medium">No school events scheduled at the moment.</p>
               </div>
             </div>
           )}
@@ -158,12 +158,12 @@ const EventsPage = () => {
         {/* PTM Meetings Section */}
         <div>
           <div className="flex items-center gap-3 mb-5">
-            <div className="w-10 h-10 bg-gradient-to-br from-[#9000ff]/20 to-[#ff7300]/20 rounded-lg flex items-center justify-center">
-              <svg className="w-6 h-6 text-[#9000ff]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="w-10 h-10 bg-gradient-to-br from-[#0F172A]/20 to-[#0EA5E9]/20 rounded-xl flex items-center justify-center">
+              <svg className="w-6 h-6 text-[#0F172A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
               </svg>
             </div>
-            <h4 className="text-2xl font-bold text-gray-800">PTM Meetings</h4>
+            <h4 className="text-2xl font-bold text-[#0F172A]">PTM Meetings</h4>
           </div>
           
           {ptmMeetings.length > 0 ? (
@@ -182,8 +182,8 @@ const EventsPage = () => {
                         alt={meeting.title} 
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
-                      <div className="absolute top-4 right-4 bg-[#9000ff] text-white px-3 py-1 rounded-full text-xs font-semibold">
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0F172A]/60 via-[#0F172A]/20 to-transparent"></div>
+                      <div className="absolute top-4 right-4 bg-[#22C55E] text-white px-3 py-1 rounded-full text-xs font-semibold">
                         PTM
                       </div>
                     </div>
@@ -191,25 +191,25 @@ const EventsPage = () => {
                   
                   {/* Meeting Content */}
                   <div className="p-5">
-                    <h5 className="text-lg font-bold text-gray-800 mb-3 group-hover:text-[#9000ff] transition-colors">
+                    <h5 className="text-lg font-bold text-[#0F172A] mb-3 group-hover:text-[#22C55E] transition-colors">
                       {meeting.title}
                     </h5>
                     
                     <div className="space-y-2 mb-3">
-                      <div className="flex items-center gap-2 text-sm text-[#827979]">
-                        <svg className="w-4 h-4 text-[#ff7300]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="flex items-center gap-2 text-sm text-[#64748B]">
+                        <svg className="w-4 h-4 text-[#0EA5E9]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
                         <span>{meeting.date}</span>
                       </div>
-                      <div className="flex items-center gap-2 text-sm text-[#827979]">
-                        <svg className="w-4 h-4 text-[#9000ff]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="flex items-center gap-2 text-sm text-[#64748B]">
+                        <svg className="w-4 h-4 text-[#22C55E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                         <span>{meeting.time}</span>
                       </div>
-                      <div className="flex items-center gap-2 text-sm text-[#827979]">
-                        <svg className="w-4 h-4 text-[#827979]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="flex items-center gap-2 text-sm text-[#64748B]">
+                        <svg className="w-4 h-4 text-[#F97316]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                         </svg>
@@ -217,9 +217,9 @@ const EventsPage = () => {
                       </div>
                     </div>
                     
-                    <p className="text-sm text-gray-600 line-clamp-2 mb-4">{meeting.description}</p>
+                    <p className="text-sm text-[#64748B] line-clamp-2 mb-4">{meeting.description}</p>
                     
-                    <div className="flex items-center gap-2 text-[#9000ff] font-semibold text-sm group-hover:gap-3 transition-all">
+                    <div className="flex items-center gap-2 text-[#22C55E] font-semibold text-sm group-hover:gap-3 transition-all">
                       <span>View Details</span>
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
@@ -232,12 +232,12 @@ const EventsPage = () => {
           ) : (
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-12">
               <div className="flex flex-col items-center justify-center">
-                <div className="w-16 h-16 bg-gradient-to-br from-[#9000ff]/10 to-[#ff7300]/10 rounded-full flex items-center justify-center mb-4">
-                  <svg className="w-8 h-8 text-[#827979]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-16 h-16 bg-gradient-to-br from-[#0F172A]/10 to-[#0EA5E9]/10 rounded-full flex items-center justify-center mb-4">
+                  <svg className="w-8 h-8 text-[#64748B]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                   </svg>
                 </div>
-                <p className="text-[#827979] font-medium">No PTM meetings scheduled at the moment.</p>
+                <p className="text-[#64748B] font-medium">No PTM meetings scheduled at the moment.</p>
               </div>
             </div>
           )}

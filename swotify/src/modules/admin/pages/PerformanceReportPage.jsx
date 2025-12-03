@@ -22,7 +22,7 @@ const PerformanceReportPage = () => {
 
       mockClasses.forEach(classItem => {
         if (!classItem || !classItem.students || classItem.students.length === 0) {
-          return; // Skip if classItem or students are invalid
+          return;
         }
 
         let classTotalScore = 0;
@@ -52,14 +52,14 @@ const PerformanceReportPage = () => {
             grade: classItem.grade,
             section: classItem.section,
             averageScore: studentAverage,
-            attendance: student.details?.attendance || 'N/A', // Use optional chaining
+            attendance: student.details?.attendance || 'N/A',
             photo: student.photo,
-            ...studentSubjects, // Spread individual assignment scores
+            ...studentSubjects,
           });
 
           classTotalScore += studentTotalScore;
           classTotalMaxScore += studentTotalMaxScore;
-          if (studentAverage >= 50) { // Assuming 50% is passing
+          if (studentAverage >= 50) {
             passedStudents++;
           }
         });
@@ -73,7 +73,7 @@ const PerformanceReportPage = () => {
           passRate: passRate,
           totalStudents: classItem.students.length,
           passedStudents: passedStudents,
-          topper: null, // Will be calculated next
+          topper: null,
         };
       });
 
@@ -158,30 +158,30 @@ const PerformanceReportPage = () => {
   };
 
   const getScoreColor = (score) => {
-    if (score >= 90) return 'text-[#ff7300]';
-    if (score >= 75) return 'text-[#9000ff]';
-    if (score >= 50) return 'text-[#827979]';
-    return 'text-red-600';
+    if (score >= 90) return 'text-[#22C55E]';
+    if (score >= 75) return 'text-[#0EA5E9]';
+    if (score >= 50) return 'text-[#F97316]';
+    return 'text-[#E11D48]';
   };
 
   const getScoreBadge = (score) => {
-    if (score >= 90) return { bg: 'bg-[#ff7300]/10', border: 'border-[#ff7300]/20', text: 'text-[#ff7300]', label: 'Excellent' };
-    if (score >= 75) return { bg: 'bg-[#9000ff]/10', border: 'border-[#9000ff]/20', text: 'text-[#9000ff]', label: 'Good' };
-    if (score >= 50) return { bg: 'bg-[#827979]/10', border: 'border-[#827979]/20', text: 'text-[#827979]', label: 'Average' };
-    return { bg: 'bg-red-50', border: 'border-red-200', text: 'text-red-600', label: 'Needs Improvement' };
+    if (score >= 90) return { bg: 'bg-[#22C55E]/10', border: 'border-[#22C55E]/20', text: 'text-[#22C55E]', label: 'Excellent' };
+    if (score >= 75) return { bg: 'bg-[#0EA5E9]/10', border: 'border-[#0EA5E9]/20', text: 'text-[#0EA5E9]', label: 'Good' };
+    if (score >= 50) return { bg: 'bg-[#F97316]/10', border: 'border-[#F97316]/20', text: 'text-[#F97316]', label: 'Average' };
+    return { bg: 'bg-[#E11D48]/10', border: 'border-[#E11D48]/20', text: 'text-[#E11D48]', label: 'Needs Improvement' };
   };
 
   if (!reportData) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-6">
+      <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-white flex items-center justify-center p-6">
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-12 text-center">
-          <div className="w-16 h-16 bg-gradient-to-br from-[#ff7300]/10 to-[#9000ff]/10 rounded-full flex items-center justify-center mx-auto mb-6 animate-pulse">
-            <svg className="w-8 h-8 text-[#ff7300]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="w-20 h-20 bg-gradient-to-br from-[#0EA5E9]/10 to-[#22C55E]/10 rounded-full flex items-center justify-center mx-auto mb-6 animate-pulse border-2 border-[#0EA5E9]/20">
+            <svg className="w-10 h-10 text-[#0EA5E9]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
             </svg>
           </div>
-          <p className="text-xl font-semibold text-gray-800">Loading report data...</p>
-          <p className="text-sm text-[#827979] mt-2">Please wait while we compile the performance metrics</p>
+          <p className="text-xl font-semibold text-[#0F172A]">Loading report data...</p>
+          <p className="text-sm text-[#64748B] mt-2">Please wait while we compile the performance metrics</p>
         </div>
       </div>
     );
@@ -190,27 +190,27 @@ const PerformanceReportPage = () => {
   const { allStudentsPerformance, classPerformance, schoolTopper } = reportData;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-white p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-gray-800 mb-2">Performance Report</h1>
-            <p className="text-[#827979] text-sm">Comprehensive academic performance analysis</p>
+            <h1 className="text-3xl font-bold text-[#0F172A] mb-2">Performance Report</h1>
+            <p className="text-[#64748B] text-sm">Comprehensive academic performance analysis</p>
           </div>
           <div className="flex gap-3">
             <button
               onClick={() => setViewMode(viewMode === 'overview' ? 'detailed' : 'overview')}
-              className="px-5 py-3 bg-white border border-gray-200 text-gray-700 font-semibold rounded-xl shadow-sm hover:shadow-md transition-all duration-300 flex items-center gap-2"
+              className="px-5 py-3 bg-white border border-gray-100 text-[#0F172A] font-semibold rounded-xl shadow-sm hover:shadow-md hover:border-[#0EA5E9]/30 transition-all duration-300 flex items-center gap-2"
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 text-[#0EA5E9]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7h12M8 12h12m-12 5h12M4 7h.01M4 12h.01M4 17h.01" />
               </svg>
               {viewMode === 'overview' ? 'Detailed View' : 'Overview'}
             </button>
             <button
               onClick={downloadCSV}
-              className="px-5 py-3 bg-gradient-to-r from-[#ff7300] to-[#9000ff] text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2 hover:-translate-y-0.5"
+              className="px-5 py-3 bg-gradient-to-r from-[#0EA5E9] to-[#22C55E] text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2 hover:-translate-y-0.5"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -222,7 +222,7 @@ const PerformanceReportPage = () => {
 
         {/* School Topper Card */}
         {schoolTopper && (
-          <div className="bg-gradient-to-br from-[#ff7300] via-[#ff7300]/90 to-[#9000ff] rounded-2xl shadow-xl p-8 mb-8 text-white relative overflow-hidden">
+          <div className="bg-gradient-to-br from-[#0EA5E9] via-[#0EA5E9]/95 to-[#22C55E] rounded-2xl shadow-xl p-8 mb-8 text-white relative overflow-hidden">
             <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -mr-32 -mt-32"></div>
             <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/10 rounded-full -ml-24 -mb-24"></div>
             <div className="relative z-10 flex items-center gap-6">
@@ -253,17 +253,17 @@ const PerformanceReportPage = () => {
 
         {/* Class Performance Overview */}
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-8 hover:shadow-lg transition-all duration-300">
-          <h2 className="text-xl font-semibold text-gray-800 mb-6 flex items-center">
-            <span className="w-1 h-6 bg-gradient-to-b from-[#ff7300] to-[#9000ff] rounded-full mr-3"></span>
+          <h2 className="text-xl font-semibold text-[#0F172A] mb-6 flex items-center">
+            <span className="w-1 h-6 bg-gradient-to-b from-[#0EA5E9] to-[#22C55E] rounded-full mr-3"></span>
             Class Performance Overview
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {Object.values(classPerformance).map(cp => {
               const badge = getScoreBadge(cp.averageScore);
               return (
-                <div key={cp.name} className="group p-6 rounded-xl border-2 border-gray-200 bg-gradient-to-br from-white to-gray-50 hover:border-[#ff7300]/50 hover:shadow-md transition-all duration-300">
+                <div key={cp.name} className="group p-6 rounded-xl border-2 border-gray-100 bg-gradient-to-br from-white to-gray-50 hover:border-[#0EA5E9]/30 hover:shadow-md transition-all duration-300">
                   <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-lg font-bold text-gray-800">{cp.name}</h3>
+                    <h3 className="text-lg font-bold text-[#0F172A]">{cp.name}</h3>
                     <span className={`px-3 py-1 rounded-full text-xs font-semibold ${badge.bg} ${badge.border} ${badge.text} border`}>
                       {badge.label}
                     </span>
@@ -271,28 +271,28 @@ const PerformanceReportPage = () => {
                   
                   <div className="space-y-3">
                     <div>
-                      <p className="text-sm text-[#827979] mb-1">Average Score</p>
+                      <p className="text-sm text-[#64748B] mb-1">Average Score</p>
                       <p className={`text-3xl font-extrabold ${getScoreColor(cp.averageScore)}`}>
                         {cp.averageScore.toFixed(1)}%
                       </p>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-3 pt-3 border-t border-gray-200">
+                    <div className="grid grid-cols-2 gap-3 pt-3 border-t border-gray-100">
                       <div>
-                        <p className="text-xs text-[#827979]">Pass Rate</p>
-                        <p className="text-sm font-bold text-gray-800">{cp.passRate.toFixed(1)}%</p>
+                        <p className="text-xs text-[#64748B]">Pass Rate</p>
+                        <p className="text-sm font-bold text-[#0F172A]">{cp.passRate.toFixed(1)}%</p>
                       </div>
                       <div>
-                        <p className="text-xs text-[#827979]">Students</p>
-                        <p className="text-sm font-bold text-gray-800">{cp.passedStudents}/{cp.totalStudents}</p>
+                        <p className="text-xs text-[#64748B]">Students</p>
+                        <p className="text-sm font-bold text-[#0F172A]">{cp.passedStudents}/{cp.totalStudents}</p>
                       </div>
                     </div>
 
                     {cp.topper && (
-                      <div className="pt-3 border-t border-gray-200">
-                        <p className="text-xs text-[#827979] mb-1">Class Topper</p>
+                      <div className="pt-3 border-t border-gray-100">
+                        <p className="text-xs text-[#64748B] mb-1">Class Topper</p>
                         <div className="flex items-center gap-2">
-                          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#ff7300] to-[#9000ff] p-0.5">
+                          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#0EA5E9] to-[#22C55E] p-0.5">
                             <img
                               src={cp.topper.photo}
                               alt={cp.topper.name}
@@ -300,8 +300,8 @@ const PerformanceReportPage = () => {
                             />
                           </div>
                           <div className="flex-1 min-w-0">
-                            <p className="text-sm font-semibold text-gray-800 truncate">{cp.topper.name}</p>
-                            <p className="text-xs text-[#ff7300] font-bold">{cp.topper.averageScore.toFixed(1)}%</p>
+                            <p className="text-sm font-semibold text-[#0F172A] truncate">{cp.topper.name}</p>
+                            <p className="text-xs text-[#22C55E] font-bold">{cp.topper.averageScore.toFixed(1)}%</p>
                           </div>
                         </div>
                       </div>
@@ -315,20 +315,20 @@ const PerformanceReportPage = () => {
 
         {/* Student Performance Table */}
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-lg transition-all duration-300">
-          <h2 className="text-xl font-semibold text-gray-800 mb-6 flex items-center">
-            <span className="w-1 h-6 bg-gradient-to-b from-[#9000ff] to-[#ff7300] rounded-full mr-3"></span>
+          <h2 className="text-xl font-semibold text-[#0F172A] mb-6 flex items-center">
+            <span className="w-1 h-6 bg-gradient-to-b from-[#22C55E] to-[#0EA5E9] rounded-full mr-3"></span>
             {viewMode === 'overview' ? 'Top Performers' : 'Detailed Student Performance'}
           </h2>
           <div className="overflow-x-auto">
             <table className="min-w-full">
               <thead>
-                <tr className="border-b-2 border-gray-200">
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-[#827979] uppercase tracking-wider">Rank</th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-[#827979] uppercase tracking-wider">Student</th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-[#827979] uppercase tracking-wider">Class</th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-[#827979] uppercase tracking-wider">Avg Score</th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-[#827979] uppercase tracking-wider">Attendance</th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-[#827979] uppercase tracking-wider">Performance</th>
+                <tr className="border-b-2 border-gray-100">
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-[#64748B] uppercase tracking-wider">Rank</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-[#64748B] uppercase tracking-wider">Student</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-[#64748B] uppercase tracking-wider">Class</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-[#64748B] uppercase tracking-wider">Avg Score</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-[#64748B] uppercase tracking-wider">Attendance</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-[#64748B] uppercase tracking-wider">Performance</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
@@ -341,28 +341,28 @@ const PerformanceReportPage = () => {
                       <tr key={student.id} className="hover:bg-gray-50 transition-colors">
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm ${
-                            index === 0 ? 'bg-gradient-to-r from-[#ff7300] to-[#9000ff] text-white' :
-                            index === 1 ? 'bg-[#9000ff]/20 text-[#9000ff]' :
-                            index === 2 ? 'bg-[#ff7300]/20 text-[#ff7300]' :
-                            'bg-gray-100 text-gray-600'
+                            index === 0 ? 'bg-gradient-to-r from-[#0EA5E9] to-[#22C55E] text-white' :
+                            index === 1 ? 'bg-[#0EA5E9]/20 text-[#0EA5E9]' :
+                            index === 2 ? 'bg-[#22C55E]/20 text-[#22C55E]' :
+                            'bg-gray-100 text-[#64748B]'
                           }`}>
                             {index + 1}
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#ff7300] to-[#9000ff] p-0.5">
+                            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#0EA5E9] to-[#22C55E] p-0.5">
                               <img
                                 src={student.photo}
                                 alt={student.name}
                                 className="w-full h-full rounded-full object-cover"
                               />
                             </div>
-                            <span className="text-sm font-semibold text-gray-800">{student.name}</span>
+                            <span className="text-sm font-semibold text-[#0F172A]">{student.name}</span>
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <span className="text-sm text-gray-700">{student.class}</span>
+                          <span className="text-sm text-[#64748B]">{student.class}</span>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span className={`text-lg font-bold ${getScoreColor(student.averageScore)}`}>
@@ -370,7 +370,7 @@ const PerformanceReportPage = () => {
                           </span>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <span className="text-sm text-gray-700">{student.attendance}</span>
+                          <span className="text-sm text-[#64748B]">{student.attendance}</span>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span className={`px-3 py-1 rounded-full text-xs font-semibold ${badge.bg} ${badge.border} ${badge.text} border inline-block`}>
