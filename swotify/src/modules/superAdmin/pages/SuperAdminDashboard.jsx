@@ -15,6 +15,7 @@ import SuperAdminSettingsPage from './SuperAdminSettingsPage';
 import SuperAdminStudentsPage from './SuperAdminStudentsPage';
 import SuperAdminPerformanceReportPage from './SuperAdminPerformanceReportPage';
 import SuperAdminAppSettingsPage from './SuperAdminAppSettingsPage';
+import AIChatbotPage from './AIChatbotPage';
 
 // Initialize theme from localStorage (client-side only)
 const useTheme = () => {
@@ -191,6 +192,7 @@ const SuperAdminDashboard = () => {
             <Route path="students" element={<SuperAdminStudentsPage />} />
             <Route path="reports" element={<SuperAdminPerformanceReportPage />} />
             <Route path="app-settings" element={<SuperAdminAppSettingsPage />} />
+            <Route path="ai-chatbot" element={<AIChatbotPage />} />
           </Routes>
         </main>
       </div>
