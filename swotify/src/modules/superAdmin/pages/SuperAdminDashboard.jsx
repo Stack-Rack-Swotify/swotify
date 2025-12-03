@@ -2,11 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { NavLink, Routes, Route, useNavigate } from 'react-router-dom';
 import SuperAdminSidebar from '../components/SuperAdminSidebar';
 // Reuse admin pages for now
-import StaffPage from '../../admin/pages/StaffPage';
-import AdminSettingsPage from '../../admin/pages/AdminSettingsPage';
-import AdminStudentsPage from '../../admin/pages/AdminStudentsPage';
-import PerformanceReportPage from '../../admin/pages/PerformanceReportPage';
-import AppSettingsPage from '../../admin/pages/AppSettingsPage';
+
+
+
+
+
+import SchoolsPage from './SchoolsPage'; // Import SchoolsPage
+import AddSchoolPage from './AddSchoolPage'; // Import AddSchoolPage
+import SuperAdminMainPage from './SuperAdminMainPage'; // Import the new SuperAdminMainPage
+import SuperAdminStaffPage from './SuperAdminStaffPage';
+import SuperAdminSettingsPage from './SuperAdminSettingsPage';
+import SuperAdminStudentsPage from './SuperAdminStudentsPage';
+import SuperAdminPerformanceReportPage from './SuperAdminPerformanceReportPage';
+import SuperAdminAppSettingsPage from './SuperAdminAppSettingsPage';
 
 // Initialize theme from localStorage (client-side only)
 const useTheme = () => {
@@ -53,72 +61,7 @@ const SuperAdminDashboard = () => {
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
   };
 
-  const SuperAdminOverview = () => (
-    <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-white p-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-[#0F172A] mb-2">Super Admin Dashboard</h1>
-          <p className="text-[#64748B] text-sm">Global system overview and management.</p>
-        </div>
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-lg transition-all duration-300">
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-[#0EA5E9]/10 to-[#0EA5E9]/5 rounded-xl flex items-center justify-center">
-                <svg className="w-6 h-6 text-[#0EA5E9]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                </svg>
-              </div>
-              <span className="text-xs font-semibold text-[#22C55E] bg-[#22C55E]/10 px-2 py-1 rounded-full">+3</span>
-            </div>
-            <h3 className="text-2xl font-bold text-[#0F172A] mb-1">12</h3>
-            <p className="text-sm text-[#64748B]">Total Schools</p>
-          </div>
-
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-lg transition-all duration-300">
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-[#22C55E]/10 to-[#22C55E]/5 rounded-xl flex items-center justify-center">
-                <svg className="w-6 h-6 text-[#22C55E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                </svg>
-              </div>
-              <span className="text-xs font-semibold text-[#0EA5E9] bg-[#0EA5E9]/10 px-2 py-1 rounded-full">+150</span>
-            </div>
-            <h3 className="text-2xl font-bold text-[#0F172A] mb-1">15,400</h3>
-            <p className="text-sm text-[#64748B]">Total Students</p>
-          </div>
-
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-lg transition-all duration-300">
-             <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-[#F97316]/10 to-[#F97316]/5 rounded-xl flex items-center justify-center">
-                <svg className="w-6 h-6 text-[#F97316]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-               <span className="text-xs font-semibold text-[#F97316] bg-[#F97316]/10 px-2 py-1 rounded-full">+8%</span>
-            </div>
-            <h3 className="text-2xl font-bold text-[#0F172A] mb-1">$1.2M</h3>
-            <p className="text-sm text-[#64748B]">Total Revenue</p>
-          </div>
-
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-lg transition-all duration-300">
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-[#0F172A]/10 to-[#64748B]/5 rounded-xl flex items-center justify-center">
-                <svg className="w-6 h-6 text-[#0F172A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />
-                </svg>
-              </div>
-              <span className="text-xs font-semibold text-[#22C55E] bg-[#22C55E]/10 px-2 py-1 rounded-full">Stable</span>
-            </div>
-            <h3 className="text-2xl font-bold text-[#0F172A] mb-1">99.9%</h3>
-            <p className="text-sm text-[#64748B]">System Uptime</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
 
   return (
     <div className="flex min-h-screen bg-gradient-to-br from-white via-gray-50 to-white relative overflow-hidden">
@@ -240,12 +183,14 @@ const SuperAdminDashboard = () => {
         {/* Main content */}
         <main className="flex-1 p-6">
           <Routes>
-            <Route path="/" element={<SuperAdminOverview />} />
-            <Route path="staff" element={<StaffPage />} />
-            <Route path="settings" element={<AdminSettingsPage />} />
-            <Route path="students" element={<AdminStudentsPage />} />
-            <Route path="reports" element={<PerformanceReportPage />} />
-            <Route path="app-settings" element={<AppSettingsPage />} />
+            <Route path="/" element={<SuperAdminMainPage />} />
+            <Route path="schools" element={<SchoolsPage />} />
+            <Route path="add-school" element={<AddSchoolPage />} />
+            <Route path="staff" element={<SuperAdminStaffPage />} />
+            <Route path="settings" element={<SuperAdminSettingsPage />} />
+            <Route path="students" element={<SuperAdminStudentsPage />} />
+            <Route path="reports" element={<SuperAdminPerformanceReportPage />} />
+            <Route path="app-settings" element={<SuperAdminAppSettingsPage />} />
           </Routes>
         </main>
       </div>
