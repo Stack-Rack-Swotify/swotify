@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import mockStaff from '../../../data/mockStaff';
 
 const SuperAdminStaffPage = () => {
@@ -37,8 +36,8 @@ const SuperAdminStaffPage = () => {
     <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-white p-6">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-[#0F172A] mb-2">Staff Directory</h1>
-        <p className="text-[#64748B] text-sm">Manage and view information for all school staff</p>
+        <h1 className="text-3xl font-bold text-[#0F172A] mb-2">Super Admin Staff Directory</h1>
+        <p className="text-[#64748B] text-sm">Manage and view information for all school staff across the system</p>
       </div>
 
       {/* Filters Section */}

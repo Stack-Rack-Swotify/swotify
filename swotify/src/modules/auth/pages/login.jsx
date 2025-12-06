@@ -38,11 +38,15 @@ const Login = () => {
           navigate('/teacher-dashboard');
         } else if (user.role === 'Admin') {
           navigate('/admin-dashboard');
-        } else if (user.role === 'Super Admin') {
+        } else if (user.role === 'Super Admin' || user.role === 'Developer') {
           navigate('/super-admin-dashboard');
         } else {
           navigate('/student-dashboard');
         }
+      } else if (selectedRole === 'Super Admin' && (user.role === 'Super Admin' || user.role === 'Developer')) {
+          // Special case for Developer logging in via Super Admin button
+          console.log('Login successful for:', user.email, 'as', user.role);
+          navigate('/super-admin-dashboard');
       } else {
         setError('Role mismatch. Please select the correct role.');
       }
@@ -224,16 +228,9 @@ const Login = () => {
                   >
                     Admin
                   </button>
-                  <button
-                    type="button"
-                    className={`py-3 px-4 bg-gray-50 text-[#64748B] font-semibold rounded-xl transition-all text-sm border ${selectedRole === 'Developer' ? 'ring-2 ring-[#0F172A] bg-[#0F172A]/10 border-[#0F172A] text-[#0F172A]' : 'border-gray-100 hover:bg-gray-100 hover:text-[#0F172A]'}`}
-                    onClick={() => handleRoleSelect('Developer')}
-                  >
-                    Developer
-                  </button>
                    <button
                     type="button"
-                    className={`col-span-2 py-3 px-4 bg-gray-50 text-[#64748B] font-semibold rounded-xl transition-all text-sm border ${selectedRole === 'Super Admin' ? 'ring-2 ring-[#8B5CF6] bg-[#8B5CF6]/10 border-[#8B5CF6] text-[#8B5CF6]' : 'border-gray-100 hover:bg-gray-100 hover:text-[#0F172A]'}`}
+                    className={`py-3 px-4 bg-gray-50 text-[#64748B] font-semibold rounded-xl transition-all text-sm border ${selectedRole === 'Super Admin' ? 'ring-2 ring-[#8B5CF6] bg-[#8B5CF6]/10 border-[#8B5CF6] text-[#8B5CF6]' : 'border-gray-100 hover:bg-gray-100 hover:text-[#0F172A]'}`}
                     onClick={() => handleRoleSelect('Super Admin')}
                   >
                     Super Admin
