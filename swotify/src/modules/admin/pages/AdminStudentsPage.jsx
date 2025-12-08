@@ -1,41 +1,252 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import mockClasses from '../../../data/mockClasses'; // Reusing mock student data
+import mockParents from '../../../data/mockParents'; // Import mock parents
 
 const AdminStudentsPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedGrade, setSelectedGrade] = useState('All');
   const [selectedSection, setSelectedSection] = useState('All');
+  const [selectedClass, setSelectedClass] = useState('All');
+  const [selectedAcademicYear, setSelectedAcademicYear] = useState('All');
+  
+  // Modal State
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [currentStudent, setCurrentStudent] = useState(null);
+  const [activeMenuId, setActiveMenuId] = useState(null);
+  const [isAddingNewParent, setIsAddingNewParent] = useState(false); // State to toggle between existing/new parent
+  const [newParentFormData, setNewParentFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+  });
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    grade: 'Grade 10',
+    section: 'A',
+    status: 'Active',
+    academicYear: '2024-2025',
+    parentId: '', // Link to existing parent
+  });
+
+  // Local state for parents to enable adding new ones
+  const [parentsList, setParentsList] = useState(mockParents);
 
   // Extract unique grades and sections from mockClasses
   const grades = ['All', ...new Set(mockClasses.map(cls => cls.grade))];
   const sections = ['All', ...new Set(mockClasses.map(cls => cls.section))];
+  const classes = ['All', ...mockClasses.map(cls => cls.className)];
 
-  // Flatten all students from all classes into a single array
-  const allStudentsWithClassInfo = mockClasses.flatMap(classData =>
-    classData.students.map(student => ({
-      ...student,
-      grade: classData.grade,
-      section: classData.section,
-      className: classData.className, // Include class name for display
-    }))
+  // Flatten all students from all classes into a single array and add default status and academic year
+  // Also link to parent data
+  const initialStudents = mockClasses.flatMap(classData =>
+    classData.students.map(student => {
+      const parent = parentsList.find(p => p.childrenIds.includes(student.id));
+      return {
+        ...student,
+        grade: classData.grade,
+        section: classData.section,
+        className: classData.className, 
+        status: student.status || 'Active',
+        academicYear: student.academicYear || '2024-2025',
+        parentId: parent ? parent.id : '',
+        parentName: parent ? parent.name : 'N/A',
+        details: { // Ensure phone is present
+          ...student.details,
+          phone: student.details.phone || 'N/A', // Default phone if not present
+        }
+      };
+    })
   );
 
-  // Filter students based on search term, selected grade, and selected section
-  const filteredStudents = allStudentsWithClassInfo.filter(student => {
-    const matchesSearch = student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          student.email.toLowerCase().includes(searchTerm.toLowerCase());
+  const [studentList, setStudentList] = useState(initialStudents);
+
+  // Filter students based on search term, selected grade, selected section, and selected class
+  const filteredStudents = studentList.filter(student => {
+    const matchesSearch = searchTerm === '' || student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                          student.details.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                          student.details.phone.toLowerCase().includes(searchTerm.toLowerCase()); // Include phone in search
+    
+    if (selectedClass !== 'All') {
+      return matchesSearch && student.className === selectedClass && (selectedAcademicYear === 'All' || student.academicYear === selectedAcademicYear);
+    }
+
     const matchesGrade = selectedGrade === 'All' || student.grade === selectedGrade;
     const matchesSection = selectedSection === 'All' || student.section === selectedSection;
-    return matchesSearch && matchesGrade && matchesSection;
+    const matchesAcademicYear = selectedAcademicYear === 'All' || student.academicYear === selectedAcademicYear;
+    return matchesSearch && matchesGrade && matchesSection && matchesAcademicYear;
   });
 
+  // Get selected class performance data
+  const selectedClassData = selectedClass !== 'All' 
+    ? mockClasses.find(cls => cls.className === selectedClass)
+    : null;
+
+  // Handlers
+  const handleAdd = () => {
+    setCurrentStudent(null);
+    setFormData({
+      name: '',
+      email: '',
+      grade: 'Grade 10',
+      section: 'A',
+      status: 'Active',
+      academicYear: '2024-2025',
+      parentId: '', 
+      phone: '', // Add phone to formData
+    });
+    setNewParentFormData({
+      name: '',
+      email: '',
+      phone: '',
+    });
+    setIsAddingNewParent(false); // Default to selecting existing parent
+    setIsModalOpen(true);
+  };
+
+  const handleEdit = (student) => {
+    setCurrentStudent(student);
+    setFormData({
+      name: student.name,
+      email: student.details?.email || student.email,
+      grade: student.grade,
+      section: student.section,
+      status: student.status || 'Active',
+      academicYear: student.academicYear || '2024-2025',
+      parentId: student.parentId || '',
+      phone: student.details?.phone || '', // Add phone to formData
+    });
+    setNewParentFormData({ // Clear new parent form data on edit
+      name: '',
+      email: '',
+      phone: '',
+    });
+    setIsAddingNewParent(false);
+    setIsModalOpen(true);
+    setActiveMenuId(null);
+  };
+
+  const confirmDelete = (student) => {
+    setCurrentStudent(student);
+    setIsDeleteModalOpen(true);
+    setActiveMenuId(null);
+  };
+
+  const handleDelete = () => {
+    if (currentStudent) {
+      setStudentList(prev => prev.filter(s => s.id !== currentStudent.id));
+      setIsDeleteModalOpen(false);
+      setCurrentStudent(null);
+    }
+  };
+
+  const handleNewParentFormChange = (e) => {
+    const { name, value } = e.target;
+    setNewParentFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    let finalParentId = formData.parentId;
+
+    if (isAddingNewParent) {
+      // Create new parent
+      const newParentId = `p${Date.now()}`;
+      const newParent = {
+        id: newParentId,
+        name: newParentFormData.name,
+        email: newParentFormData.email,
+        phone: newParentFormData.phone,
+        username: newParentFormData.email, // Default username
+        password: newParentFormData.phone, // Default password
+        childrenIds: [],
+      };
+      setParentsList(prev => [...prev, newParent]);
+      finalParentId = newParentId;
+    }
+
+    if (currentStudent) {
+      // Edit Student
+      setStudentList(prev => prev.map(s => {
+        if (s.id === currentStudent.id) {
+          // Update parent's childrenIds if parent is changed
+          if (s.parentId && s.parentId !== finalParentId) {
+            setParentsList(pList => pList.map(p => p.id === s.parentId ? {...p, childrenIds: p.childrenIds.filter(cid => cid !== s.id)} : p));
+          }
+          if (finalParentId && s.parentId !== finalParentId) {
+            setParentsList(pList => pList.map(p => p.id === finalParentId ? {...p, childrenIds: [...p.childrenIds, s.id]} : p));
+          }
+
+          const updatedStudent = {
+            ...s,
+            name: formData.name,
+            email: formData.email,
+            grade: formData.grade,
+            section: formData.section,
+            status: formData.status,
+            academicYear: formData.academicYear,
+            className: `${formData.grade} - Section ${formData.section}`,
+            details: { ...s.details, email: formData.email, phone: formData.phone }, // Update phone in details
+            parentId: finalParentId,
+            parentName: parentsList.find(p => p.id === finalParentId)?.name || 'N/A',
+          };
+          return updatedStudent;
+        }
+        return s;
+      }));
+    } else {
+      // Add Student
+      const newStudentId = `s${Date.now()}`;
+      const newStudent = {
+        id: newStudentId,
+        name: formData.name,
+        email: formData.email,
+        grade: formData.grade,
+        section: formData.section,
+        status: formData.status,
+        academicYear: formData.academicYear,
+        className: `${formData.grade} - Section ${formData.section}`,
+        photo: `https://placehold.co/150/000000/FFFFFF?text=${formData.name.charAt(0)}`,
+        details: {
+          email: formData.email,
+          phone: formData.phone, // Add phone to details
+          attendance: 'N/A',
+          grade: 'N/A',
+          parents: 'N/A',
+        },
+        assignments: [],
+        parentId: finalParentId,
+        parentName: parentsList.find(p => p.id === finalParentId)?.name || 'N/A',
+      };
+      setStudentList(prev => [newStudent, ...prev]);
+
+      // Update parent's childrenIds
+      if (finalParentId) {
+        setParentsList(pList => pList.map(p => p.id === finalParentId ? {...p, childrenIds: [...p.childrenIds, newStudentId]} : p));
+      }
+    }
+    setIsModalOpen(false);
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-white p-6">
+    <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-white p-6 relative">
       {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-[#0F172A] mb-2">Student Management</h1>
-        <p className="text-[#64748B] text-sm">Manage and view information for all students</p>
+      <div className="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+          <h1 className="text-3xl font-bold text-[#0F172A] mb-2">Student Management</h1>
+          <p className="text-[#64748B] text-sm">Manage and view information for all students</p>
+        </div>
+        <button
+          onClick={handleAdd}
+          className="px-6 py-3 bg-gradient-to-r from-[#0EA5E9] to-[#22C55E] text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5 flex items-center gap-2"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
+          </svg>
+          Add New Student
+        </button>
       </div>
 
       {/* Filters Section */}
@@ -45,7 +256,64 @@ const AdminStudentsPage = () => {
           Search & Filter Students
         </h2>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+          {/* Academic Year Dropdown */}
+          <div>
+            <label htmlFor="year-select" className="block text-sm font-semibold text-[#0F172A] mb-2 flex items-center gap-2">
+              <svg className="w-4 h-4 text-[#6366f1]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              Year
+            </label>
+            <div className="relative">
+              <select
+                id="year-select"
+                value={selectedAcademicYear}
+                onChange={(e) => setSelectedAcademicYear(e.target.value)}
+                className="w-full px-4 py-3 text-sm border border-gray-100 focus:outline-none focus:ring-2 focus:ring-[#6366f1]/50 focus:border-[#6366f1] bg-white text-[#0F172A] rounded-xl transition-all duration-200 hover:border-[#6366f1]/50 appearance-none cursor-pointer"
+              >
+                <option value="All">All Years</option>
+                <option value="2023-2024">2023-2024</option>
+                <option value="2024-2025">2024-2025</option>
+                <option value="2025-2026">2025-2026</option>
+              </select>
+              <svg className="absolute right-3 top-3.5 w-5 h-5 text-[#64748B] pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </div>
+
+          {/* Class Dropdown */}
+          <div>
+            <label htmlFor="class-select" className="block text-sm font-semibold text-[#0F172A] mb-2 flex items-center gap-2">
+              <svg className="w-4 h-4 text-[#8b5cf6]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+              </svg>
+              Class
+            </label>
+            <div className="relative">
+              <select
+                id="class-select"
+                value={selectedClass}
+                onChange={(e) => {
+                  setSelectedClass(e.target.value);
+                  if (e.target.value !== 'All') {
+                    setSelectedGrade('All');
+                    setSelectedSection('All');
+                  }
+                }}
+                className="w-full px-4 py-3 text-sm border border-gray-100 focus:outline-none focus:ring-2 focus:ring-[#8b5cf6]/50 focus:border-[#8b5cf6] bg-white text-[#0F172A] rounded-xl transition-all duration-200 hover:border-[#8b5cf6]/50 appearance-none cursor-pointer"
+              >
+                {classes.map(cls => (
+                  <option key={cls} value={cls}>{cls === 'All' ? 'All Classes' : cls}</option>
+                ))}
+              </select>
+              <svg className="absolute right-3 top-3.5 w-5 h-5 text-[#64748B] pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </div>
+
           {/* Grade Dropdown */}
           <div>
             <label htmlFor="grade-select" className="block text-sm font-semibold text-[#0F172A] mb-2 flex items-center gap-2">
@@ -61,8 +329,10 @@ const AdminStudentsPage = () => {
                 onChange={(e) => {
                   setSelectedGrade(e.target.value);
                   setSelectedSection('All');
+                  setSelectedClass('All');
                 }}
-                className="w-full px-4 py-3 text-sm border border-gray-100 focus:outline-none focus:ring-2 focus:ring-[#0EA5E9]/50 focus:border-[#0EA5E9] bg-white text-[#0F172A] rounded-xl transition-all duration-200 hover:border-[#0EA5E9]/50 appearance-none cursor-pointer"
+                disabled={selectedClass !== 'All'}
+                className={`w-full px-4 py-3 text-sm border border-gray-100 focus:outline-none focus:ring-2 focus:ring-[#0EA5E9]/50 focus:border-[#0EA5E9] bg-white text-[#0F172A] rounded-xl transition-all duration-200 hover:border-[#0EA5E9]/50 appearance-none cursor-pointer ${selectedClass !== 'All' ? 'opacity-50 cursor-not-allowed' : ''}`}
               >
                 {grades.map(grade => (
                   <option key={grade} value={grade}>{grade}</option>
@@ -86,8 +356,12 @@ const AdminStudentsPage = () => {
               <select
                 id="section-select"
                 value={selectedSection}
-                onChange={(e) => setSelectedSection(e.target.value)}
-                className="w-full px-4 py-3 text-sm border border-gray-100 focus:outline-none focus:ring-2 focus:ring-[#22C55E]/50 focus:border-[#22C55E] bg-white text-[#0F172A] rounded-xl transition-all duration-200 hover:border-[#22C55E]/50 appearance-none cursor-pointer"
+                onChange={(e) => {
+                  setSelectedSection(e.target.value);
+                  setSelectedClass('All');
+                }}
+                disabled={selectedClass !== 'All'}
+                className={`w-full px-4 py-3 text-sm border border-gray-100 focus:outline-none focus:ring-2 focus:ring-[#22C55E]/50 focus:border-[#22C55E] bg-white text-[#0F172A] rounded-xl transition-all duration-200 hover:border-[#22C55E]/50 appearance-none cursor-pointer ${selectedClass !== 'All' ? 'opacity-50 cursor-not-allowed' : ''}`}
               >
                 {sections.map(section => (
                   <option key={section} value={section}>{section}</option>
@@ -124,6 +398,34 @@ const AdminStudentsPage = () => {
         </div>
       </div>
 
+      {/* Class Performance Summary */}
+      {selectedClassData && (
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-6 hover:shadow-lg transition-all duration-300 animate-fade-in">
+          <h2 className="text-lg font-semibold text-[#0F172A] mb-5 flex items-center">
+            <span className="w-1 h-6 bg-gradient-to-b from-[#8b5cf6] to-[#6366f1] rounded-full mr-3"></span>
+            {selectedClassData.className} Performance
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="bg-[#6366f1]/5 rounded-xl p-4 border border-[#6366f1]/10">
+              <p className="text-sm text-[#64748B] mb-1">Average Score</p>
+              <p className="text-2xl font-bold text-[#6366f1]">{selectedClassData.classPerformance.averageScore}%</p>
+            </div>
+            <div className="bg-[#22C55E]/5 rounded-xl p-4 border border-[#22C55E]/10">
+              <p className="text-sm text-[#64748B] mb-1">Highest Score</p>
+              <p className="text-2xl font-bold text-[#22C55E]">{selectedClassData.classPerformance.highestScore}%</p>
+            </div>
+            <div className="bg-[#F97316]/5 rounded-xl p-4 border border-[#F97316]/10">
+              <p className="text-sm text-[#64748B] mb-1">Lowest Score</p>
+              <p className="text-2xl font-bold text-[#F97316]">{selectedClassData.classPerformance.lowestScore}%</p>
+            </div>
+            <div className="bg-[#0EA5E9]/5 rounded-xl p-4 border border-[#0EA5E9]/10">
+              <p className="text-sm text-[#64748B] mb-1">Pass Rate</p>
+              <p className="text-2xl font-bold text-[#0EA5E9]">{selectedClassData.classPerformance.passRate}</p>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Results Header */}
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-6 hover:shadow-lg transition-all duration-300">
         <div className="flex items-center justify-between">
@@ -144,67 +446,124 @@ const AdminStudentsPage = () => {
       {filteredStudents.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filteredStudents.map((student) => (
-            <Link
+            <div
               key={student.id}
-              to={`/admin-dashboard/student-profile/${student.id}`}
-              className="group bg-white rounded-2xl shadow-sm border border-gray-100 p-6 flex flex-col items-center text-center hover:shadow-xl hover:border-[#0EA5E9]/30 transition-all duration-300 transform hover:-translate-y-2 cursor-pointer"
+              className="group bg-white rounded-2xl shadow-sm border border-gray-100 p-6 flex flex-col items-center text-center hover:shadow-xl hover:border-[#0EA5E9]/30 transition-all duration-300 transform hover:-translate-y-2 relative"
             >
-              {/* Student Photo */}
-              <div className="relative mb-4">
-                <div className="w-24 h-24 rounded-full bg-gradient-to-br from-[#0EA5E9] to-[#22C55E] p-1">
-                  <img
-                    src={student.photo}
-                    alt={student.name}
-                    className="w-full h-full rounded-full object-cover bg-white"
-                  />
-                </div>
-                {/* Grade Badge */}
-                <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-[#0EA5E9] rounded-full border-2 border-white flex items-center justify-center shadow-lg">
-                  <span className="text-xs text-white font-bold">
-                    {student.grade.slice(-2)}
-                  </span>
-                </div>
+              {/* Three Dots Menu */}
+              <div className="absolute top-4 right-4 z-10">
+                <button 
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setActiveMenuId(activeMenuId === student.id ? null : student.id);
+                  }}
+                  className="p-1.5 text-gray-400 hover:text-[#0F172A] hover:bg-gray-100 rounded-full transition-all focus:outline-none"
+                >
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
+                  </svg>
+                </button>
+                {activeMenuId === student.id && (
+                  <div className="absolute right-0 mt-2 w-32 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden animate-fade-in">
+                    <button 
+                      onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleEdit(student); }}
+                      className="w-full text-left px-4 py-2.5 text-sm text-[#64748B] hover:bg-[#0EA5E9]/10 hover:text-[#0EA5E9] transition-colors flex items-center gap-2"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                      </svg>
+                      Edit
+                    </button>
+                    <button 
+                      onClick={(e) => { e.preventDefault(); e.stopPropagation(); confirmDelete(student); }}
+                      className="w-full text-left px-4 py-2.5 text-sm text-[#64748B] hover:bg-red-50 hover:text-red-500 transition-colors flex items-center gap-2"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                      </svg>
+                      Delete
+                    </button>
+                  </div>
+                )}
               </div>
 
-              {/* Student Name */}
-              <h3 className="text-lg font-bold text-[#0F172A] mb-1 group-hover:text-[#0EA5E9] transition-colors">
-                {student.name}
-              </h3>
+              <Link to={`/admin-dashboard/student-profile/${student.id}`} className="flex flex-col items-center w-full">
+                {/* Student Photo */}
+                <div className="relative mb-4">
+                  <div className="w-24 h-24 rounded-full bg-gradient-to-br from-[#0EA5E9] to-[#22C55E] p-1">
+                    <img
+                      src={student.photo}
+                      alt={student.name}
+                      className="w-full h-full rounded-full object-cover bg-white"
+                    />
+                  </div>
+                  {/* Grade Badge */}
+                  <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-[#0EA5E9] rounded-full border-2 border-white flex items-center justify-center shadow-lg">
+                    <span className="text-xs text-white font-bold">
+                      {student.grade.slice(-2)}
+                    </span>
+                  </div>
+                </div>
 
-              {/* Class Info */}
-              <div className="flex items-center gap-2 mb-3">
-                <span className="bg-[#0EA5E9]/10 text-[#0EA5E9] px-3 py-1 rounded-full text-xs font-semibold border border-[#0EA5E9]/20">
-                  {student.grade}
-                </span>
-                <span className="bg-[#22C55E]/10 text-[#22C55E] px-3 py-1 rounded-full text-xs font-semibold border border-[#22C55E]/20">
-                  Section {student.section}
-                </span>
-              </div>
-
-              {/* Quick Info */}
-              <div className="w-full space-y-2 mt-4 pt-4 border-t border-gray-100">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="text-[#64748B] flex items-center gap-1">
-                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                    </svg>
-                    Email
-                  </span>
-                  <span className="text-[#0F172A] font-medium truncate ml-2 max-w-[120px]" title={student.details.email}>
-                    {student.details.email.split('@')[0]}
+                {/* Status Badge */}
+                <div className="mb-3">
+                  <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold border ${
+                    student.status === 'Active' 
+                      ? 'bg-green-50 text-green-600 border-green-200' 
+                      : 'bg-red-50 text-red-600 border-red-200'
+                  }`}>
+                    {student.status}
                   </span>
                 </div>
-                <div className="flex items-center justify-between text-xs">
-                  <span className="text-[#64748B] flex items-center gap-1">
-                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    Attendance
+
+                {/* Student Name */}
+                <h3 className="text-lg font-bold text-[#0F172A] mb-1 group-hover:text-[#0EA5E9] transition-colors">
+                  {student.name}
+                </h3>
+
+                {/* Class Info */}
+                <div className="flex items-center gap-2 mb-3 flex-wrap justify-center">
+                  <span className="bg-[#0EA5E9]/10 text-[#0EA5E9] px-3 py-1 rounded-full text-xs font-semibold border border-[#0EA5E9]/20">
+                    {student.grade}
                   </span>
-                  <span className="text-[#0F172A] font-medium">{student.details.attendance}</span>
+                  <span className="bg-[#22C55E]/10 text-[#22C55E] px-3 py-1 rounded-full text-xs font-semibold border border-[#22C55E]/20">
+                    Section {student.section}
+                  </span>
+                  <span className="bg-[#6366f1]/10 text-[#6366f1] px-3 py-1 rounded-full text-xs font-semibold border border-[#6366f1]/20">
+                    {student.academicYear}
+                  </span>
+                  {student.parentName && (
+                    <span className="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-xs font-semibold border border-purple-200">
+                      Parent: {student.parentName}
+                    </span>
+                  )}
                 </div>
-              </div>
-            </Link>
+                {/* Quick Info */}
+                <div className="w-full space-y-2 mt-4 pt-4 border-t border-gray-100">
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-[#64748B] flex items-center gap-1">
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      </svg>
+                      Email
+                    </span>
+                    <span className="text-[#0F172A] font-medium truncate ml-2 max-w-[120px]" title={student.details.email}>
+                      {student.details.email.split('@')[0]}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-[#64748B] flex items-center gap-1">
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                      </svg>
+                      Phone
+                    </span>
+                    <span className="text-[#0F172A] font-medium">{student.details.phone || 'N/A'}</span>
+                  </div>
+                </div>
+              </Link>
+            </div>
           ))}
         </div>
       ) : (
@@ -224,6 +583,7 @@ const AdminStudentsPage = () => {
               setSearchTerm('');
               setSelectedGrade('All');
               setSelectedSection('All');
+              setSelectedClass('All');
             }}
             className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#0EA5E9] to-[#22C55E] text-white font-semibold rounded-xl hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5"
           >
@@ -232,6 +592,241 @@ const AdminStudentsPage = () => {
             </svg>
             Reset Filters
           </button>
+        </div>
+      )}
+
+      {/* Add/Edit Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden animate-scale-in">
+            <div className="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gradient-to-r from-gray-50 to-white">
+              <h3 className="text-lg font-bold text-[#0F172A]">{currentStudent ? 'Edit Student' : 'Add New Student'}</h3>
+              <button onClick={() => setIsModalOpen(false)} className="text-[#64748B] hover:text-[#0F172A] transition-colors">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <form onSubmit={handleFormSubmit} className="p-6 space-y-4">
+              <div>
+                <label className="block text-sm font-semibold text-[#0F172A] mb-1">Full Name</label>
+                <input
+                  type="text"
+                  required
+                  value={formData.name}
+                  onChange={(e) => setFormData({...formData, name: e.target.value})}
+                  className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0EA5E9]/50 transition-all text-[#0F172A]"
+                  placeholder="e.g. Alice Johnson"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold text-[#0F172A] mb-1">Email Address</label>
+                <input
+                  type="email"
+                  required
+                  value={formData.email}
+                  onChange={(e) => setFormData({...formData, email: e.target.value})}
+                  className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0EA5E9]/50 transition-all text-[#0F172A]"
+                  placeholder="e.g. alice@school.com"
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-semibold text-[#0F172A] mb-1">Grade</label>
+                  <select
+                    value={formData.grade}
+                    onChange={(e) => setFormData({...formData, grade: e.target.value})}
+                    className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0EA5E9]/50 transition-all text-[#0F172A]"
+                  >
+                    {grades.filter(g => g !== 'All').map(grade => (
+                      <option key={grade} value={grade}>{grade}</option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-[#0F172A] mb-1">Section</label>
+                  <select
+                    value={formData.section}
+                    onChange={(e) => setFormData({...formData, section: e.target.value})}
+                    className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0EA5E9]/50 transition-all text-[#0F172A]"
+                  >
+                    {sections.filter(s => s !== 'All').map(section => (
+                      <option key={section} value={section}>{section}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-semibold text-[#0F172A] mb-1">Academic Year</label>
+                  <select
+                    value={formData.academicYear}
+                    onChange={(e) => setFormData({...formData, academicYear: e.target.value})}
+                    className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0EA5E9]/50 transition-all text-[#0F172A]"
+                  >
+                    <option value="2023-2024">2023-2024</option>
+                    <option value="2024-2025">2024-2025</option>
+                    <option value="2025-2026">2025-2026</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-[#0F172A] mb-1">Status</label>
+                  <select
+                    value={formData.status}
+                    onChange={(e) => setFormData({...formData, status: e.target.value})}
+                    className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0EA5E9]/50 transition-all text-[#0F172A]"
+                  >
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                  </select>
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-semibold text-[#0F172A] mb-1">Phone Number</label>
+                <input
+                  type="tel"
+                  value={formData.phone}
+                  onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                  className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0EA5E9]/50 transition-all text-[#0F172A]"
+                  placeholder="e.g. 555-123-4567"
+                />
+              </div>
+
+              {/* Parent Association Section */}
+              <div className="pt-4 border-t border-gray-100">
+                <h4 className="text-base font-semibold text-[#0F172A] mb-3">Associate Parent</h4>
+                <div className="flex items-center gap-4 mb-3">
+                  <label className="inline-flex items-center">
+                    <input
+                      type="radio"
+                      className="form-radio text-[#0EA5E9]"
+                      name="parent-option"
+                      value="existing"
+                      checked={!isAddingNewParent}
+                      onChange={() => setIsAddingNewParent(false)}
+                    />
+                    <span className="ml-2 text-sm text-[#0F172A]">Select Existing Parent</span>
+                  </label>
+                  <label className="inline-flex items-center">
+                    <input
+                      type="radio"
+                      className="form-radio text-[#0EA5E9]"
+                      name="parent-option"
+                      value="new"
+                      checked={isAddingNewParent}
+                      onChange={() => setIsAddingNewParent(true)}
+                    />
+                    <span className="ml-2 text-sm text-[#0F172A]">Create New Parent</span>
+                  </label>
+                </div>
+
+                {!isAddingNewParent ? (
+                  // Select Existing Parent
+                  <div>
+                    <label htmlFor="parent-select" className="block text-sm font-semibold text-[#0F172A] mb-1">Parent</label>
+                    <select
+                      id="parent-select"
+                      value={formData.parentId}
+                      onChange={(e) => setFormData({...formData, parentId: e.target.value})}
+                      className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0EA5E9]/50 transition-all text-[#0F172A]"
+                    >
+                      <option value="">Select a Parent</option>
+                      {parentsList.map(parent => (
+                        <option key={parent.id} value={parent.id}>{parent.name} ({parent.email})</option>
+                      ))}
+                    </select>
+                  </div>
+                ) : (
+                  // Create New Parent
+                  <div className="space-y-3">
+                    <div>
+                      <label className="block text-sm font-semibold text-[#0F172A] mb-1">Parent Name</label>
+                      <input
+                        type="text"
+                        required
+                        value={newParentFormData.name}
+                        onChange={handleNewParentFormChange}
+                        name="name"
+                        className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0EA5E9]/50 transition-all text-[#0F172A]"
+                        placeholder="e.g. John Doe (Parent)"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-[#0F172A] mb-1">Parent Email</label>
+                      <input
+                        type="email"
+                        required
+                        value={newParentFormData.email}
+                        onChange={handleNewParentFormChange}
+                        name="email"
+                        className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0EA5E9]/50 transition-all text-[#0F172A]"
+                        placeholder="e.g. parent@example.com"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-[#0F172A] mb-1">Parent Phone</label>
+                      <input
+                        type="tel"
+                        required
+                        value={newParentFormData.phone}
+                        onChange={handleNewParentFormChange}
+                        name="phone"
+                        className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0EA5E9]/50 transition-all text-[#0F172A]"
+                        placeholder="e.g. 555-123-4567"
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <div className="pt-4 flex gap-3">
+                <button
+                  type="button"
+                  onClick={() => setIsModalOpen(false)}
+                  className="flex-1 px-4 py-2.5 border border-gray-200 text-[#64748B] font-semibold rounded-xl hover:bg-gray-50 transition-all"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="flex-1 px-4 py-2.5 bg-gradient-to-r from-[#0EA5E9] to-[#22C55E] text-white font-semibold rounded-xl hover:shadow-lg transition-all"
+                >
+                  {currentStudent ? 'Save Changes' : 'Add Student'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {isDeleteModalOpen && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl w-full max-w-sm shadow-2xl p-6 text-center animate-scale-in">
+            <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg className="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg>
+            </div>
+            <h3 className="text-xl font-bold text-[#0F172A] mb-2">Delete Student?</h3>
+            <p className="text-[#64748B] text-sm mb-6">
+              Are you sure you want to delete <span className="font-semibold text-[#0F172A]">{currentStudent?.name}</span>? This action cannot be undone.
+            </p>
+            <div className="flex gap-3">
+              <button
+                onClick={() => setIsDeleteModalOpen(false)}
+                className="flex-1 px-4 py-2.5 border border-gray-200 text-[#64748B] font-semibold rounded-xl hover:bg-gray-50 transition-all"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleDelete}
+                className="flex-1 px-4 py-2.5 bg-red-500 text-white font-semibold rounded-xl hover:bg-red-600 hover:shadow-lg transition-all"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>

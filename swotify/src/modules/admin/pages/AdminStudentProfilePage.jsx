@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import mockClasses from '../../../data/mockClasses';
-import StudentProfile from '../../student/components/StudentProfile'; // Reusable StudentProfile component
+import StudentProfile from '../../student/components/StudentProfile';
 
-const TeacherStudentProfilePage = () => {
+const AdminStudentProfilePage = () => {
   const { studentId } = useParams();
   const navigate = useNavigate();
   const [student, setStudent] = useState(null);
@@ -71,4 +71,4 @@ const TeacherStudentProfilePage = () => {
   );
 };
 
-export default TeacherStudentProfilePage;
+export default AdminStudentProfilePage;

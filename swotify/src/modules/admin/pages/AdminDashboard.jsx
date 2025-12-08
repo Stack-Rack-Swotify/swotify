@@ -8,6 +8,10 @@ import AIChatbot from '../../student/components/AIChatbot';
 import PerformanceReportPage from './PerformanceReportPage';
 import SchoolManagementPage from './SchoolManagementPage';
 import AppSettingsPage from './AppSettingsPage';
+import mockEvents from '../../../data/mockEvents';
+import AdminEventsPage from './AdminEventsPage';
+import AdminEventDetailPage from './AdminEventDetailPage';
+import AdminStudentProfilePage from './AdminStudentProfilePage';
 
 // Initialize theme from localStorage (client-side only)
 const useTheme = () => {
@@ -122,136 +126,152 @@ const AdminDashboard = () => {
         </div>
 
         {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Quick Actions */}
-          <div className="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-all duration-300">
-            <h2 className="text-lg font-semibold text-[#1e293b] mb-5 flex items-center">
-              <span className="w-1 h-6 bg-gradient-to-b from-[#6366f1] to-[#8b5cf6] rounded-full mr-3"></span>
-              Quick Actions
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <NavLink 
-                to="staff" 
-                className="flex items-center gap-4 p-4 bg-gradient-to-br from-[#6366f1]/5 to-white rounded-xl border border-gray-100 hover:shadow-md hover:border-[#6366f1]/30 transition-all duration-300 group"
-              >
-                <div className="w-12 h-12 bg-gradient-to-br from-[#6366f1] to-[#6366f1]/80 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-sm">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="font-semibold text-[#1e293b] group-hover:text-[#6366f1] transition-colors">Manage Staff</h3>
-                  <p className="text-xs text-[#64748b]">Add, edit or remove staff</p>
-                </div>
-              </NavLink>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Left Column */}
+          <div className="space-y-6">
+            {/* Quick Actions */}
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-all duration-300">
+              <h2 className="text-lg font-semibold text-[#1e293b] mb-5 flex items-center">
+                <span className="w-1 h-6 bg-gradient-to-b from-[#6366f1] to-[#8b5cf6] rounded-full mr-3"></span>
+                Quick Actions
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <NavLink 
+                  to="staff" 
+                  className="flex items-center gap-4 p-4 bg-gradient-to-br from-[#6366f1]/5 to-white rounded-xl border border-gray-100 hover:shadow-md hover:border-[#6366f1]/30 transition-all duration-300 group"
+                >
+                  <div className="w-12 h-12 bg-gradient-to-br from-[#6366f1] to-[#6366f1]/80 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-sm">
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-[#1e293b] group-hover:text-[#6366f1] transition-colors">Manage Staff</h3>
+                    <p className="text-xs text-[#64748b]">Add, edit or remove staff</p>
+                  </div>
+                </NavLink>
 
-              <NavLink 
-                to="students" 
-                className="flex items-center gap-4 p-4 bg-gradient-to-br from-[#8b5cf6]/5 to-white rounded-xl border border-gray-100 hover:shadow-md hover:border-[#8b5cf6]/30 transition-all duration-300 group"
-              >
-                <div className="w-12 h-12 bg-gradient-to-br from-[#8b5cf6] to-[#8b5cf6]/80 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-sm">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="font-semibold text-[#1e293b] group-hover:text-[#8b5cf6] transition-colors">Manage Students</h3>
-                  <p className="text-xs text-[#64748b]">View and manage students</p>
-                </div>
-              </NavLink>
+                <NavLink 
+                  to="students" 
+                  className="flex items-center gap-4 p-4 bg-gradient-to-br from-[#8b5cf6]/5 to-white rounded-xl border border-gray-100 hover:shadow-md hover:border-[#8b5cf6]/30 transition-all duration-300 group"
+                >
+                  <div className="w-12 h-12 bg-gradient-to-br from-[#8b5cf6] to-[#8b5cf6]/80 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-sm">
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-[#1e293b] group-hover:text-[#8b5cf6] transition-colors">Manage Students</h3>
+                    <p className="text-xs text-[#64748b]">View and manage students</p>
+                  </div>
+                </NavLink>
 
-              <NavLink 
-                to="performance-report" 
-                className="flex items-center gap-4 p-4 bg-gradient-to-br from-[#a78bfa]/5 to-white rounded-xl border border-gray-100 hover:shadow-md hover:border-[#a78bfa]/30 transition-all duration-300 group"
-              >
-                <div className="w-12 h-12 bg-gradient-to-br from-[#a78bfa] to-[#a78bfa]/80 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-sm">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="font-semibold text-[#1e293b] group-hover:text-[#a78bfa] transition-colors">View Reports</h3>
-                  <p className="text-xs text-[#64748b]">Performance analytics</p>
-                </div>
-              </NavLink>
+                <NavLink 
+                  to="performance-report" 
+                  className="flex items-center gap-4 p-4 bg-gradient-to-br from-[#a78bfa]/5 to-white rounded-xl border border-gray-100 hover:shadow-md hover:border-[#a78bfa]/30 transition-all duration-300 group"
+                >
+                  <div className="w-12 h-12 bg-gradient-to-br from-[#a78bfa] to-[#a78bfa]/80 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-sm">
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-[#1e293b] group-hover:text-[#a78bfa] transition-colors">View Reports</h3>
+                    <p className="text-xs text-[#64748b]">Performance analytics</p>
+                  </div>
+                </NavLink>
 
-              <NavLink 
-                to="settings" 
-                className="flex items-center gap-4 p-4 bg-gradient-to-br from-[#1e293b]/5 to-white rounded-xl border border-gray-100 hover:shadow-md hover:border-[#1e293b]/30 transition-all duration-300 group"
-              >
-                <div className="w-12 h-12 bg-gradient-to-br from-[#1e293b] to-[#334155] rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-sm">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="font-semibold text-[#1e293b] group-hover:text-[#1e293b] transition-colors">System Settings</h3>
-                  <p className="text-xs text-[#64748b]">Configure system</p>
-                </div>
-              </NavLink>
+                <NavLink 
+                  to="settings" 
+                  className="flex items-center gap-4 p-4 bg-gradient-to-br from-[#1e293b]/5 to-white rounded-xl border border-gray-100 hover:shadow-md hover:border-[#1e293b]/30 transition-all duration-300 group"
+                >
+                  <div className="w-12 h-12 bg-gradient-to-br from-[#1e293b] to-[#334155] rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-sm">
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-[#1e293b] group-hover:text-[#1e293b] transition-colors">System Settings</h3>
+                    <p className="text-xs text-[#64748b]">Configure system</p>
+                  </div>
+                </NavLink>
+              </div>
+            </div>
+
+            {/* Recent Activity */}
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-all duration-300">
+              <h2 className="text-lg font-semibold text-[#1e293b] mb-5 flex items-center">
+                <span className="w-1 h-6 bg-gradient-to-b from-[#a78bfa] to-[#6366f1] rounded-full mr-3"></span>
+                Recent Activity
+              </h2>
+              <div className="space-y-3">
+                {[
+                  { action: 'New student registration', user: 'John Doe', time: '5 minutes ago', color: '6366f1' },
+                  { action: 'Staff member updated profile', user: 'Jane Smith', time: '15 minutes ago', color: '8b5cf6' },
+                  { action: 'New class created', user: 'Admin', time: '1 hour ago', color: 'a78bfa' },
+                  { action: 'Performance report generated', user: 'System', time: '2 hours ago', color: '6366f1' },
+                ].map((activity, index) => (
+                  <div key={index} className="flex items-center gap-4 p-4 bg-gradient-to-r from-gray-50 to-white rounded-xl border border-gray-100 hover:border-gray-200 hover:shadow-sm transition-all duration-200">
+                    <div className={`w-10 h-10 bg-[#${activity.color}]/10 rounded-full flex items-center justify-center`}>
+                      <svg className={`w-5 h-5 text-[#${activity.color}]`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                      </svg>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-semibold text-[#1e293b] truncate">{activity.action}</p>
+                      <p className="text-xs text-[#64748b]">{activity.user} • {activity.time}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
-          {/* System Status */}
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-all duration-300">
-            <h2 className="text-lg font-semibold text-[#1e293b] mb-5 flex items-center">
-              <span className="w-1 h-6 bg-gradient-to-b from-[#8b5cf6] to-[#6366f1] rounded-full mr-3"></span>
-              System Status
+          {/* Right Column: Upcoming Events */}
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-all duration-300 h-full">
+            <h2 className="text-lg font-semibold text-[#1e293b] mb-5 flex items-center justify-between">
+              <div className="flex items-center">
+                <span className="w-1 h-6 bg-gradient-to-b from-[#f59e0b] to-[#f59e0b]/80 rounded-full mr-3"></span>
+                Upcoming Events
+              </div>
+              <NavLink to="events" className="text-xs text-[#6366f1] hover:text-[#8b5cf6] font-medium transition-colors">
+                View All
+              </NavLink>
             </h2>
             <div className="space-y-4">
-              <div className="flex items-center justify-between p-3 bg-gradient-to-r from-[#22c55e]/5 to-white rounded-xl border border-[#22c55e]/20">
-                <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-[#22c55e] rounded-full animate-pulse"></div>
-                  <span className="text-sm font-medium text-[#1e293b]">Database</span>
+              {mockEvents.slice(0, 5).map((event) => (
+                <div key={event.id} className="group bg-white rounded-xl border border-gray-100 overflow-hidden hover:shadow-md transition-all duration-300">
+                  <div className="relative h-24 overflow-hidden">
+                    <img 
+                      src={event.thumbnail} 
+                      alt={event.title} 
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  </div>
+                  <div className="p-3">
+                    <h3 className="font-semibold text-[#1e293b] mb-2 line-clamp-1 group-hover:text-[#f59e0b] transition-colors">{event.title}</h3>
+                    <div className="flex items-center gap-2 text-xs text-[#64748b] mb-1">
+                      <svg className="w-3 h-3 text-[#22c55e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                      {event.date}
+                    </div>
+                    <div className="flex items-center gap-2 text-xs text-[#64748b]">
+                      <svg className="w-3 h-3 text-[#f59e0b]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                      {event.location}
+                    </div>
+                  </div>
                 </div>
-                <span className="text-xs font-semibold text-[#22c55e]">Online</span>
-              </div>
-
-              <div className="flex items-center justify-between p-3 bg-gradient-to-r from-[#22c55e]/5 to-white rounded-xl border border-[#22c55e]/20">
-                <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-[#22c55e] rounded-full animate-pulse"></div>
-                  <span className="text-sm font-medium text-[#1e293b]">API Server</span>
-                </div>
-                <span className="text-xs font-semibold text-[#22c55e]">Running</span>
-              </div>
-
-              <div className="flex items-center justify-between p-3 bg-gradient-to-r from-[#6366f1]/5 to-white rounded-xl border border-[#6366f1]/20">
-                <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-[#6366f1] rounded-full animate-pulse"></div>
-                  <span className="text-sm font-medium text-[#1e293b]">Backup</span>
-                </div>
-                <span className="text-xs font-semibold text-[#6366f1]">2 hours ago</span>
-              </div>
+              ))}
+              {mockEvents.length === 0 && (
+                <p className="text-sm text-[#64748b] text-center py-4">No upcoming events.</p>
+              )}
             </div>
-          </div>
-        </div>
-
-        {/* Recent Activity */}
-        <div className="mt-6 bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-all duration-300">
-          <h2 className="text-lg font-semibold text-[#1e293b] mb-5 flex items-center">
-            <span className="w-1 h-6 bg-gradient-to-b from-[#a78bfa] to-[#6366f1] rounded-full mr-3"></span>
-            Recent Activity
-          </h2>
-          <div className="space-y-3">
-            {[
-              { action: 'New student registration', user: 'John Doe', time: '5 minutes ago', color: '6366f1' },
-              { action: 'Staff member updated profile', user: 'Jane Smith', time: '15 minutes ago', color: '8b5cf6' },
-              { action: 'New class created', user: 'Admin', time: '1 hour ago', color: 'a78bfa' },
-              { action: 'Performance report generated', user: 'System', time: '2 hours ago', color: '6366f1' },
-            ].map((activity, index) => (
-              <div key={index} className="flex items-center gap-4 p-4 bg-gradient-to-r from-gray-50 to-white rounded-xl border border-gray-100 hover:border-gray-200 hover:shadow-sm transition-all duration-200">
-                <div className={`w-10 h-10 bg-[#${activity.color}]/10 rounded-full flex items-center justify-center`}>
-                  <svg className={`w-5 h-5 text-[#${activity.color}]`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                  </svg>
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-[#1e293b] truncate">{activity.action}</p>
-                  <p className="text-xs text-[#64748b]">{activity.user} • {activity.time}</p>
-                </div>
-              </div>
-            ))}
           </div>
         </div>
       </div>
@@ -397,6 +417,9 @@ const AdminDashboard = () => {
             <Route path="performance-report" element={<PerformanceReportPage />} />
             <Route path="school-management" element={<SchoolManagementPage />} />
             <Route path="app-settings" element={<AppSettingsPage />} />
+            <Route path="events" element={<AdminEventsPage />} />
+            <Route path="events/:id" element={<AdminEventDetailPage />} />
+            <Route path="student-profile/:studentId" element={<AdminStudentProfilePage />} />
           </Routes>
         </main>
       </div>

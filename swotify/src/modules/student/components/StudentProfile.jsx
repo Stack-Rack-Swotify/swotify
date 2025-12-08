@@ -14,11 +14,7 @@ const StudentProfile = ({ student }) => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-white p-6">
       <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <div className="mb-6">
-          <h3 className="text-3xl font-bold text-[#0F172A] mb-2">Student Profile</h3>
-          <p className="text-[#64748B] text-sm">Complete academic and personal information</p>
-        </div>
+
 
         {/* Profile Header Card */}
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 mb-6 hover:shadow-lg transition-all duration-300">
@@ -49,6 +45,11 @@ const StudentProfile = ({ student }) => {
                 <span className="bg-gradient-to-r from-[#22C55E]/10 to-[#22C55E]/5 text-[#22C55E] px-3 py-1 rounded-lg text-sm font-semibold border border-[#22C55E]/20">
                   {student.details.grade}
                 </span>
+                {student.academicYear && (
+                  <span className="bg-gradient-to-r from-[#6366f1]/10 to-[#6366f1]/5 text-[#6366f1] px-3 py-1 rounded-lg text-sm font-semibold border border-[#6366f1]/20">
+                    {student.academicYear}
+                  </span>
+                )}
               </div>
               <div className="space-y-1 text-sm">
                 <p className="text-[#0F172A]">
@@ -91,7 +92,7 @@ const StudentProfile = ({ student }) => {
                 </div>
                 <span className="text-xs font-medium text-[#64748B] uppercase tracking-wide">Phone</span>
               </div>
-              <p className="text-sm font-semibold text-[#0F172A]">{student.details.contact || 'N/A'}</p>
+              <p className="text-sm font-semibold text-[#0F172A]">{student.details.phone || 'N/A'}</p>
             </div>
 
             <div className="bg-gradient-to-br from-[#F97316]/10 to-[#F97316]/5 p-5 rounded-xl border border-[#F97316]/20 md:col-span-2 hover:shadow-md transition-all duration-300">
