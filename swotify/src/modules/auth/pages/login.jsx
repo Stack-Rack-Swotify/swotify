@@ -16,7 +16,6 @@ const Login = () => {
     { value: 'Student', label: 'Student' },
     { value: 'Teacher', label: 'Teacher' },
     { value: 'Admin', label: 'Admin' },
-    { value: 'Developer', label: 'Developer' },
     { value: 'Super Admin', label: 'Super Admin' }
   ];
 
@@ -48,12 +47,12 @@ const Login = () => {
           navigate('/teacher-dashboard');
         } else if (user.role === 'Admin') {
           navigate('/admin-dashboard');
-        } else if (user.role === 'Super Admin' || user.role === 'Developer') {
+        } else if (user.role === 'Super Admin') {
           navigate('/super-admin-dashboard');
         } else {
           navigate('/student-dashboard');
         }
-      } else if (selectedRole === 'Super Admin' && (user.role === 'Super Admin' || user.role === 'Developer')) {
+      } else if (selectedRole === 'Super Admin' && user.role === 'Super Admin') {
           // Special case for Developer logging in via Super Admin button
           console.log('Login successful for:', user.email, 'as', user.role);
           navigate('/super-admin-dashboard');
