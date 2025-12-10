@@ -18,6 +18,7 @@ const mockPTMHistory = [
       scienceScore: '78%',
       attendance: '95%',
       teacherComment: 'Alice is a diligent student with strong academic potential. Encouraged to explore advanced topics in Mathematics.',
+      internshipPerformance: 'Exceeded expectations in Q3 project, demonstrated strong analytical skills and teamwork in data analysis tasks. Received positive feedback from supervisor.',
     },
     actionItems: [
       'Parents to encourage independent research for Science projects.',
@@ -42,6 +43,7 @@ const mockPTMHistory = [
       artScore: '85%',
       attendance: '70%',
       teacherComment: 'Charlie needs targeted support in reading comprehension for History. Positive engagement in Art is commendable.',
+      internshipPerformance: 'Showed enthusiasm in creative design tasks during the internship. Needs to improve on technical documentation and meeting deadlines. Feedback noted areas for growth in structured task completion.',
     },
     actionItems: [
       'Parents to engage in daily reading practice with Charlie.',
@@ -66,6 +68,7 @@ const mockPTMHistory = [
       englishScore: '85%',
       attendance: '88%',
       teacherComment: 'Bob is a well-rounded student. Focusing on advanced planning for assignments will further enhance his academic success.',
+      internshipPerformance: 'Consistently met project goals and displayed excellent problem-solving skills in software development. Proactive in seeking feedback and contributing to team discussions. Highly recommended.',
     },
     actionItems: [
       'Parents to assist Bob in creating a study schedule for major projects.',

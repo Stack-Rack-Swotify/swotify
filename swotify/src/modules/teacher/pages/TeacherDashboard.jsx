@@ -199,7 +199,7 @@ const TeacherDashboard = () => {
             <Route path="/events" element={<TeacherEventsPage />} />
             <Route path="/student-profile/:studentId" element={<TeacherStudentProfilePage />} />
             <Route path="/ai-chatbot" element={<AIChatbot />} />
-            <Route path="/ptm-history" element={<PTMHistoryPage />} />
+            <Route path="/ptm-history/:ptmId?" element={<PTMHistoryPage />} />
             <Route path="/report" element={<ReportPage />} />
             <Route path="/settings" element={<TeacherSettingsPage />} />
             <Route path="/performance-report" element={<PerformanceReportPage />} />

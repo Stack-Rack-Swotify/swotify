@@ -287,7 +287,11 @@ const TeacherEventsPage = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {events.length > 0 ? (
               events.map(event => (
-                <div key={event.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 group">
+                <Link 
+                  key={event.id} 
+                  to={event.type === 'PTM' ? `/teacher-dashboard/ptm-history/${event.id}` : `/teacher-dashboard/events/${event.id}`}
+                  className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 group cursor-pointer"
+                >
                   <div className="relative overflow-hidden">
                     <img 
                       src={event.thumbnail} 
@@ -319,9 +323,7 @@ const TeacherEventsPage = () => {
                       {event.description}
                     </p>
                   </div>
-                </div>
-              ))
-            ) : (
+                </Link>
               <div className="lg:col-span-3 text-center py-16 bg-white rounded-2xl border border-gray-100">
                 <div className="w-20 h-20 bg-gradient-to-br from-[#0EA5E9]/10 to-[#22C55E]/10 rounded-full flex items-center justify-center mx-auto mb-4 border-2 border-[#0EA5E9]/20">
                   <svg className="w-10 h-10 text-[#64748B]" fill="none" stroke="currentColor" viewBox="0 0 24 24">

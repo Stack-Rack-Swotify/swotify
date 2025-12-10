@@ -10,6 +10,7 @@ const mockEvents = [
     thumbnail: 'https://placehold.co/150/FFC0CB/000000?text=PTM',
     createdBy: 'Teacher Smith',
     targetAudience: 'All Parents & Teachers',
+    type: 'PTM'
   },
   {
     id: 'e2',
@@ -21,6 +22,7 @@ const mockEvents = [
     thumbnail: 'https://placehold.co/150/87CEEB/000000?text=Science',
     createdBy: 'Teacher Johnson',
     targetAudience: 'Students, Parents, Public',
+    type: 'General'
   },
   {
     id: 'e3',
@@ -32,6 +34,7 @@ const mockEvents = [
     thumbnail: 'https://placehold.co/150/DDA0DD/000000?text=Play',
     createdBy: 'Teacher Davis',
     targetAudience: 'Students, Parents, Public',
+    type: 'General'
   },
 ];
 
