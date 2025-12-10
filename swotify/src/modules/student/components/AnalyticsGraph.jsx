@@ -24,11 +24,11 @@ ChartJS.register(
   Filler
 );
 
-const AnalyticsGraph = ({ title = 'Performance Trend', graphData = [] }) => {
-  const labels = graphData.map((_, index) => `Week ${index + 1}`);
+const AnalyticsGraph = ({ title = 'Performance Trend', graphData = [], labels }) => {
+  const chartLabels = labels || graphData.map((_, index) => `Week ${index + 1}`);
 
   const data = {
-    labels,
+    labels: chartLabels,
     datasets: [
       {
         label: 'Score',

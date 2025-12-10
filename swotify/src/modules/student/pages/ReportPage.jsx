@@ -4,6 +4,7 @@ import jsPDF from 'jspdf';
 import StudentAttendance from '../components/StudentAttendance';
 import StudentMarks from '../components/StudentMarks';
 import PerformanceAnalysis from '../components/PerformanceAnalysis';
+import YearWisePerformanceTrends from '../../admin/components/YearWisePerformanceTrends';
 
 const ReportPage = () => {
   const reportRef = useRef();
@@ -83,6 +84,7 @@ const ReportPage = () => {
           <StudentAttendance />
           <StudentMarks />
           <PerformanceAnalysis />
+          <YearWisePerformanceTrends />
 
           {/* Report Footer (will appear in PDF) */}
           <div className="mt-8 pt-6 border-t border-gray-100">

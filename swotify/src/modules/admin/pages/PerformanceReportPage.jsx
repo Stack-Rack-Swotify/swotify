@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import mockClasses from '../../../data/mockClasses';
+import AnalyticsGraph from '../../student/components/AnalyticsGraph';
+import YearWisePerformanceTrends from '../components/YearWisePerformanceTrends';
+import { useNavigate } from 'react-router-dom';
 
 const PerformanceReportPage = () => {
   const [reportData, setReportData] = useState(null);
-  const [viewMode, setViewMode] = useState('overview'); // 'overview' or 'detailed'
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Process data from mockClasses
@@ -68,6 +71,7 @@ const PerformanceReportPage = () => {
         const passRate = (classItem.students.length > 0) ? (passedStudents / classItem.students.length) * 100 : 0;
 
         classPerformance[classItem.id] = {
+          id: classItem.id,
           name: classItem.className,
           averageScore: classAverage,
           passRate: passRate,
@@ -111,11 +115,18 @@ const PerformanceReportPage = () => {
 
     // School Topper
     if (schoolTopper) {
-      csvContent += `School Topper,,,,,\nName,${schoolTopper.name},,,,\nClass,${schoolTopper.class},,,,\nAverage Score,${schoolTopper.averageScore.toFixed(2)}%,,,,\n\n`;
+      csvContent += `School Topper,,,,,
+Name,${schoolTopper.name},,,,
+Class,${schoolTopper.class},,,,
+Average Score,${schoolTopper.averageScore.toFixed(2)}%,,,,
+
+`;
     }
 
     // Class Performance Overview
-    csvContent += `Class Performance Overview,,,,,\nClass Name,Average Score,Pass Rate,Total Students,Class Topper Name,Class Topper Score\n`;
+    csvContent += `Class Performance Overview,,,,,
+Class Name,Average Score,Pass Rate,Total Students,Class Topper Name,Class Topper Score
+`;
     for (const classId in classPerformance) {
       const cp = classPerformance[classId];
       csvContent += `${cp.name},${cp.averageScore.toFixed(2)}%,${cp.passRate.toFixed(2)}%,${cp.totalStudents},${cp.topper ? cp.topper.name : 'N/A'},${cp.topper ? cp.topper.averageScore.toFixed(2) + '%' : 'N/A'}\n`;
@@ -123,7 +134,8 @@ const PerformanceReportPage = () => {
     csvContent += "\n";
 
     // Detailed Student Performance
-    csvContent += `Detailed Student Performance,,,,,\n`;
+    csvContent += `Detailed Student Performance,,,,,
+`;
     const allSubjects = new Set();
     allStudentsPerformance.forEach(student => {
       Object.keys(student).forEach(key => {
@@ -200,15 +212,6 @@ const PerformanceReportPage = () => {
           </div>
           <div className="flex gap-3">
             <button
-              onClick={() => setViewMode(viewMode === 'overview' ? 'detailed' : 'overview')}
-              className="px-5 py-3 bg-white border border-gray-100 text-[#0F172A] font-semibold rounded-xl shadow-sm hover:shadow-md hover:border-[#0EA5E9]/30 transition-all duration-300 flex items-center gap-2"
-            >
-              <svg className="w-5 h-5 text-[#0EA5E9]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7h12M8 12h12m-12 5h12M4 7h.01M4 12h.01M4 17h.01" />
-              </svg>
-              {viewMode === 'overview' ? 'Detailed View' : 'Overview'}
-            </button>
-            <button
               onClick={downloadCSV}
               className="px-5 py-3 bg-gradient-to-r from-[#0EA5E9] to-[#22C55E] text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2 hover:-translate-y-0.5"
             >
@@ -261,7 +264,11 @@ const PerformanceReportPage = () => {
             {Object.values(classPerformance).map(cp => {
               const badge = getScoreBadge(cp.averageScore);
               return (
-                <div key={cp.name} className="group p-6 rounded-xl border-2 border-gray-100 bg-gradient-to-br from-white to-gray-50 hover:border-[#0EA5E9]/30 hover:shadow-md transition-all duration-300">
+                <div 
+                  key={cp.name} 
+                  onClick={() => navigate(`/admin-dashboard/class-detail/${cp.id}`)}
+                  className="group p-6 rounded-xl border-2 border-gray-100 bg-gradient-to-br from-white to-gray-50 hover:border-[#0EA5E9]/30 hover:shadow-md transition-all duration-300 cursor-pointer"
+                >
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="text-lg font-bold text-[#0F172A]">{cp.name}</h3>
                     <span className={`px-3 py-1 rounded-full text-xs font-semibold ${badge.bg} ${badge.border} ${badge.text} border`}>
@@ -313,12 +320,18 @@ const PerformanceReportPage = () => {
           </div>
         </div>
 
-        {/* Student Performance Table */}
+        {/* Student Performance Table with Year-Wise Trends */}
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-lg transition-all duration-300">
           <h2 className="text-xl font-semibold text-[#0F172A] mb-6 flex items-center">
             <span className="w-1 h-6 bg-gradient-to-b from-[#22C55E] to-[#0EA5E9] rounded-full mr-3"></span>
-            {viewMode === 'overview' ? 'Top Performers' : 'Detailed Student Performance'}
+            Detailed Student Performance
           </h2>
+          
+          {/* Year-Wise Performance Trends - Integrated inline */}
+          <div className="mb-8">
+            <YearWisePerformanceTrends />
+          </div>
+
           <div className="overflow-x-auto">
             <table className="min-w-full">
               <thead>
@@ -334,17 +347,16 @@ const PerformanceReportPage = () => {
               <tbody className="divide-y divide-gray-100">
                 {allStudentsPerformance
                   .sort((a, b) => b.averageScore - a.averageScore)
-                  .slice(0, viewMode === 'overview' ? 10 : undefined)
                   .map((student, index) => {
                     const badge = getScoreBadge(student.averageScore);
                     return (
                       <tr key={student.id} className="hover:bg-gray-50 transition-colors">
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm ${
+                          <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm ${ 
                             index === 0 ? 'bg-gradient-to-r from-[#0EA5E9] to-[#22C55E] text-white' :
                             index === 1 ? 'bg-[#0EA5E9]/20 text-[#0EA5E9]' :
                             index === 2 ? 'bg-[#22C55E]/20 text-[#22C55E]' :
-                            'bg-gray-100 text-[#64748B]'
+                            'bg-gray-100 text-[#64748B]' 
                           }`}>
                             {index + 1}
                           </div>

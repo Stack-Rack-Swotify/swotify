@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { NavLink, Routes, Route, useNavigate } from 'react-router-dom';
 import AdminSidebar from '../components/AdminSidebar';
 import StaffPage from './StaffPage';
+import StaffProfilePage from './StaffProfilePage';
 import AdminSettingsPage from './AdminSettingsPage';
 import AdminStudentsPage from './AdminStudentsPage';
 import AIChatbot from '../../student/components/AIChatbot';
+import AnalyticsGraph from '../../student/components/AnalyticsGraph';
 import PerformanceReportPage from './PerformanceReportPage';
 import SchoolManagementPage from './SchoolManagementPage';
 import AppSettingsPage from './AppSettingsPage';
@@ -12,6 +14,7 @@ import mockEvents from '../../../data/mockEvents';
 import AdminEventsPage from './AdminEventsPage';
 import AdminEventDetailPage from './AdminEventDetailPage';
 import AdminStudentProfilePage from './AdminStudentProfilePage';
+import AdminClassDetailPage from './AdminClassDetailPage';
 
 // Initialize theme from localStorage (client-side only)
 const useTheme = () => {
@@ -125,10 +128,43 @@ const AdminDashboard = () => {
           </div>
         </div>
 
-        {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Left Column */}
-          <div className="space-y-6">
+        {/* School Performance Overview (Full Width) */}
+        <div 
+          onClick={() => navigate('performance-report')}
+          className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-6 hover:shadow-md transition-all duration-300 cursor-pointer group"
+        >
+          <h2 className="text-lg font-semibold text-[#1e293b] mb-5 flex items-center">
+            <span className="w-1 h-6 bg-gradient-to-b from-[#0EA5E9] to-[#22C55E] rounded-full mr-3"></span>
+            School Performance Overview
+          </h2>
+          
+          <div className="flex justify-between items-start mb-4">
+            <div>
+               <p className="text-sm text-[#64748B] mb-1">Average Score</p>
+               <div className="flex items-center gap-3">
+                 <p className="text-3xl font-bold text-[#0EA5E9]">85%</p>
+                 <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#22C55E]/10 text-[#22C55E] border border-[#22C55E]/20">
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                    </svg>
+                    Up 5%
+                 </span>
+               </div>
+            </div>
+          </div>
+          
+          <div onClick={(e) => e.stopPropagation()}>
+            <AnalyticsGraph 
+              title="Overall Performance Trend" 
+              graphData={[75, 78, 80, 82, 85]} 
+            />
+          </div>
+        </div>
+
+        {/* Main Content Grid (Quick Actions & Recent Activity vs Events) */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Left Column (Span 2) */}
+          <div className="lg:col-span-2 space-y-6">
             {/* Quick Actions */}
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-all duration-300">
               <h2 className="text-lg font-semibold text-[#1e293b] mb-5 flex items-center">
@@ -228,8 +264,7 @@ const AdminDashboard = () => {
             </div>
           </div>
 
-          {/* Right Column: Upcoming Events */}
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-all duration-300 h-full">
+          <div className="lg:col-span-1 bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-all duration-300 h-full">
             <h2 className="text-lg font-semibold text-[#1e293b] mb-5 flex items-center justify-between">
               <div className="flex items-center">
                 <span className="w-1 h-6 bg-gradient-to-b from-[#f59e0b] to-[#f59e0b]/80 rounded-full mr-3"></span>
@@ -411,6 +446,7 @@ const AdminDashboard = () => {
           <Routes>
             <Route path="/" element={<AdminOverview />} />
             <Route path="staff" element={<StaffPage />} />
+            <Route path="staff-profile/:staffId" element={<StaffProfilePage />} />
             <Route path="settings" element={<AdminSettingsPage />} />
             <Route path="students" element={<AdminStudentsPage />} />
             <Route path="ai-chatbot" element={<AIChatbot />} />
@@ -418,8 +454,10 @@ const AdminDashboard = () => {
             <Route path="school-management" element={<SchoolManagementPage />} />
             <Route path="app-settings" element={<AppSettingsPage />} />
             <Route path="events" element={<AdminEventsPage />} />
+            <Route path="settings" element={<AdminSettingsPage />} />
             <Route path="events/:id" element={<AdminEventDetailPage />} />
             <Route path="student-profile/:studentId" element={<AdminStudentProfilePage />} />
+            <Route path="class-detail/:classId" element={<AdminClassDetailPage />} />
           </Routes>
         </main>
       </div>

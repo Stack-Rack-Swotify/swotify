@@ -7,13 +7,11 @@ import SuperAdminSidebar from '../components/SuperAdminSidebar';
 
 
 
-import ManagementPage from './ManagementPage'; // Import ManagementPage
 import SchoolsPage from './SchoolsPage'; // Import SchoolsPage
 import AddSchoolPage from './AddSchoolPage'; // Import AddSchoolPage
 import SuperAdminReportPage from './SuperAdminReportPage'; // Import ReportPage
 import SuperAdminMainPage from './SuperAdminMainPage'; // Import the new SuperAdminMainPage
-import SuperAdminSettingsPage from './SuperAdminSettingsPage';
-import SuperAdminAppSettingsPage from './SuperAdminAppSettingsPage';
+import SchoolAndSystemManagementPage from './SchoolAndSystemManagementPage'; // Combined page
 import AIChatbotPage from './AIChatbotPage';
 
 // Initialize theme from localStorage (client-side only)
@@ -184,12 +182,10 @@ const SuperAdminDashboard = () => {
         <main className="flex-1 p-6">
           <Routes>
             <Route path="/" element={<SuperAdminMainPage />} />
-            <Route path="management" element={<ManagementPage />} />
+            <Route path="management" element={<SchoolAndSystemManagementPage />} />
             <Route path="schools" element={<SchoolsPage />} />
             <Route path="add-school" element={<AddSchoolPage />} />
             <Route path="reports-feedback" element={<SuperAdminReportPage />} />
-            <Route path="settings" element={<SuperAdminSettingsPage />} />
-            <Route path="app-settings" element={<SuperAdminAppSettingsPage />} />
             <Route path="ai-chatbot" element={<AIChatbotPage />} />
           </Routes>
         </main>

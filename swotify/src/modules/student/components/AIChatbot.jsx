@@ -7,6 +7,7 @@ const AIChatbot = () => {
     { type: 'ai', text: 'Hi there! I can help you with your attendance, grades, assignments, and more. What would you like to know?' },
   ]);
   const [inputValue, setInputValue] = useState('');
+  const [searchMode, setSearchMode] = useState('simple'); // 'simple' or 'deep'
 
   const handleSend = () => {
     if (inputValue.trim()) {
@@ -14,7 +15,7 @@ const AIChatbot = () => {
       setInputValue('');
       // Simulate AI response
       setTimeout(() => {
-        setMessages(prev => [...prev, { type: 'ai', text: 'I\'m processing your request...' }]);
+        setMessages(prev => [...prev, { type: 'ai', text: `[${searchMode === 'deep' ? 'Deep Search' : 'Simple Mode'}] I'm processing your request...` }]);
       }, 500);
     }
   };
@@ -27,18 +28,44 @@ const AIChatbot = () => {
     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 h-full flex flex-col overflow-hidden hover:shadow-lg transition-all duration-300">
       {/* Header */}
       <div className="bg-gradient-to-r from-[#0EA5E9] to-[#22C55E] px-6 py-4">
-        <div className="flex items-center gap-3">
-          <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
-            <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-            </svg>
-          </div>
-          <div>
-            <h3 className="text-xl font-bold text-white">AI Assistant</h3>
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-              <p className="text-white/90 text-sm">Online & Ready to Help</p>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
+              <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+              </svg>
             </div>
+            <div>
+              <h3 className="text-xl font-bold text-white">AI Assistant</h3>
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                <p className="text-white/90 text-sm">Online & Ready to Help</p>
+              </div>
+            </div>
+          </div>
+          
+          {/* Mode Toggle */}
+          <div className="flex bg-black/20 rounded-lg p-1">
+            <button
+              onClick={() => setSearchMode('simple')}
+              className={`px-3 py-1.5 rounded-md text-sm font-semibold transition-all ${
+                searchMode === 'simple' 
+                  ? 'bg-white text-[#0EA5E9] shadow-sm' 
+                  : 'text-white/80 hover:text-white hover:bg-white/10'
+              }`}
+            >
+              Simple
+            </button>
+            <button
+              onClick={() => setSearchMode('deep')}
+              className={`px-3 py-1.5 rounded-md text-sm font-semibold transition-all ${
+                searchMode === 'deep' 
+                  ? 'bg-white text-[#0EA5E9] shadow-sm' 
+                  : 'text-white/80 hover:text-white hover:bg-white/10'
+              }`}
+            >
+              Deep Search
+            </button>
           </div>
         </div>
       </div>
