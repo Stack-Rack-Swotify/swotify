@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 
 const SchoolAndSystemManagementPage = () => {
-  // --- School Management State ---
-  const [activeSchoolTab, setActiveSchoolTab] = useState('list');
+  // --- State Management ---
   const [showAddModal, setShowAddModal] = useState(false);
   const [schools, setSchools] = useState([
     { id: 1, name: 'Greenwood High', principal: 'Mr. John Smith', email: 'principal@greenwood.edu', students: 1200, status: 'Active' },
     { id: 2, name: 'Sunnydale Academy', principal: 'Mrs. Sarah Jones', email: 'principal@sunnydale.edu', students: 850, status: 'Active' },
   ]);
+  
   const [newSchool, setNewSchool] = useState({
     name: '',
     principal: '',
@@ -19,43 +19,59 @@ const SchoolAndSystemManagementPage = () => {
     logo: null
   });
 
-  // --- System Settings State ---
-  const [settings, setSettings] = useState({
-    schoolName: 'Swotify Academy',
-    adminEmail: 'superadmin@swotify.com',
-    contactPhone: '+91 98765 43210',
-    address: 'Global HQ, Cyber City, Gurgaon',
-    timezone: 'Asia/Kolkata',
-    language: 'English',
-    academicYear: '2024-2025',
-    emailNotifications: true,
-    smsNotifications: false,
-    maintenanceMode: false,
-  });
+  // Inline validation and feedback
+  const [formError, setFormError] = useState('');
+  const [showSuccessToast, setShowSuccessToast] = useState(false);
+  const [passwordStrength, setPasswordStrength] = useState('');
 
-  const [saved, setSaved] = useState(false);
-  const [activeMainTab, setActiveMainTab] = useState('schoolManagement');
-
-  // --- School Management Handlers ---
+  // --- Handlers ---
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewSchool(prev => ({
       ...prev,
       [name]: value
     }));
+
+    if (formError) setFormError('');
+
+    if (name === 'password') {
+      if (value.length < 6) setPasswordStrength('weak');
+      else if (value.length < 10) setPasswordStrength('medium');
+      else setPasswordStrength('strong');
+    }
+
+    if (name === 'confirmPassword' || name === 'password') {
+      const pwd = name === 'password' ? value : newSchool.password;
+      const confirmPwd = name === 'confirmPassword' ? value : newSchool.confirmPassword;
+      
+      if (confirmPwd && pwd !== confirmPwd) {
+        setFormError('Passwords do not match');
+      } else if (formError === 'Passwords do not match') {
+        setFormError('');
+      }
+    }
   };
 
   const handleFileChange = (e) => {
-    setNewSchool(prev => ({
-      ...prev,
-      logo: e.target.files[0]
-    }));
+    const file = e.target.files[0];
+    if (file && file.size > 2000000) {
+      setFormError('Logo file size must be less than 2MB');
+      return;
+    }
+    setNewSchool(prev => ({ ...prev, logo: file }));
+    setFormError('');
   };
 
   const handleAddSchool = (e) => {
     e.preventDefault();
+    
     if (newSchool.password !== newSchool.confirmPassword) {
-      alert("Passwords do not match!");
+      setFormError('Passwords do not match!');
+      return;
+    }
+
+    if (newSchool.password.length < 6) {
+      setFormError('Password must be at least 6 characters long');
       return;
     }
 
@@ -67,10 +83,25 @@ const SchoolAndSystemManagementPage = () => {
       students: 0,
       status: 'Active'
     };
+    
     setSchools([...schools, school]);
     setShowAddModal(false);
     setNewSchool({ name: '', principal: '', email: '', password: '', confirmPassword: '', address: '', phone: '', logo: null });
-    alert('School registered successfully with login details!');
+    setFormError('');
+    setPasswordStrength('');
+    
+    setShowSuccessToast(true);
+    setTimeout(() => setShowSuccessToast(false), 4000);
+  };
+
+  const handleViewSchool = (id) => {
+    console.log('View school:', id);
+    alert(`Viewing details for school ID: ${id}`);
+  };
+
+  const handleEditSchool = (id) => {
+    console.log('Edit school:', id);
+    alert(`Edit functionality for school ID: ${id}`);
   };
 
   const handleRemoveSchool = (id) => {
@@ -79,567 +110,521 @@ const SchoolAndSystemManagementPage = () => {
     }
   };
 
-  // --- System Settings Handlers ---
-  const handleSettingChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setSettings(prev => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value
-    }));
-  };
-
-  const handleSaveSettings = () => {
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
-  };
+  const stats = [
+    { label: 'Total Schools', value: schools.length, icon: 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4', gradient: 'from-blue-500 to-cyan-500' },
+    { label: 'Active Schools', value: schools.filter(s => s.status === 'Active').length, icon: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z', gradient: 'from-emerald-500 to-teal-500' },
+    { label: 'Total Students', value: schools.reduce((sum, s) => sum + s.students, 0).toLocaleString(), icon: 'M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z', gradient: 'from-purple-500 to-pink-500' },
+    { label: 'System Health', value: '98%', icon: 'M13 10V3L4 14h7v7l9-11h-7z', gradient: 'from-amber-500 to-orange-500' },
+  ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-white p-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Header with Tabs */}
-        <div className="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div>
-            <h1 className="text-3xl font-bold text-[#0F172A] mb-2">Management Console</h1>
-            <p className="text-[#64748B] text-sm">Unified school and system management for Super Admin</p>
-          </div>
-          <div className="bg-gray-100 p-1.5 rounded-xl flex gap-1">
-            <button
-              onClick={() => setActiveMainTab('schoolManagement')}
-              className={`px-6 py-2.5 rounded-lg text-sm font-bold transition-all duration-300 ${
-                activeMainTab === 'schoolManagement'
-                  ? 'bg-white text-[#0EA5E9] shadow-md'
-                  : 'text-[#64748B] hover:text-[#0F172A] hover:bg-gray-200'
-              }`}
-            >
-              School Management
-            </button>
-            <button
-              onClick={() => setActiveMainTab('systemSettings')}
-              className={`px-6 py-2.5 rounded-lg text-sm font-bold transition-all duration-300 ${
-                activeMainTab === 'systemSettings'
-                  ? 'bg-white text-[#0EA5E9] shadow-md'
-                  : 'text-[#64748B] hover:text-[#0F172A] hover:bg-gray-200'
-              }`}
-            >
-              System Settings
+    <div className="min-h-screen bg-gradient-to-br from-white via-slate-50 to-white p-6 animate-fade-in">
+      
+      {/* Premium Success Toast */}
+      {showSuccessToast && (
+        <div className="fixed top-6 right-6 z-50 animate-in slide-in-from-right-5 duration-300">
+          <div className="bg-white rounded-2xl shadow-2xl border-2 border-emerald-200 p-5 flex items-start gap-4 max-w-md">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center flex-shrink-0 shadow-lg animate-pulse">
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <div className="flex-1">
+              <p className="text-sm font-bold text-slate-900">School Added Successfully!</p>
+              <p className="text-xs text-slate-600 mt-1 font-medium">Login credentials have been created and sent via email.</p>
+            </div>
+            <button onClick={() => setShowSuccessToast(false)} className="text-slate-400 hover:text-slate-600 p-1 hover:bg-slate-100 rounded-lg transition-colors">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
             </button>
           </div>
         </div>
+      )}
 
-        {/* --- SCHOOL MANAGEMENT TAB CONTENT --- */}
-        {activeMainTab === 'schoolManagement' && (
-          <div className="space-y-6 animate-fade-in-up">
-            <div className="flex justify-end">
-              <button 
-                onClick={() => setShowAddModal(true)}
-                className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-[#0EA5E9] to-[#22C55E] text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                </svg>
-                Add School & Login
-              </button>
+      <div className="max-w-7xl mx-auto">
+        
+        {/* Premium Header */}
+        <div className="mb-8 relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-purple-500/5 to-pink-500/5 rounded-2xl blur-3xl"></div>
+          <div className="relative bg-gradient-to-r from-slate-900 via-blue-900 to-purple-900 rounded-2xl p-8 shadow-2xl border-2 border-slate-700/50">
+            <div className="absolute inset-0 opacity-10">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-white rounded-full blur-3xl"></div>
+              <div className="absolute bottom-0 left-0 w-48 h-48 bg-blue-400 rounded-full blur-2xl"></div>
+            </div>
+            
+            <div className="relative">
+              <h1 className="text-4xl font-extrabold text-white tracking-tight mb-2 flex items-center gap-3">
+                School Management
+                <span className="px-3 py-1 bg-gradient-to-r from-emerald-400 to-teal-400 text-slate-900 text-xs font-bold rounded-lg shadow-lg">
+                  {schools.length} SCHOOLS
+                </span>
+              </h1>
+              <p className="text-slate-300 text-sm font-medium">Manage registered schools and system configurations</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Premium Stats Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          {stats.map((stat, index) => (
+            <div key={index} className="group bg-white rounded-2xl p-6 shadow-lg border-2 border-slate-200/60 hover:shadow-2xl transition-all duration-300 hover:scale-105 relative overflow-hidden">
+              <div className={`absolute inset-0 bg-gradient-to-br ${stat.gradient} opacity-0 group-hover:opacity-5 transition-opacity`}></div>
+              <div className="relative">
+                <div className="flex items-start justify-between mb-4">
+                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${stat.gradient} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform`}>
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                      <path strokeLinecap="round" strokeLinejoin="round" d={stat.icon} />
+                    </svg>
+                  </div>
+                </div>
+                <p className="text-slate-600 text-sm font-bold uppercase tracking-wider mb-1">{stat.label}</p>
+                <p className="text-3xl font-extrabold text-slate-900">{stat.value}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Action Bar */}
+        <div className="space-y-6 animate-in fade-in duration-300">
+          <div className="flex justify-end">
+            <button 
+              onClick={() => setShowAddModal(true)}
+              className="group flex items-center gap-2 px-6 py-3.5 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white font-bold rounded-xl shadow-2xl hover:shadow-3xl hover:scale-105 active:scale-95 transition-all duration-300 border-2 border-white/20"
+            >
+              <svg className="w-5 h-5 group-hover:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+              </svg>
+              Add School & Login
+            </button>
+          </div>
+
+          {/* Premium Schools Table */}
+          <div className="bg-white rounded-2xl border-2 border-slate-200/60 shadow-2xl overflow-hidden">
+            <div className="p-6 border-b-2 border-slate-100 bg-gradient-to-r from-slate-50 to-blue-50">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-xl font-extrabold text-slate-900 tracking-tight">Registered Schools</h2>
+                  <p className="text-sm text-slate-600 mt-1 font-bold">{schools.length} school{schools.length !== 1 ? 's' : ''} registered in the system</p>
+                </div>
+              </div>
             </div>
 
-            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-              <div className="p-6 border-b border-gray-100">
-                <h2 className="text-lg font-bold text-[#0F172A]">Registered Schools</h2>
-              </div>
+            {schools.length > 0 ? (
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
-                    <tr className="bg-gray-50 border-b border-gray-100">
-                      <th className="text-left py-4 px-6 text-xs font-semibold text-[#64748B] uppercase">School Name</th>
-                      <th className="text-left py-4 px-6 text-xs font-semibold text-[#64748B] uppercase">Principal / Admin</th>
-                      <th className="text-left py-4 px-6 text-xs font-semibold text-[#64748B] uppercase">Login Email</th>
-                      <th className="text-center py-4 px-6 text-xs font-semibold text-[#64748B] uppercase">Status</th>
-                      <th className="text-right py-4 px-6 text-xs font-semibold text-[#64748B] uppercase">Actions</th>
+                    <tr className="bg-gradient-to-r from-slate-900 via-blue-900 to-purple-900 border-b-2 border-slate-700">
+                      <th className="text-left py-4 px-6 text-xs font-bold text-white uppercase tracking-wider">School Name</th>
+                      <th className="text-left py-4 px-6 text-xs font-bold text-white uppercase tracking-wider">Principal / Admin</th>
+                      <th className="text-left py-4 px-6 text-xs font-bold text-white uppercase tracking-wider">Login Email</th>
+                      <th className="text-center py-4 px-6 text-xs font-bold text-white uppercase tracking-wider">Students</th>
+                      <th className="text-center py-4 px-6 text-xs font-bold text-white uppercase tracking-wider">Status</th>
+                      <th className="text-center py-4 px-6 text-xs font-bold text-white uppercase tracking-wider">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-100">
-                    {schools.map((school) => (
-                      <tr key={school.id} className="hover:bg-gray-50 transition-colors">
-                        <td className="py-4 px-6 font-semibold text-[#0F172A]">{school.name}</td>
-                        <td className="py-4 px-6 text-sm text-[#64748B]">{school.principal}</td>
-                        <td className="py-4 px-6 text-sm text-[#64748B]">{school.email}</td>
+                  <tbody>
+                    {schools.map((school, index) => (
+                      <tr key={school.id} className={`border-b-2 border-slate-100 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 transition-all group ${index % 2 === 0 ? 'bg-white' : 'bg-slate-50/50'}`}>
+                        <td className="py-4 px-6">
+                          <div className="flex items-center gap-3">
+                            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/10 to-purple-500/10 flex items-center justify-center group-hover:scale-110 transition-transform shadow-sm">
+                              <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                              </svg>
+                            </div>
+                            <span className="font-bold text-slate-900">{school.name}</span>
+                          </div>
+                        </td>
+                        <td className="py-4 px-6 text-sm text-slate-600 font-bold">{school.principal}</td>
+                        <td className="py-4 px-6 text-sm text-slate-600 font-mono font-bold">{school.email}</td>
                         <td className="py-4 px-6 text-center">
-                          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${school.status === 'Active' ? 'bg-[#22C55E]/10 text-[#22C55E]' : 'bg-red-100 text-red-600'}`}>
+                          <span className="px-3 py-1.5 bg-gradient-to-r from-purple-100 to-pink-100 text-purple-700 rounded-lg text-sm font-bold border-2 border-purple-200/50">
+                            {school.students}
+                          </span>
+                        </td>
+                        <td className="py-4 px-6 text-center">
+                          <span className={`inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-bold border-2 ${
+                            school.status === 'Active' 
+                              ? 'bg-gradient-to-r from-emerald-100 to-teal-100 text-emerald-700 border-emerald-200/50' 
+                              : 'bg-gradient-to-r from-red-100 to-rose-100 text-red-700 border-red-200/50'
+                          }`}>
+                            <span className={`w-2 h-2 rounded-full mr-2 ${school.status === 'Active' ? 'bg-emerald-500' : 'bg-red-500'} animate-pulse`}></span>
                             {school.status}
                           </span>
                         </td>
-                        <td className="py-4 px-6 text-right">
-                          <button 
-                            onClick={() => handleRemoveSchool(school.id)}
-                            className="text-red-500 hover:text-red-700 transition-colors text-sm font-medium"
-                          >
-                            Remove
-                          </button>
+                        <td className="py-4 px-6">
+                          <div className="flex items-center justify-center gap-2">
+                            {/* View Button */}
+                            <button 
+                              onClick={() => handleViewSchool(school.id)}
+                              className="group/btn p-2.5 text-blue-600 hover:bg-gradient-to-br hover:from-blue-50 hover:to-cyan-50 rounded-xl transition-all duration-200 border-2 border-transparent hover:border-blue-200 hover:scale-110"
+                              title="View Details"
+                            >
+                              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                              </svg>
+                            </button>
+
+                            {/* Edit Button */}
+                            <button 
+                              onClick={() => handleEditSchool(school.id)}
+                              className="group/btn p-2.5 text-amber-600 hover:bg-gradient-to-br hover:from-amber-50 hover:to-orange-50 rounded-xl transition-all duration-200 border-2 border-transparent hover:border-amber-200 hover:scale-110"
+                              title="Edit School"
+                            >
+                              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                              </svg>
+                            </button>
+
+                            {/* Remove Button */}
+                            <button 
+                              onClick={() => handleRemoveSchool(school.id)}
+                              className="group/btn p-2.5 text-red-600 hover:bg-gradient-to-br hover:from-red-50 hover:to-rose-50 rounded-xl transition-all duration-200 border-2 border-transparent hover:border-red-200 hover:scale-110"
+                              title="Remove School"
+                            >
+                              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                              </svg>
+                            </button>
+                          </div>
                         </td>
                       </tr>
                     ))}
-                    {schools.length === 0 && (
-                      <tr>
-                        <td colSpan="5" className="py-8 text-center text-[#64748B]">No schools registered.</td>
-                      </tr>
-                    )}
                   </tbody>
                 </table>
               </div>
-            </div>
-          </div>
-        )}
-
-        {/* --- SYSTEM SETTINGS TAB CONTENT --- */}
-        {activeMainTab === 'systemSettings' && (
-          <div className="space-y-6 animate-fade-in-up">
-            {/* Success Message */}
-            {saved && (
-              <div className="mb-6 bg-gradient-to-r from-[#22C55E]/10 to-[#0EA5E9]/10 border border-[#22C55E]/30 rounded-xl p-4 flex items-center gap-3 animate-fade-in shadow-sm">
-                <div className="w-10 h-10 bg-[#22C55E] rounded-full flex items-center justify-center flex-shrink-0">
-                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
-                <div>
-                  <p className="text-sm font-semibold text-[#0F172A]">Settings saved successfully!</p>
-                  <p className="text-xs text-[#64748B]">Your changes have been applied to the system.</p>
-                </div>
-              </div>
-            )}
-
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              {/* Main Settings */}
-              <div className="lg:col-span-2 space-y-6">
-                {/* School Information */}
-                <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-lg transition-all duration-300">
-                  <h2 className="text-lg font-semibold text-[#0F172A] mb-5 flex items-center">
-                    <span className="w-1 h-6 bg-gradient-to-b from-[#0EA5E9] to-[#22C55E] rounded-full mr-3"></span>
-                    Global School Information
-                  </h2>
-                  <div className="space-y-4">
-                    <div>
-                      <label htmlFor="schoolName" className="block text-sm font-semibold text-[#0F172A] mb-2 flex items-center gap-2">
-                        <svg className="w-4 h-4 text-[#0EA5E9]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                        </svg>
-                        Default School Name
-                      </label>
-                      <input
-                        type="text"
-                        id="schoolName"
-                        name="schoolName"
-                        value={settings.schoolName}
-                        onChange={handleSettingChange}
-                        className="w-full px-4 py-3 text-sm border border-gray-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0EA5E9]/50 focus:border-[#0EA5E9] transition-all duration-200 hover:border-[#0EA5E9]/50 text-[#0F172A] bg-white"
-                      />
-                    </div>
-
-                    <div>
-                      <label htmlFor="address" className="block text-sm font-semibold text-[#0F172A] mb-2 flex items-center gap-2">
-                        <svg className="w-4 h-4 text-[#22C55E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                        </svg>
-                        Global Address
-                      </label>
-                      <textarea
-                        id="address"
-                        name="address"
-                        value={settings.address}
-                        onChange={handleSettingChange}
-                        rows="3"
-                        className="w-full px-4 py-3 text-sm border border-gray-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#22C55E]/50 focus:border-[#22C55E] transition-all duration-200 hover:border-[#22C55E]/50 text-[#0F172A] bg-white resize-none"
-                      />
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <label htmlFor="contactPhone" className="block text-sm font-semibold text-[#0F172A] mb-2 flex items-center gap-2">
-                          <svg className="w-4 h-4 text-[#F97316]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                          </svg>
-                          Global Contact Phone
-                        </label>
-                        <input
-                          type="tel"
-                          id="contactPhone"
-                          name="contactPhone"
-                          value={settings.contactPhone}
-                          onChange={handleSettingChange}
-                          className="w-full px-4 py-3 text-sm border border-gray-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#F97316]/50 focus:border-[#F97316] transition-all duration-200 hover:border-[#F97316]/50 text-[#0F172A] bg-white"
-                        />
-                      </div>
-
-                      <div>
-                        <label htmlFor="adminEmail" className="block text-sm font-semibold text-[#0F172A] mb-2 flex items-center gap-2">
-                          <svg className="w-4 h-4 text-[#0EA5E9]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                          </svg>
-                          Super Admin Email
-                        </label>
-                        <input
-                          type="email"
-                          id="adminEmail"
-                          name="adminEmail"
-                          value={settings.adminEmail}
-                          onChange={handleSettingChange}
-                          className="w-full px-4 py-3 text-sm border border-gray-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0EA5E9]/50 focus:border-[#0EA5E9] transition-all duration-200 hover:border-[#0EA5E9]/50 text-[#0F172A] bg-white"
-                        />
-                      </div>
-                    </div>
+            ) : (
+              /* Premium Empty State */
+              <div className="flex flex-col items-center justify-center py-20 px-6">
+                <div className="relative w-24 h-24 mb-6">
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-2xl blur-xl opacity-30 animate-pulse"></div>
+                  <div className="relative w-24 h-24 rounded-2xl bg-gradient-to-br from-blue-500/10 to-purple-500/10 flex items-center justify-center border-2 border-slate-200">
+                    <svg className="w-12 h-12 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                    </svg>
                   </div>
                 </div>
-
-                {/* System Configuration */}
-                <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-lg transition-all duration-300">
-                  <h2 className="text-lg font-semibold text-[#0F172A] mb-5 flex items-center">
-                    <span className="w-1 h-6 bg-gradient-to-b from-[#F97316] to-[#0EA5E9] rounded-full mr-3"></span>
-                    System Configuration
-                  </h2>
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <label htmlFor="timezone" className="block text-sm font-semibold text-[#0F172A] mb-2 flex items-center gap-2">
-                          <svg className="w-4 h-4 text-[#0EA5E9]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                          </svg>
-                          Timezone
-                        </label>
-                        <div className="relative">
-                          <select
-                            id="timezone"
-                            name="timezone"
-                            value={settings.timezone}
-                            onChange={handleSettingChange}
-                            className="w-full px-4 py-3 text-sm border border-gray-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0EA5E9]/50 focus:border-[#0EA5E9] transition-all duration-200 hover:border-[#0EA5E9]/50 text-[#0F172A] bg-white appearance-none cursor-pointer"
-                          >
-                            <option value="Asia/Kolkata">Asia/Kolkata (IST)</option>
-                            <option value="America/New_York">America/New York (EST)</option>
-                            <option value="Europe/London">Europe/London (GMT)</option>
-                            <option value="Asia/Tokyo">Asia/Tokyo (JST)</option>
-                          </select>
-                          <svg className="absolute right-3 top-3.5 w-5 h-5 text-[#64748B] pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                          </svg>
-                        </div>
-                      </div>
-
-                      <div>
-                        <label htmlFor="language" className="block text-sm font-semibold text-[#0F172A] mb-2 flex items-center gap-2">
-                          <svg className="w-4 h-4 text-[#22C55E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
-                          </svg>
-                          Default Language
-                        </label>
-                        <div className="relative">
-                          <select
-                            id="language"
-                            name="language"
-                            value={settings.language}
-                            onChange={handleSettingChange}
-                            className="w-full px-4 py-3 text-sm border border-gray-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#22C55E]/50 focus:border-[#22C55E] transition-all duration-200 hover:border-[#22C55E]/50 text-[#0F172A] bg-white appearance-none cursor-pointer"
-                          >
-                            <option value="English">English</option>
-                            <option value="Hindi">Hindi</option>
-                            <option value="Spanish">Spanish</option>
-                            <option value="French">French</option>
-                          </select>
-                          <svg className="absolute right-3 top-3.5 w-5 h-5 text-[#64748B] pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                          </svg>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div>
-                      <label htmlFor="academicYear" className="block text-sm font-semibold text-[#0F172A] mb-2 flex items-center gap-2">
-                        <svg className="w-4 h-4 text-[#F97316]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
-                        Academic Year
-                      </label>
-                      <div className="relative">
-                        <select
-                          id="academicYear"
-                          name="academicYear"
-                          value={settings.academicYear}
-                          onChange={handleSettingChange}
-                          className="w-full px-4 py-3 text-sm border border-gray-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#F97316]/50 focus:border-[#F97316] transition-all duration-200 hover:border-[#F97316]/50 text-[#0F172A] bg-white appearance-none cursor-pointer"
-                        >
-                          <option value="2024-2025">2024-2025</option>
-                          <option value="2025-2026">2025-2026</option>
-                          <option value="2026-2027">2026-2027</option>
-                        </select>
-                        <svg className="absolute right-3 top-3.5 w-5 h-5 text-[#64748B] pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Notification Preferences */}
-                <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-lg transition-all duration-300">
-                  <h2 className="text-lg font-semibold text-[#0F172A] mb-5 flex items-center">
-                    <span className="w-1 h-6 bg-gradient-to-b from-[#22C55E] to-[#0EA5E9] rounded-full mr-3"></span>
-                    Notification Preferences
-                  </h2>
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between p-4 bg-gradient-to-r from-gray-50 to-white rounded-xl border border-gray-100 hover:border-[#0EA5E9]/20 hover:shadow-sm transition-all cursor-pointer group">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-[#0EA5E9]/10 rounded-lg flex items-center justify-center group-hover:bg-[#0EA5E9]/20 transition-colors">
-                          <svg className="w-5 h-5 text-[#0EA5E9]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                          </svg>
-                        </div>
-                        <div>
-                          <p className="text-sm font-semibold text-[#0F172A]">Email Notifications</p>
-                          <p className="text-xs text-[#64748B]">Receive updates via email</p>
-                        </div>
-                      </div>
-                      <label className="relative inline-flex items-center cursor-pointer">
-                        <input
-                          type="checkbox"
-                          name="emailNotifications"
-                          checked={settings.emailNotifications}
-                          onChange={handleSettingChange}
-                          className="sr-only peer"
-                        />
-                        <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-[#0EA5E9]/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#0EA5E9]"></div>
-                      </label>
-                    </div>
-
-                    <div className="flex items-center justify-between p-4 bg-gradient-to-r from-gray-50 to-white rounded-xl border border-gray-100 hover:border-[#22C55E]/20 hover:shadow-sm transition-all cursor-pointer group">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-[#22C55E]/10 rounded-lg flex items-center justify-center group-hover:bg-[#22C55E]/20 transition-colors">
-                          <svg className="w-5 h-5 text-[#22C55E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                          </svg>
-                        </div>
-                        <div>
-                          <p className="text-sm font-semibold text-[#0F172A]">SMS Notifications</p>
-                          <p className="text-xs text-[#64748B]">Receive updates via SMS</p>
-                        </div>
-                      </div>
-                      <label className="relative inline-flex items-center cursor-pointer">
-                        <input
-                          type="checkbox"
-                          name="smsNotifications"
-                          checked={settings.smsNotifications}
-                          onChange={handleSettingChange}
-                          className="sr-only peer"
-                        />
-                        <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-[#22C55E]/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#22C55E]"></div>
-                      </label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Sidebar */}
-              <div className="space-y-6">
-                {/* Quick Actions */}
-                <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-lg transition-all duration-300">
-                  <h3 className="text-base font-semibold text-[#0F172A] mb-4 flex items-center">
-                    <span className="w-1 h-5 bg-gradient-to-b from-[#0EA5E9] to-[#22C55E] rounded-full mr-2"></span>
-                    Quick Actions
-                  </h3>
-                  <div className="space-y-3">
-                    <button className="w-full flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-[#0EA5E9]/5 to-white rounded-xl border border-gray-100 hover:shadow-md hover:border-[#0EA5E9]/30 transition-all duration-300 text-left group">
-                      <div className="w-8 h-8 bg-[#0EA5E9]/10 rounded-lg flex items-center justify-center group-hover:bg-[#0EA5E9]/20 transition-colors">
-                        <svg className="w-4 h-4 text-[#0EA5E9] group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                        </svg>
-                      </div>
-                      <span className="text-sm font-semibold text-[#0F172A] group-hover:text-[#0EA5E9] transition-colors">Backup System</span>
-                    </button>
-
-                    <button className="w-full flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-[#22C55E]/5 to-white rounded-xl border border-gray-100 hover:shadow-md hover:border-[#22C55E]/30 transition-all duration-300 text-left group">
-                      <div className="w-8 h-8 bg-[#22C55E]/10 rounded-lg flex items-center justify-center group-hover:bg-[#22C55E]/20 transition-colors">
-                        <svg className="w-4 h-4 text-[#22C55E] group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                        </svg>
-                      </div>
-                      <span className="text-sm font-semibold text-[#0F172A] group-hover:text-[#22C55E] transition-colors">View Logs</span>
-                    </button>
-
-                    <button className="w-full flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-[#F97316]/5 to-white rounded-xl border border-gray-100 hover:shadow-md hover:border-[#F97316]/30 transition-all duration-300 text-left group">
-                      <div className="w-8 h-8 bg-[#F97316]/10 rounded-lg flex items-center justify-center group-hover:bg-[#F97316]/20 transition-colors">
-                        <svg className="w-4 h-4 text-[#F97316] group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
-                        </svg>
-                      </div>
-                      <span className="text-sm font-semibold text-[#0F172A] group-hover:text-[#F97316] transition-colors">Advanced Settings</span>
-                    </button>
-                  </div>
-                </div>
-
-                {/* System Status */}
-                <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-lg transition-all duration-300">
-                  <h3 className="text-base font-semibold text-[#0F172A] mb-4 flex items-center">
-                    <span className="w-1 h-5 bg-gradient-to-b from-[#E11D48] to-[#F97316] rounded-full mr-2"></span>
-                    Maintenance Mode
-                  </h3>
-                  <div className="flex items-center justify-between p-4 bg-gradient-to-br from-[#E11D48]/5 to-white rounded-xl border border-[#E11D48]/20 hover:border-[#E11D48]/30 transition-all cursor-pointer group">
-                    <div>
-                      <p className="text-sm font-semibold text-[#0F172A]">Enable Maintenance</p>
-                      <p className="text-xs text-[#64748B] mt-1">Restrict system access</p>
-                    </div>
-                    <label className="relative inline-flex items-center cursor-pointer">
-                      <input
-                        type="checkbox"
-                        name="maintenanceMode"
-                        checked={settings.maintenanceMode}
-                        onChange={handleSettingChange}
-                        className="sr-only peer"
-                      />
-                      <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-[#E11D48]/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#E11D48]"></div>
-                    </label>
-                  </div>
-                </div>
-
-                {/* Save Button */}
-                <button
-                  onClick={handleSaveSettings}
-                  className="w-full px-6 py-4 bg-gradient-to-r from-[#0EA5E9] to-[#22C55E] text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 flex items-center justify-center gap-2"
+                <h3 className="text-2xl font-extrabold text-slate-900 mb-3 tracking-tight">No schools registered yet</h3>
+                <p className="text-sm text-slate-600 mb-8 text-center max-w-md font-medium">
+                  Get started by adding your first school to the system. You'll be able to manage their access and monitor their activity.
+                </p>
+                <button 
+                  onClick={() => setShowAddModal(true)}
+                  className="flex items-center gap-2 px-6 py-3.5 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white font-bold rounded-xl shadow-2xl hover:shadow-3xl transition-all hover:scale-105 border-2 border-white/20"
                 >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                   </svg>
-                  Save All Settings
+                  Add Your First School
                 </button>
               </div>
+            )}
+          </div>
+        </div>
+
+        {/* Premium Add School Modal */}
+        {showAddModal && (
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto animate-in fade-in duration-300">
+            <div className="bg-white rounded-2xl shadow-2xl w-full max-w-3xl my-8 animate-in zoom-in duration-300 border-4 border-slate-200 max-h-[90vh] overflow-y-auto custom-scrollbar">
+              
+              {/* Premium Modal Header */}
+              <div className="p-6 border-b-2 border-slate-100 sticky top-0 bg-gradient-to-r from-slate-50 to-blue-50 z-10 rounded-t-2xl">
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center shadow-lg">
+                      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight">Add New School</h2>
+                      <p className="text-sm text-slate-600 mt-1 font-medium">Create school account with login credentials</p>
+                    </div>
+                  </div>
+                  <button 
+                    onClick={() => {
+                      setShowAddModal(false);
+                      setFormError('');
+                      setPasswordStrength('');
+                    }} 
+                    className="group p-2.5 rounded-xl hover:bg-slate-100 transition-all hover:scale-110"
+                  >
+                    <svg className="w-6 h-6 text-slate-400 group-hover:text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <form onSubmit={handleAddSchool} className="p-6 space-y-6">
+                
+                {/* Inline Error Alert */}
+                {formError && (
+                  <div className="rounded-xl bg-gradient-to-r from-red-50 to-rose-50 border-2 border-red-200 p-4 flex items-start gap-3 animate-in slide-in-from-top duration-200 shadow-lg">
+                    <div className="w-10 h-10 rounded-lg bg-red-500 flex items-center justify-center flex-shrink-0">
+                      <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-sm font-bold text-red-800">{formError}</p>
+                    </div>
+                  </div>
+                )}
+                
+                {/* School Logo */}
+                <div className="space-y-2">
+                  <label className="text-sm font-bold text-slate-700 flex items-center gap-2">
+                    <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    School Logo
+                    <span className="text-xs text-slate-500 font-normal">(Max 2MB)</span>
+                  </label>
+                  <div className="flex items-center justify-center w-full">
+                    <label className="group flex flex-col items-center justify-center w-full h-36 border-3 border-blue-300 border-dashed rounded-xl cursor-pointer bg-gradient-to-br from-blue-50 to-purple-50 hover:from-blue-100 hover:to-purple-100 transition-all shadow-sm hover:shadow-lg">
+                      <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                        <div className="w-16 h-16 mb-3 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
+                          <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                          </svg>
+                        </div>
+                        <p className="text-sm text-slate-700 font-bold"><span className="text-blue-600">Click to upload</span> or drag and drop</p>
+                        <p className="text-xs text-slate-500 mt-1 font-medium">PNG, JPG, GIF up to 2MB</p>
+                      </div>
+                      <input type="file" className="hidden" onChange={handleFileChange} accept="image/*" />
+                    </label>
+                  </div>
+                  {newSchool.logo && (
+                    <p className="text-xs text-emerald-600 flex items-center gap-1.5 mt-2 font-bold">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                      </svg>
+                      {newSchool.logo.name} uploaded successfully
+                    </p>
+                  )}
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <label className="text-sm font-bold text-slate-700 flex items-center gap-2">
+                      <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                      </svg>
+                      School Name *
+                    </label>
+                    <input
+                      type="text"
+                      name="name"
+                      required
+                      value={newSchool.name}
+                      onChange={handleInputChange}
+                      placeholder="Enter school name"
+                      className="w-full px-4 py-3.5 rounded-xl border-2 border-slate-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 outline-none transition-all text-sm font-medium shadow-sm hover:shadow-md"
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <label className="text-sm font-bold text-slate-700 flex items-center gap-2">
+                      <svg className="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                      </svg>
+                      Principal Name *
+                    </label>
+                    <input
+                      type="text"
+                      name="principal"
+                      required
+                      value={newSchool.principal}
+                      onChange={handleInputChange}
+                      placeholder="Enter principal name"
+                      className="w-full px-4 py-3.5 rounded-xl border-2 border-slate-200 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/20 outline-none transition-all text-sm font-medium shadow-sm hover:shadow-md"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm font-bold text-slate-700 flex items-center gap-2">
+                      <svg className="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      </svg>
+                      Login Email *
+                    </label>
+                    <input
+                      type="email"
+                      name="email"
+                      required
+                      value={newSchool.email}
+                      onChange={handleInputChange}
+                      placeholder="admin@school.com"
+                      className="w-full px-4 py-3.5 rounded-xl border-2 border-slate-200 focus:border-purple-500 focus:ring-4 focus:ring-purple-500/20 outline-none transition-all text-sm font-mono font-medium shadow-sm hover:shadow-md"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm font-bold text-slate-700 flex items-center gap-2">
+                      <svg className="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                      </svg>
+                      Phone
+                    </label>
+                    <input
+                      type="tel"
+                      name="phone"
+                      value={newSchool.phone}
+                      onChange={handleInputChange}
+                      placeholder="+91-1234567890"
+                      className="w-full px-4 py-3.5 rounded-xl border-2 border-slate-200 focus:border-amber-500 focus:ring-4 focus:ring-amber-500/20 outline-none transition-all text-sm font-medium shadow-sm hover:shadow-md"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm font-bold text-slate-700 flex items-center gap-2">
+                      <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                      </svg>
+                      Password *
+                    </label>
+                    <input
+                      type="password"
+                      name="password"
+                      required
+                      value={newSchool.password}
+                      onChange={handleInputChange}
+                      placeholder="Min. 6 characters"
+                      className="w-full px-4 py-3.5 rounded-xl border-2 border-slate-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 outline-none transition-all text-sm font-medium shadow-sm hover:shadow-md"
+                    />
+                    {passwordStrength && newSchool.password && (
+                      <div className="flex items-center gap-2 mt-2">
+                        <div className="flex-1 h-2 bg-slate-200 rounded-full overflow-hidden">
+                          <div 
+                            className={`h-full transition-all duration-300 ${
+                              passwordStrength === 'weak' ? 'w-1/3 bg-gradient-to-r from-red-500 to-red-600' :
+                              passwordStrength === 'medium' ? 'w-2/3 bg-gradient-to-r from-yellow-500 to-amber-500' :
+                              'w-full bg-gradient-to-r from-emerald-500 to-teal-500'
+                            }`}
+                          />
+                        </div>
+                        <span className={`text-xs font-bold ${
+                          passwordStrength === 'weak' ? 'text-red-600' :
+                          passwordStrength === 'medium' ? 'text-yellow-600' :
+                          'text-emerald-600'
+                        }`}>
+                          {passwordStrength.toUpperCase()}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm font-bold text-slate-700 flex items-center gap-2">
+                      <svg className="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      Confirm Password *
+                    </label>
+                    <input
+                      type="password"
+                      name="confirmPassword"
+                      required
+                      value={newSchool.confirmPassword}
+                      onChange={handleInputChange}
+                      placeholder="Re-enter password"
+                      className={`w-full px-4 py-3.5 rounded-xl border-2 outline-none transition-all text-sm font-medium shadow-sm hover:shadow-md ${
+                        newSchool.confirmPassword && newSchool.password === newSchool.confirmPassword
+                          ? 'border-emerald-500 focus:border-emerald-600 focus:ring-4 focus:ring-emerald-500/20 bg-emerald-50'
+                          : 'border-slate-200 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/20 bg-white'
+                      }`}
+                    />
+                    {newSchool.confirmPassword && newSchool.password === newSchool.confirmPassword && (
+                      <p className="text-xs text-emerald-600 flex items-center gap-1.5 mt-1 font-bold">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        Passwords match perfectly!
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="space-y-2 md:col-span-2">
+                    <label className="text-sm font-bold text-slate-700 flex items-center gap-2">
+                      <svg className="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      </svg>
+                      Address
+                    </label>
+                    <textarea
+                      name="address"
+                      value={newSchool.address}
+                      onChange={handleInputChange}
+                      rows="3"
+                      placeholder="Enter complete school address with city and postal code..."
+                      className="w-full px-4 py-3.5 rounded-xl border-2 border-slate-200 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/20 outline-none resize-none transition-all text-sm font-medium shadow-sm hover:shadow-md"
+                    ></textarea>
+                  </div>
+                </div>
+
+                <div className="pt-6 flex flex-col sm:flex-row justify-end gap-3 border-t-2 border-slate-100">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setShowAddModal(false);
+                      setFormError('');
+                      setPasswordStrength('');
+                    }}
+                    className="group px-8 py-3.5 rounded-xl text-slate-700 font-bold hover:bg-gradient-to-r hover:from-slate-100 hover:to-slate-200 transition-all duration-300 border-2 border-slate-200 hover:border-slate-300 hover:scale-105 shadow-sm"
+                  >
+                    <span className="flex items-center justify-center gap-2">
+                      <svg className="w-5 h-5 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                      Cancel
+                    </span>
+                  </button>
+                  <button
+                    type="submit"
+                    className="group px-10 py-3.5 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white font-bold rounded-xl shadow-2xl hover:shadow-3xl hover:from-blue-500 hover:via-purple-500 hover:to-pink-500 focus:outline-none focus:ring-4 focus:ring-offset-2 focus:ring-purple-500 transform hover:scale-105 active:scale-95 transition-all duration-300 border-2 border-white/20"
+                  >
+                    <span className="flex items-center justify-center gap-2">
+                      <svg className="w-5 h-5 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                      </svg>
+                      Create School & Login
+                    </span>
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         )}
       </div>
 
-      {/* Add School Modal */}
-      {showAddModal && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-            <div className="p-6 border-b border-gray-100 flex justify-between items-center">
-              <h2 className="text-xl font-bold text-[#0F172A]">Add New School & Login Details</h2>
-              <button onClick={() => setShowAddModal(false)} className="text-[#64748B] hover:text-[#0F172A]">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-            <form onSubmit={handleAddSchool} className="p-6 space-y-6">
-              
-              {/* School Logo */}
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-[#334155]">School Logo</label>
-                <div className="flex items-center justify-center w-full">
-                  <label className="flex flex-col items-center justify-center w-full h-24 border-2 border-gray-300 border-dashed rounded-xl cursor-pointer bg-gray-50 hover:bg-gray-100 transition-all">
-                    <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                      <svg className="w-8 h-8 mb-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                      </svg>
-                      <p className="text-xs text-gray-500"><span className="font-semibold">Click to upload</span> or drag and drop</p>
-                    </div>
-                    <input type="file" className="hidden" onChange={handleFileChange} accept="image/*" />
-                  </label>
-                </div>
-              </div>
+      <style>{`
+        @keyframes fade-in {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        
+        .animate-fade-in {
+          animation: fade-in 0.5s ease-out;
+        }
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-[#334155]">School Name</label>
-                  <input
-                    type="text"
-                    name="name"
-                    required
-                    value={newSchool.name}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-2 rounded-xl border border-gray-200 focus:border-[#0EA5E9] focus:ring-2 focus:ring-[#0EA5E9]/20 outline-none"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-[#334155]">Principal Name</label>
-                  <input
-                    type="text"
-                    name="principal"
-                    required
-                    value={newSchool.principal}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-2 rounded-xl border border-gray-200 focus:border-[#0EA5E9] focus:ring-2 focus:ring-[#0EA5E9]/20 outline-none"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-[#334155]">Login Email</label>
-                  <input
-                    type="email"
-                    name="email"
-                    required
-                    value={newSchool.email}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-2 rounded-xl border border-gray-200 focus:border-[#0EA5E9] focus:ring-2 focus:ring-[#0EA5E9]/20 outline-none"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-[#334155]">Phone</label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={newSchool.phone}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-2 rounded-xl border border-gray-200 focus:border-[#0EA5E9] focus:ring-2 focus:ring-[#0EA5E9]/20 outline-none"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-[#334155]">Password</label>
-                  <input
-                    type="password"
-                    name="password"
-                    required
-                    value={newSchool.password}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-2 rounded-xl border border-gray-200 focus:border-[#0EA5E9] focus:ring-2 focus:ring-[#0EA5E9]/20 outline-none"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-[#334155]">Confirm Password</label>
-                  <input
-                    type="password"
-                    name="confirmPassword"
-                    required
-                    value={newSchool.confirmPassword}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-2 rounded-xl border border-gray-200 focus:border-[#0EA5E9] focus:ring-2 focus:ring-[#0EA5E9]/20 outline-none"
-                  />
-                </div>
-                <div className="space-y-2 md:col-span-2">
-                  <label className="text-sm font-medium text-[#334155]">Address</label>
-                  <textarea
-                    name="address"
-                    value={newSchool.address}
-                    onChange={handleInputChange}
-                    rows="2"
-                    className="w-full px-4 py-2 rounded-xl border border-gray-200 focus:border-[#0EA5E9] focus:ring-2 focus:ring-[#0EA5E9]/20 outline-none"
-                  ></textarea>
-                </div>
-              </div>
-              <div className="pt-4 flex justify-end gap-3">
-                <button
-                  type="button"
-                  onClick={() => setShowAddModal(false)}
-                  className="px-6 py-2 rounded-xl text-[#64748B] font-semibold hover:bg-gray-50"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="px-6 py-2 bg-gradient-to-r from-[#0EA5E9] to-[#22C55E] text-white font-semibold rounded-xl hover:shadow-lg"
-                >
-                  Create School & Login
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
+        .custom-scrollbar {
+          scrollbar-width: thin;
+          scrollbar-color: #8b5cf6 transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: linear-gradient(180deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);
+          border-radius: 10px;
+        }
+      `}</style>
     </div>
   );
 };
