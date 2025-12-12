@@ -54,7 +54,12 @@ const Signup = () => {
       role: selectedRole,
     };
 
-    mockUsers.push(newUser); 
+    mockUsers.push(newUser);
+    
+    // Persist to localStorage
+    const existingUsers = JSON.parse(localStorage.getItem('swotify_users') || '[]');
+    localStorage.setItem('swotify_users', JSON.stringify([...existingUsers, newUser]));
+
     console.log('New user registered (mock):', newUser);
     console.log('Current mock users:', mockUsers);
 

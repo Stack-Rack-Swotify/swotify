@@ -34,12 +34,16 @@ const Login = () => {
       return;
     }
 
-    const user = mockUsers.find(
+    // Combine mock users with localStorage users
+    const localUsers = JSON.parse(localStorage.getItem('swotify_users') || '[]');
+    const allUsers = [...mockUsers, ...localUsers];
+
+    const user = allUsers.find(
       (u) => u.email === email && u.password === password
     );
 
     if (user) {
-      if (user.role === selectedRole) {
+      if (user.role === selectedRole || (selectedRole === 'Super Admin' && user.role === 'Developer')) {
         console.log('Login successful for:', user.email, 'as', user.role);
         if (user.role === 'Student') {
           navigate('/student-dashboard');
@@ -47,15 +51,11 @@ const Login = () => {
           navigate('/teacher-dashboard');
         } else if (user.role === 'Admin') {
           navigate('/admin-dashboard');
-        } else if (user.role === 'Super Admin') {
+        } else if (user.role === 'Super Admin' || user.role === 'Developer') {
           navigate('/super-admin-dashboard');
         } else {
           navigate('/student-dashboard');
         }
-      } else if (selectedRole === 'Super Admin' && user.role === 'Super Admin') {
-          // Special case for Developer logging in via Super Admin button
-          console.log('Login successful for:', user.email, 'as', user.role);
-          navigate('/super-admin-dashboard');
       } else {
         setError('Role mismatch. Please select the correct role.');
       }
