@@ -28,4 +28,4 @@ jobs:
         uses: jamesives/github-pages-deploy-action@v4
         with:
           folder: swotify/dist
-          branch: gh-pages
+          branch: main
