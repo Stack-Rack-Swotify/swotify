@@ -289,7 +289,7 @@ const TeacherEventsPage = () => {
               events.map(event => (
                 <Link 
                   key={event.id} 
-                  to={event.type === 'PTM' ? `/teacher-dashboard/ptm-history/${event.id}` : `/teacher-dashboard/events/${event.id}`}
+                  to={event.type === 'PTM' ? `/teacher-dashboard/ptm-history` : `/teacher-dashboard/events/${event.id}`}
                   className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 group cursor-pointer"
                 >
                   <div className="relative overflow-hidden">
@@ -324,6 +324,8 @@ const TeacherEventsPage = () => {
                     </p>
                   </div>
                 </Link>
+              ))
+            ) : (
               <div className="lg:col-span-3 text-center py-16 bg-white rounded-2xl border border-gray-100">
                 <div className="w-20 h-20 bg-gradient-to-br from-[#0EA5E9]/10 to-[#22C55E]/10 rounded-full flex items-center justify-center mx-auto mb-4 border-2 border-[#0EA5E9]/20">
                   <svg className="w-10 h-10 text-[#64748B]" fill="none" stroke="currentColor" viewBox="0 0 24 24">

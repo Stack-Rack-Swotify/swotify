@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import Login from './modules/auth/pages/login.jsx';
 import Signup from './modules/auth/pages/signup.jsx'; // Import the new Signup component
 import StudentDashboard from './modules/student/pages/StudentDashboard.jsx'; // Import the StudentDashboard component
@@ -10,7 +10,7 @@ import SuperAdminDashboard from './modules/superAdmin/pages/SuperAdminDashboard.
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
@@ -23,7 +23,7 @@ function App() {
         {/* You can add a default route or redirect here if needed */}
         <Route path="/" element={<Signup />} /> {/* Default to signup */}
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 

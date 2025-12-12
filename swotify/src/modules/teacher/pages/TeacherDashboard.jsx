@@ -12,6 +12,7 @@ import TeacherDashboardOverview from './TeacherDashboardOverview';
 import ReportPage from '../../student/pages/ReportPage';
 import TeacherSettingsPage from './TeacherSettingsPage';
 import PerformanceReportPage from '../../admin/pages/PerformanceReportPage';
+import TeacherEventDetailPage from './TeacherEventDetailPage';
 
 // Initialize theme from localStorage (client-side only)
 const useTheme = () => {
@@ -197,6 +198,7 @@ const TeacherDashboard = () => {
             <Route path="/students" element={<StudentsPage />} />
             <Route path="/class" element={<ClassPage />} />
             <Route path="/events" element={<TeacherEventsPage />} />
+            <Route path="/events/:eventId" element={<TeacherEventDetailPage />} />
             <Route path="/student-profile/:studentId" element={<TeacherStudentProfilePage />} />
             <Route path="/ai-chatbot" element={<AIChatbot />} />
             <Route path="/ptm-history/:ptmId?" element={<PTMHistoryPage />} />
