@@ -1,383 +1,311 @@
 import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import mockClasses from '../../../data/mockClasses';
 import mockPTMHistory from '../../../data/mockPTMHistory';
-import { Link, useParams } from 'react-router-dom';
 
 const PTMHistoryPage = () => {
-  const { ptmId } = useParams();
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filterTeacher, setFilterTeacher] = useState('All');
+  const { ptmId } = useParams(); // Optional: if deep linking to a specific PTM
+  const navigate = useNavigate();
+  const [selectedStudent, setSelectedStudent] = useState(null);
+  const [activeTab, setActiveTab] = useState('history'); // history, performance, suggestions
+  const [isRecording, setIsRecording] = useState(false);
+  const [recordingTime, setRecordingTime] = useState(0);
+  const [timerInterval, setTimerInterval] = useState(null);
 
-  const initialPtmData = ptmId 
-    ? mockPTMHistory.find(ptm => ptm.id === ptmId)
-    : mockPTMHistory;
+  // Flatten students from all classes for the sidebar list
+  const allStudents = mockClasses.flatMap(classData => 
+    classData.students.map(student => ({
+      ...student,
+      className: classData.className,
+      grade: classData.grade,
+      section: classData.section
+    }))
+  );
 
-  const [ptmDisplayData, setPtmDisplayData] = useState(initialPtmData);
+  // Filter PTM history for the selected student
+  const studentPTMHistory = selectedStudent 
+    ? mockPTMHistory.filter(record => record.studentId === selectedStudent.id)
+    : [];
+
+  const handleRecordToggle = () => {
+    if (!isRecording) {
+      setIsRecording(true);
+      const interval = setInterval(() => {
+        setRecordingTime(prev => prev + 1);
+      }, 1000);
+      setTimerInterval(interval);
+    } else {
+      setIsRecording(false);
+      clearInterval(timerInterval);
+      setRecordingTime(0);
+      alert('PTM Session Recorded & Saved!');
+    }
+  };
+
+  const formatTime = (seconds) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  };
 
   useEffect(() => {
+    // If a ptmId is provided in URL, try to find that student
     if (ptmId) {
-      setPtmDisplayData(mockPTMHistory.find(ptm => ptm.id === ptmId));
-    } else {
-      setPtmDisplayData(mockPTMHistory);
+        const record = mockPTMHistory.find(r => r.id === ptmId);
+        if (record) {
+            const student = allStudents.find(s => s.id === record.studentId);
+            if (student) setSelectedStudent(student);
+        }
+    } else if (allStudents.length > 0 && !selectedStudent) {
+        // Default to first student if none selected
+        setSelectedStudent(allStudents[0]);
     }
   }, [ptmId]);
 
-  // Extract unique teachers for filter (only if not viewing a single PTM)
-  const teachers = ['All', ...new Set(mockPTMHistory.map(ptm => ptm.teacher))];
-
-  // Filter PTM history (only if not viewing a single PTM)
-  const filteredPTMHistory = ptmId 
-    ? (ptmDisplayData ? [ptmDisplayData] : []) 
-    : (Array.isArray(ptmDisplayData) 
-        ? ptmDisplayData.filter(ptm => {
-            const matchesSearch = ptm.studentName.toLowerCase().includes(searchTerm.toLowerCase());
-            const matchesTeacher = filterTeacher === 'All' || ptm.teacher === filterTeacher;
-            return matchesSearch && matchesTeacher;
-          })
-        : []); // Ensure it's an array for filtering
-
-  // Get score color based on grade
-  const getScoreColor = (score) => {
-    const numScore = parseInt(score);
-    if (numScore >= 90) return 'text-[#22C55E]';
-    if (numScore >= 75) return 'text-[#0EA5E9]';
-    if (numScore >= 60) return 'text-[#F97316]';
-    return 'text-[#E11D48]';
-  };
-
-  // Get grade badge style
-  const getGradeBadgeStyle = (grade) => {
-    if (grade.startsWith('A')) return 'bg-gradient-to-r from-[#22C55E]/10 to-[#22C55E]/5 text-[#22C55E] border-[#22C55E]/20';
-    if (grade.startsWith('B')) return 'bg-gradient-to-r from-[#0EA5E9]/10 to-[#0EA5E9]/5 text-[#0EA5E9] border-[#0EA5E9]/20';
-    if (grade.startsWith('C')) return 'bg-gradient-to-r from-[#F97316]/10 to-[#F97316]/5 text-[#F97316] border-[#F97316]/20';
-    return 'bg-gradient-to-r from-[#64748B]/10 to-[#64748B]/5 text-[#64748B] border-[#64748B]/20';
-  };
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-white p-6">
+    <div className="min-h-screen bg-gradient-to-br from-white via-slate-50/50 to-white p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          {ptmId && (
-            <Link to="/teacher-dashboard/ptm-history" className="inline-flex items-center text-[#0EA5E9] hover:text-[#22C55E] mb-4">
-              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-              </svg>
-              Back to PTM History
-            </Link>
-          )}
-          <h1 className="text-3xl font-bold text-[#0F172A] mb-2">{ptmId ? 'PTM Details' : 'PTM History'}</h1>
-          <p className="text-[#64748B] text-sm">{ptmId ? 'Detailed view of the selected Parent-Teacher Meeting.' : 'Review past Parent-Teacher Meeting logs and student performance discussions'}</p>
+          <h1 className="text-4xl font-semibold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-3">
+            PTM History & Management
+          </h1>
+          <p className="text-slate-600 text-sm font-medium">
+            Manage Parent-Teacher Meetings, view history, and record sessions.
+          </p>
         </div>
 
-        {!ptmId && (
-          <>
-            {/* Filters Section */}
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-6 hover:shadow-lg transition-all duration-300">
-              <h2 className="text-lg font-semibold text-[#0F172A] mb-4 flex items-center">
-                <span className="w-1 h-6 bg-gradient-to-b from-[#0EA5E9] to-[#0F172A] rounded-full mr-3"></span>
-                Search & Filter
-              </h2>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {/* Search Bar */}
-                <div>
-                  <label htmlFor="search" className="block text-sm font-medium text-[#64748B] mb-2">
-                    Search Student
-                  </label>
-                  <div className="relative">
-                    <input
-                      id="search"
-                      type="text"
-                      placeholder="Search by student name..."
-                      className="w-full px-4 py-3 pl-10 text-sm border border-gray-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0EA5E9]/50 focus:border-[#0EA5E9] transition-all duration-200 hover:border-[#0EA5E9]/50 text-[#0F172A] bg-white"
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          {/* Left Sidebar - Student List (Switching Button area) */}
+          <div className="lg:col-span-3">
+            <div className="bg-white rounded-2xl shadow-lg border border-slate-200/60 p-4 sticky top-6">
+              <h2 className="text-lg font-semibold text-slate-900 mb-4 px-2">Select Student</h2>
+              <div className="space-y-2 max-h-[600px] overflow-y-auto custom-scrollbar">
+                {allStudents.map((student) => (
+                  <button
+                    key={student.id}
+                    onClick={() => setSelectedStudent(student)}
+                    className={`w-full flex items-center gap-3 p-3 rounded-xl transition-all border-2 text-left ${
+                      selectedStudent?.id === student.id
+                        ? 'bg-blue-50 border-blue-200 shadow-sm'
+                        : 'hover:bg-slate-50 border-transparent hover:border-slate-100'
+                    }`}
+                  >
+                    <img
+                      src={student.photo}
+                      alt={student.name}
+                      className={`w-10 h-10 rounded-full object-cover border-2 ${selectedStudent?.id === student.id ? 'border-blue-400' : 'border-gray-200'}`}
                     />
-                    <svg className="absolute left-3 top-3.5 w-5 h-5 text-[#64748B]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
-                  </div>
-                </div>
-
-                {/* Teacher Filter */}
-                <div>
-                  <label htmlFor="teacher-filter" className="block text-sm font-medium text-[#64748B] mb-2">
-                    Filter by Teacher
-                  </label>
-                  <div className="relative">
-                    <select
-                      id="teacher-filter"
-                      value={filterTeacher}
-                      onChange={(e) => setFilterTeacher(e.target.value)}
-                      className="w-full px-4 py-3 text-sm border border-gray-100 focus:outline-none focus:ring-2 focus:ring-[#22C55E]/50 focus:border-[#22C55E] bg-white text-[#0F172A] rounded-xl transition-all duration-200 hover:border-[#22C55E]/50 appearance-none cursor-pointer"
-                    >
-                      {teachers.map(teacher => (
-                        <option key={teacher} value={teacher}>{teacher}</option>
-                      ))}
-                    </select>
-                    <svg className="absolute right-3 top-3.5 w-5 h-5 text-[#64748B] pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </div>
-                </div>
+                    <div className="min-w-0">
+                      <p className={`text-sm font-bold truncate ${selectedStudent?.id === student.id ? 'text-blue-700' : 'text-slate-700'}`}>{student.name}</p>
+                      <p className="text-xs text-slate-500 truncate">{student.className}</p>
+                    </div>
+                  </button>
+                ))}
               </div>
             </div>
+          </div>
 
-            {/* Results Count */}
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 mb-6 flex items-center justify-between hover:shadow-lg transition-all duration-300">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-[#0EA5E9]/10 to-[#22C55E]/10 rounded-lg flex items-center justify-center">
-                  <svg className="w-5 h-5 text-[#0EA5E9]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+          {/* Right Content Area */}
+          <div className="lg:col-span-9">
+            {selectedStudent ? (
+              <div className="space-y-6">
+                {/* Student Header Card */}
+                <div className="bg-white rounded-2xl shadow-lg border border-slate-200/60 p-6 flex flex-col md:flex-row justify-between items-center gap-6">
+                  <div className="flex items-center gap-5">
+                    <img
+                      src={selectedStudent.photo}
+                      alt={selectedStudent.name}
+                      className="w-20 h-20 rounded-full object-cover border-4 border-white shadow-lg"
+                    />
+                    <div>
+                      <h2 className="text-2xl font-bold text-slate-900">{selectedStudent.name}</h2>
+                      <p className="text-slate-600 font-medium">Parents: {selectedStudent.details.parents}</p>
+                      <p className="text-slate-500 text-sm">{selectedStudent.details.email}</p>
+                    </div>
+                  </div>
+                  
+                  {/* Recording Button */}
+                  <div className="flex flex-col items-end gap-2">
+                    <button
+                      onClick={handleRecordToggle}
+                      className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-white shadow-lg transition-all hover:scale-105 ${
+                        isRecording 
+                          ? 'bg-gradient-to-r from-red-500 to-rose-600 animate-pulse' 
+                          : 'bg-gradient-to-r from-emerald-500 to-teal-500'
+                      }`}
+                    >
+                      {isRecording ? (
+                        <>
+                          <span className="w-3 h-3 bg-white rounded-full animate-ping"></span>
+                          Stop Recording ({formatTime(recordingTime)})
+                        </>
+                      ) : (
+                        <>
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                          </svg>
+                          Start PTM Session
+                        </>
+                      )}
+                    </button>
+                    {isRecording && <p className="text-xs text-red-500 font-semibold">Recording in progress...</p>}
+                  </div>
+                </div>
+
+                {/* Tabs */}
+                <div className="flex gap-4 border-b border-slate-200 pb-1">
+                  {['history', 'performance', 'suggestions'].map((tab) => (
+                    <button
+                      key={tab}
+                      onClick={() => setActiveTab(tab)}
+                      className={`px-4 py-2 text-sm font-bold capitalize transition-colors relative ${
+                        activeTab === tab ? 'text-blue-600' : 'text-slate-500 hover:text-slate-700'
+                      }`}
+                    >
+                      {tab === 'history' ? 'History & Summary' : tab}
+                      {activeTab === tab && (
+                        <div className="absolute bottom-[-5px] left-0 w-full h-1 bg-blue-600 rounded-full"></div>
+                      )}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Tab Content */}
+                <div className="space-y-6">
+                  {activeTab === 'history' && (
+                    <div className="space-y-4">
+                      {studentPTMHistory.length > 0 ? (
+                        studentPTMHistory.map((record) => (
+                          <div key={record.id} className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all">
+                            <div className="flex justify-between items-start mb-4">
+                              <div>
+                                <h3 className="text-lg font-bold text-slate-900 mb-1">PTM Date: {record.date}</h3>
+                                <p className="text-sm text-slate-500">Conducted by: {record.teacher}</p>
+                              </div>
+                              <span className="px-3 py-1 bg-blue-50 text-blue-700 text-xs font-bold rounded-lg border border-blue-100">Completed</span>
+                            </div>
+                            
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                              <div>
+                                <h4 className="text-sm font-bold text-slate-700 uppercase tracking-wide mb-2">Summary & Discussion</h4>
+                                <ul className="list-disc list-inside space-y-1 text-sm text-slate-600">
+                                  {record.discussionPoints.map((point, i) => (
+                                    <li key={i}>{point}</li>
+                                  ))}
+                                </ul>
+                              </div>
+                              <div>
+                                <h4 className="text-sm font-bold text-slate-700 uppercase tracking-wide mb-2">Teacher's Note</h4>
+                                <p className="text-sm text-slate-600 italic bg-slate-50 p-3 rounded-lg border border-slate-100">
+                                  "{record.performanceSummary.teacherComment}"
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        ))
+                      ) : (
+                        <div className="text-center py-12 bg-white rounded-xl border border-slate-200 border-dashed">
+                          <p className="text-slate-500 font-medium">No previous PTM records found for this student.</p>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {activeTab === 'performance' && (
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                      <div className="bg-gradient-to-br from-emerald-50 to-teal-50 p-6 rounded-xl border border-emerald-100 shadow-sm">
+                        <h4 className="text-emerald-800 font-bold mb-2">Current Grade</h4>
+                        <p className="text-4xl font-bold text-emerald-600">{selectedStudent.details.grade}</p>
+                      </div>
+                      <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-xl border border-blue-100 shadow-sm">
+                        <h4 className="text-blue-800 font-bold mb-2">Attendance</h4>
+                        <p className="text-4xl font-bold text-blue-600">{selectedStudent.details.attendance}</p>
+                      </div>
+                      <div className="bg-gradient-to-br from-purple-50 to-fuchsia-50 p-6 rounded-xl border border-purple-100 shadow-sm">
+                        <h4 className="text-purple-800 font-bold mb-2">Assignments</h4>
+                        <p className="text-4xl font-bold text-purple-600">{selectedStudent.assignments?.length || 0}</p>
+                        <p className="text-xs text-purple-700 mt-1">Total assignments submitted</p>
+                      </div>
+                      
+                      <div className="md:col-span-3 bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                        <h4 className="text-slate-900 font-bold mb-4">Latest Performance Summary</h4>
+                        {studentPTMHistory.length > 0 ? (
+                           <div className="grid grid-cols-2 gap-4">
+                             {Object.entries(studentPTMHistory[0].performanceSummary)
+                               .filter(([key]) => key.includes('Score'))
+                               .map(([key, value]) => (
+                                 <div key={key} className="flex justify-between items-center p-3 bg-slate-50 rounded-lg">
+                                   <span className="text-sm font-semibold capitalize text-slate-700">{key.replace('Score', '')}</span>
+                                   <span className="text-sm font-bold text-slate-900">{value}</span>
+                                 </div>
+                               ))
+                             }
+                           </div>
+                        ) : (
+                          <p className="text-slate-500 text-sm">No recent performance data linked to PTMs.</p>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {activeTab === 'suggestions' && (
+                    <div className="bg-white rounded-2xl shadow-lg border border-slate-200/60 p-6">
+                      <h3 className="text-lg font-bold text-slate-900 mb-4">Action Items & Suggestions</h3>
+                      <div className="space-y-4">
+                        {studentPTMHistory.length > 0 ? (
+                          studentPTMHistory.flatMap(r => r.actionItems).map((item, index) => (
+                            <div key={index} className="flex items-start gap-3 p-4 bg-amber-50 border border-amber-100 rounded-xl">
+                              <div className="w-6 h-6 bg-amber-200 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <svg className="w-4 h-4 text-amber-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                </svg>
+                              </div>
+                              <p className="text-sm font-medium text-amber-900">{item}</p>
+                            </div>
+                          ))
+                        ) : (
+                          <p className="text-slate-500 text-sm">No pending suggestions or action items.</p>
+                        )}
+                        
+                        {/* Add New Suggestion Input */}
+                        <div className="mt-6 pt-6 border-t border-slate-100">
+                          <label className="block text-sm font-bold text-slate-700 mb-2">Add New Note/Suggestion</label>
+                          <textarea 
+                            className="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none text-sm" 
+                            rows="3"
+                            placeholder="Type a new suggestion for the next meeting..."
+                          ></textarea>
+                          <button className="mt-3 px-6 py-2 bg-slate-900 text-white text-sm font-bold rounded-lg hover:bg-slate-800 transition-colors">
+                            Add Note
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            ) : (
+              <div className="h-full flex flex-col items-center justify-center text-center p-12 bg-white rounded-2xl border border-slate-200 border-dashed">
+                <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mb-4">
+                  <svg className="w-10 h-10 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
                   </svg>
                 </div>
-                <div>
-                  <h3 className="text-sm font-semibold text-[#0F172A]">Meeting Records</h3>
-                  <p className="text-xs text-[#64748B]">Total PTM sessions logged</p>
-                </div>
+                <h3 className="text-xl font-bold text-slate-900">No Student Selected</h3>
+                <p className="text-slate-500">Please select a student from the list to view their PTM history.</p>
               </div>
-              <span className="bg-gradient-to-r from-[#0EA5E9]/10 to-[#22C55E]/10 text-[#0EA5E9] px-4 py-2 rounded-full text-sm font-semibold border border-[#0EA5E9]/20">
-                {filteredPTMHistory.length} {filteredPTMHistory.length === 1 ? 'Record' : 'Records'}
-              </span>
-            </div>
-          </>
-        )}
-        
-        {/* PTM Logs */}
-        <div className="space-y-6">
-          {filteredPTMHistory.length > 0 ? (
-            filteredPTMHistory.map((ptm) => (
-              <div key={ptm.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300">
-                {/* Header Section */}
-                <div className="bg-gradient-to-r from-[#0EA5E9]/5 to-[#22C55E]/5 p-6 border-b border-gray-100">
-                  <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-2">
-                        <div className="w-12 h-12 bg-gradient-to-br from-[#0EA5E9] to-[#22C55E] rounded-full flex items-center justify-center text-white font-bold text-lg">
-                          {ptm.studentName.charAt(0)}
-                        </div>
-                        <div>
-                          <h2 className="text-xl font-bold text-[#0F172A]">{ptm.studentName}</h2>
-                          <div className="flex items-center gap-3 text-sm text-[#64748B]">
-                            <span className="flex items-center gap-1">
-                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                              </svg>
-                              {ptm.date}
-                            </span>
-                            <span className="flex items-center gap-1">
-                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                              </svg>
-                              {ptm.teacher}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <Link 
-                      to={`/teacher-dashboard/student-profile/${ptm.studentId}`}
-                      className="inline-flex items-center justify-center gap-2 px-5 py-3 bg-gradient-to-r from-[#0EA5E9] to-[#22C55E] text-white font-semibold rounded-xl text-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5"
-                    >
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                      </svg>
-                      View Profile
-                    </Link>
-                  </div>
-                </div>
-
-                {/* Content Grid */}
-                <div className="p-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  {/* Left Column */}
-                  <div className="space-y-6">
-                    {/* Discussion Points */}
-                    <div>
-                      <h3 className="text-base font-semibold text-[#0F172A] mb-3 flex items-center">
-                        <span className="w-1 h-5 bg-gradient-to-b from-[#0EA5E9] to-[#22C55E] rounded-full mr-2"></span>
-                        Discussion Points
-                      </h3>
-                      <div className="space-y-2">
-                        {ptm.discussionPoints.map((point, index) => (
-                          <div key={index} className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
-                            <div className="w-6 h-6 bg-[#0EA5E9]/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                              <svg className="w-3 h-3 text-[#0EA5E9]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
-                              </svg>
-                            </div>
-                            <p className="text-sm text-[#0F172A]">{point}</p>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Action Items */}
-                    {ptm.actionItems && ptm.actionItems.length > 0 && (
-                      <div>
-                        <h3 className="text-base font-semibold text-[#0F172A] mb-3 flex items-center">
-                          <span className="w-1 h-5 bg-gradient-to-b from-[#22C55E] to-[#0EA5E9] rounded-full mr-2"></span>
-                          Action Items
-                        </h3>
-                        <div className="space-y-2">
-                          {ptm.actionItems.map((item, index) => (
-                            <div key={index} className="flex items-start gap-3 p-3 bg-gradient-to-br from-[#22C55E]/5 to-[#0EA5E9]/5 rounded-lg border border-[#22C55E]/20">
-                              <div className="w-6 h-6 bg-[#22C55E]/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                                <svg className="w-3 h-3 text-[#22C55E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-                                </svg>
-                              </div>
-                              <p className="text-sm text-[#0F172A] font-medium">{item}</p>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Right Column - Performance Summary */}
-                  <div>
-                    <h3 className="text-base font-semibold text-[#0F172A] mb-3 flex items-center">
-                      <span className="w-1 h-5 bg-gradient-to-b from-[#F97316] to-[#0EA5E9] rounded-full mr-2"></span>
-                      Performance Summary
-                    </h3>
-                    
-                    <div className="bg-gradient-to-br from-gray-50 to-white p-5 rounded-xl border border-gray-100 space-y-4">
-                      {/* Overall Grade Badge */}
-                      <div className="flex items-center justify-between pb-4 border-b border-gray-100">
-                        <span className="text-sm font-medium text-[#64748B]">Overall Grade</span>
-                        <span className={`px-4 py-2 rounded-full text-lg font-bold border ${getGradeBadgeStyle(ptm.performanceSummary.overallGrade)}`}>
-                          {ptm.performanceSummary.overallGrade}
-                        </span>
-                      </div>
-
-                      {/* Subject Scores */}
-                      <div className="space-y-3">
-                        {ptm.performanceSummary.mathScore && (
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                              <div className="w-8 h-8 bg-[#0EA5E9]/10 rounded-lg flex items-center justify-center">
-                                <svg className="w-4 h-4 text-[#0EA5E9]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                                </svg>
-                              </div>
-                              <span className="text-sm font-medium text-[#0F172A]">Mathematics</span>
-                            </div>
-                            <span className={`text-base font-bold ${getScoreColor(ptm.performanceSummary.mathScore)}`}>
-                              {ptm.performanceSummary.mathScore}
-                            </span>
-                          </div>
-                        )}
-
-                        {ptm.performanceSummary.scienceScore && (
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                              <div className="w-8 h-8 bg-[#22C55E]/10 rounded-lg flex items-center justify-center">
-                                <svg className="w-4 h-4 text-[#22C55E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
-                                </svg>
-                              </div>
-                              <span className="text-sm font-medium text-[#0F172A]">Science</span>
-                            </div>
-                            <span className={`text-base font-bold ${getScoreColor(ptm.performanceSummary.scienceScore)}`}>
-                              {ptm.performanceSummary.scienceScore}
-                            </span>
-                          </div>
-                        )}
-
-                        {ptm.performanceSummary.historyScore && (
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                              <div className="w-8 h-8 bg-[#F97316]/10 rounded-lg flex items-center justify-center">
-                                <svg className="w-4 h-4 text-[#F97316]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                                </svg>
-                              </div>
-                              <span className="text-sm font-medium text-[#0F172A]">History</span>
-                            </div>
-                            <span className={`text-base font-bold ${getScoreColor(ptm.performanceSummary.historyScore)}`}>
-                              {ptm.performanceSummary.historyScore}
-                            </span>
-                          </div>
-                        )}
-
-                        {ptm.performanceSummary.artScore && (
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                              <div className="w-8 h-8 bg-[#0EA5E9]/10 rounded-lg flex items-center justify-center">
-                                <svg className="w-4 h-4 text-[#0EA5E9]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
-                                </svg>
-                              </div>
-                              <span className="text-sm font-medium text-[#0F172A]">Art</span>
-                            </div>
-                            <span className={`text-base font-bold ${getScoreColor(ptm.performanceSummary.artScore)}`}>
-                              {ptm.performanceSummary.artScore}
-                            </span>
-                          </div>
-                        )}
-
-                        {/* Internship Performance */}
-                        {ptm.performanceSummary.internshipPerformance && (
-                          <div className="pt-4 border-t border-gray-100">
-                            <p className="text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wide flex items-center gap-2">
-                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 6l3 3m0 0l-3 3m3-3h18M6 21v-7a2 2 0 012-2h4a2 2 0 012 2v7" />
-                              </svg>
-                              Internship Performance
-                            </p>
-                            <p className="text-sm text-[#0F172A] leading-relaxed">
-                              "{ptm.performanceSummary.internshipPerformance}"
-                            </p>
-                          </div>
-                        )}
-
-                        {/* Attendance */}
-                        <div className="flex items-center justify-between pt-3 border-t border-gray-100">
-                          <div className="flex items-center gap-2">
-                            <div className="w-8 h-8 bg-[#22C55E]/10 rounded-lg flex items-center justify-center">
-                              <svg className="w-4 h-4 text-[#22C55E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                              </svg>
-                            </div>
-                            <span className="text-sm font-medium text-[#0F172A]">Attendance</span>
-                          </div>
-                          <span className="text-base font-bold text-[#22C55E]">{ptm.performanceSummary.attendance}</span>
-                        </div>
-                      </div>
-
-                      {/* Teacher Comment */}
-                      <div className="pt-4 border-t border-gray-100">
-                        <p className="text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wide flex items-center gap-2">
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
-                          </svg>
-                          Teacher's Comment
-                        </p>
-                        <p className="text-sm text-[#0F172A] leading-relaxed italic">
-                          "{ptm.performanceSummary.teacherComment}"
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))
-          ) : (
-            // Empty State
-            <div className="text-center py-16 bg-white rounded-2xl shadow-sm border border-gray-100">
-              <div className="w-24 h-24 bg-gradient-to-br from-[#0EA5E9]/10 to-[#22C55E]/10 rounded-full flex items-center justify-center mx-auto mb-6 border-2 border-[#0EA5E9]/20">
-                <svg className="w-12 h-12 text-[#64748B]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold text-[#0F172A] mb-2">No PTM Records Found</h3>
-              <p className="text-[#64748B] max-w-md mx-auto">
-                No Parent-Teacher Meeting records match your search criteria. Try adjusting your filters.
-              </p>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
+      
+      <style>{`
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+      `}</style>
     </div>
   );
 };

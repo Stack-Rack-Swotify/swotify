@@ -94,6 +94,7 @@ const AnalyticsGraph = ({ title = 'Performance Trend', graphData = [], labels })
           color: '#64748B',
           font: {
             size: 11,
+            weight: '500',
             family: 'system-ui',
           },
           callback: function(value) {
@@ -109,6 +110,7 @@ const AnalyticsGraph = ({ title = 'Performance Trend', graphData = [], labels })
           color: '#64748B',
           font: {
             size: 11,
+            weight: '500',
             family: 'system-ui',
           },
         },
@@ -131,99 +133,122 @@ const AnalyticsGraph = ({ title = 'Performance Trend', graphData = [], labels })
     : 0;
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-gray-50 to-white px-6 py-4 border-b border-gray-100">
+    <div className="group relative bg-white/90 dark:bg-gray-800/90 backdrop-blur-2xl rounded-2xl border-2 border-slate-200/60 dark:border-gray-700/50 overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300">
+      {/* Premium Decorative Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+
+      {/* Premium Header */}
+      <div className="relative bg-gradient-to-r from-slate-50 via-white to-slate-50 dark:from-gray-800 dark:via-gray-700 dark:to-gray-800 px-6 py-5 border-b-2 border-slate-200/60 dark:border-gray-600/50">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-[#0EA5E9]/10 rounded-xl flex items-center justify-center">
-              <svg className="w-5 h-5 text-[#0EA5E9]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
-              </svg>
+          <div className="flex items-center gap-4">
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-xl blur opacity-50 animate-pulse"></div>
+              <div className="relative w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-xl flex items-center justify-center shadow-lg">
+                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
+                </svg>
+              </div>
             </div>
             <div>
-              <h2 className="text-lg font-bold text-[#0F172A]">{title}</h2>
-              <p className="text-xs text-[#64748B]">Interactive performance visualization</p>
+              <h2 className="text-lg font-bold text-slate-900 dark:text-gray-100">{title}</h2>
+              <p className="text-xs text-slate-600 dark:text-gray-400 mt-1 flex items-center gap-2">
+                <div className="w-1.5 h-1.5 bg-cyan-500 rounded-full animate-pulse"></div>
+                Interactive performance visualization
+              </p>
             </div>
           </div>
           {graphData.length > 0 && (
             <div className="flex items-center gap-2">
               {trend > 0 ? (
-                <span className="flex items-center gap-1 text-[#22C55E] bg-[#22C55E]/10 px-3 py-1 rounded-full text-xs font-semibold border border-[#22C55E]/20">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                <div className="group/badge flex items-center gap-2 text-emerald-600 dark:text-emerald-400 bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20 px-4 py-2 rounded-full text-sm font-semibold border-2 border-emerald-300 dark:border-emerald-700 shadow-lg hover:scale-110 transition-transform">
+                  <svg className="w-4 h-4 group-hover/badge:animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                   </svg>
                   +{trend.toFixed(0)}%
-                </span>
+                </div>
               ) : trend < 0 ? (
-                <span className="flex items-center gap-1 text-[#E11D48] bg-[#E11D48]/10 px-3 py-1 rounded-full text-xs font-semibold border border-[#E11D48]/20">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6" />
+                <div className="group/badge flex items-center gap-2 text-rose-600 dark:text-rose-400 bg-gradient-to-r from-rose-50 to-red-50 dark:from-rose-900/20 dark:to-red-900/20 px-4 py-2 rounded-full text-sm font-semibold border-2 border-rose-300 dark:border-rose-700 shadow-lg hover:scale-110 transition-transform">
+                  <svg className="w-4 h-4 group-hover/badge:animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6" />
                   </svg>
                   {trend.toFixed(0)}%
-                </span>
+                </div>
               ) : (
-                <span className="flex items-center gap-1 text-[#0EA5E9] bg-[#0EA5E9]/10 px-3 py-1 rounded-full text-xs font-semibold border border-[#0EA5E9]/20">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 12h14" />
+                <div className="group/badge flex items-center gap-2 text-cyan-600 dark:text-cyan-400 bg-gradient-to-r from-cyan-50 to-blue-50 dark:from-cyan-900/20 dark:to-blue-900/20 px-4 py-2 rounded-full text-sm font-semibold border-2 border-cyan-300 dark:border-cyan-700 shadow-lg hover:scale-110 transition-transform">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14" />
                   </svg>
                   Stable
-                </span>
+                </div>
               )}
             </div>
           )}
         </div>
       </div>
 
-      {/* Graph Area */}
-      <div className="p-6">
+      {/* Premium Graph Area */}
+      <div className="relative p-6">
         <div className="h-64 w-full">
           {graphData.length > 0 ? (
             <Line data={data} options={options} />
           ) : (
             <div className="h-full flex flex-col items-center justify-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-[#0EA5E9]/10 to-[#0F172A]/10 rounded-full flex items-center justify-center mb-4">
-                <svg className="w-8 h-8 text-[#64748B]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                </svg>
+              <div className="relative w-20 h-20 mb-6">
+                <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 to-blue-500/20 rounded-2xl animate-pulse"></div>
+                <div className="relative w-full h-full bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-cyan-900/20 dark:to-blue-900/20 rounded-2xl flex items-center justify-center border-2 border-cyan-300 dark:border-cyan-700 shadow-lg">
+                  <svg className="w-10 h-10 text-slate-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                  </svg>
+                </div>
               </div>
-              <p className="text-[#0F172A] font-medium">No graph data available</p>
-              <p className="text-[#64748B] text-sm mt-1">Data will appear here once available</p>
+              <p className="text-slate-900 dark:text-gray-100 font-bold text-lg">No graph data available</p>
+              <p className="text-slate-600 dark:text-gray-400 text-sm mt-2">Data will appear here once available</p>
             </div>
           )}
         </div>
       </div>
 
-      {/* Statistics Footer */}
+      {/* Premium Statistics Footer */}
       {graphData.length > 0 && (
-        <div className="bg-gradient-to-r from-gray-50 to-white px-6 py-4 border-t border-gray-100">
-          <div className="grid grid-cols-3 gap-4">
-            <div className="text-center">
-              <div className="flex items-center justify-center gap-2 mb-1">
-                <svg className="w-4 h-4 text-[#22C55E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                </svg>
-                <span className="text-xs font-medium text-[#64748B] uppercase tracking-wide">Highest</span>
+        <div className="relative bg-gradient-to-r from-slate-50 via-white to-slate-50 dark:from-gray-800 dark:via-gray-700 dark:to-gray-800 px-6 py-5 border-t-2 border-slate-200/60 dark:border-gray-600/50">
+          <div className="grid grid-cols-3 gap-5">
+            {/* Highest Score */}
+            <div className="group/stat text-center p-4 rounded-xl bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20 border-2 border-emerald-200 dark:border-emerald-700 hover:scale-105 transition-all shadow-lg hover:shadow-xl">
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center shadow-lg group-hover/stat:rotate-12 transition-transform">
+                  <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                  </svg>
+                </div>
+                <span className="text-xs font-semibold text-slate-700 dark:text-gray-300 uppercase tracking-wide">Highest</span>
               </div>
-              <p className="text-xl font-bold text-[#22C55E]">{maxScore}%</p>
+              <p className="text-3xl font-bold text-emerald-600 dark:text-emerald-400">{maxScore}%</p>
             </div>
-            <div className="text-center border-x border-gray-100">
-              <div className="flex items-center justify-center gap-2 mb-1">
-                <svg className="w-4 h-4 text-[#0EA5E9]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                </svg>
-                <span className="text-xs font-medium text-[#64748B] uppercase tracking-wide">Average</span>
+
+            {/* Average Score */}
+            <div className="group/stat text-center p-4 rounded-xl bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-cyan-900/20 dark:to-blue-900/20 border-2 border-cyan-200 dark:border-cyan-700 hover:scale-105 transition-all shadow-lg hover:shadow-xl">
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center shadow-lg group-hover/stat:rotate-12 transition-transform">
+                  <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                  </svg>
+                </div>
+                <span className="text-xs font-semibold text-slate-700 dark:text-gray-300 uppercase tracking-wide">Average</span>
               </div>
-              <p className="text-xl font-bold text-[#0EA5E9]">{avgScore}%</p>
+              <p className="text-3xl font-bold text-cyan-600 dark:text-cyan-400">{avgScore}%</p>
             </div>
-            <div className="text-center">
-              <div className="flex items-center justify-center gap-2 mb-1">
-                <svg className="w-4 h-4 text-[#F97316]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6" />
-                </svg>
-                <span className="text-xs font-medium text-[#64748B] uppercase tracking-wide">Lowest</span>
+
+            {/* Lowest Score */}
+            <div className="group/stat text-center p-4 rounded-xl bg-gradient-to-br from-orange-50 to-red-50 dark:from-orange-900/20 dark:to-red-900/20 border-2 border-orange-200 dark:border-orange-700 hover:scale-105 transition-all shadow-lg hover:shadow-xl">
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center shadow-lg group-hover/stat:rotate-12 transition-transform">
+                  <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6" />
+                  </svg>
+                </div>
+                <span className="text-xs font-semibold text-slate-700 dark:text-gray-300 uppercase tracking-wide">Lowest</span>
               </div>
-              <p className="text-xl font-bold text-[#F97316]">{minScore}%</p>
+              <p className="text-3xl font-bold text-orange-600 dark:text-orange-400">{minScore}%</p>
             </div>
           </div>
         </div>

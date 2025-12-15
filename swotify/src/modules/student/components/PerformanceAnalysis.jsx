@@ -1,183 +1,194 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AnalyticsGraph from './AnalyticsGraph';
+import mockClasses from '../../../data/mockClasses';
 
-const PerformanceAnalysis = () => {
-  // Dummy data for overall performance metrics
-  const dummyPerformanceData = {
-    overallScore: 85,
-    lastMonthImprovement: 7,
-    strongestSubject: 'Mathematics',
-    weakestSubject: 'Physics',
-    attendanceRate: 92,
-  };
+const PerformanceAnalysis = ({ studentId = 's1' }) => {
+  const [studentPerformance, setStudentPerformance] = useState(null);
+  const [selectedSubject, setSelectedSubject] = useState('Mathematics');
 
-  // Dummy data for subject-wise performance
-  const subjects = ['Mathematics', 'Physics', 'Chemistry', 'Biology', 'Computer Science'];
-  const subjectPerformanceData = {
-    'Mathematics': { score: 90, trend: 'up', graphData: [65, 70, 75, 80, 90] },
-    'Physics': { score: 78, trend: 'flat', graphData: [70, 75, 72, 78, 78] },
-    'Chemistry': { score: 85, trend: 'up', graphData: [75, 80, 82, 83, 85] },
-    'Biology': { score: 92, trend: 'up', graphData: [80, 85, 88, 90, 92] },
-    'Computer Science': { score: 88, trend: 'down', graphData: [90, 89, 87, 88, 88] },
-  };
+  useEffect(() => {
+    let foundStudent = null;
+    for (const classData of mockClasses) {
+      foundStudent = classData.students.find(s => s.id === studentId);
+      if (foundStudent) break;
+    }
 
-  const [selectedSubject, setSelectedSubject] = useState(subjects[0]);
+    if (foundStudent && foundStudent.performance) {
+        setStudentPerformance(foundStudent.performance);
+    } else {
+        setStudentPerformance(null);
+    }
+  }, [studentId]);
 
   const handleSubjectChange = (event) => {
     setSelectedSubject(event.target.value);
   };
 
-  const currentSubjectPerformance = subjectPerformanceData[selectedSubject];
+  if (!studentPerformance) {
+      return (
+        <div className="p-8 text-center bg-white/90 dark:bg-gray-800/90 rounded-2xl shadow-xl border-2 border-slate-200/60 dark:border-gray-700/50">
+            <p className="text-slate-500 dark:text-gray-400">No performance data available for analysis.</p>
+        </div>
+      );
+  }
+
+  const subjects = Object.keys(studentPerformance);
+  const currentSubject = subjects.includes(selectedSubject) ? selectedSubject : subjects[0];
+  const currentSubjectPerformance = studentPerformance[currentSubject];
+
+  // Calculate Overall Score (simple average of current scores for now)
+  const overallScore = Math.round(Object.values(studentPerformance).reduce((acc, curr) => acc + curr.score, 0) / subjects.length);
+  
+  // Find strongest and weakest subjects
+  let strongestSubject = subjects[0];
+  let weakestSubject = subjects[0];
+  subjects.forEach(sub => {
+      if (studentPerformance[sub].score > studentPerformance[strongestSubject].score) strongestSubject = sub;
+      if (studentPerformance[sub].score < studentPerformance[weakestSubject].score) weakestSubject = sub;
+  });
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 hover:shadow-lg transition-all duration-300">
-      <div className="mb-6">
-        <h3 className="text-2xl font-bold text-[#0F172A] mb-2 flex items-center">
-          <span className="w-1 h-7 bg-gradient-to-b from-[#0EA5E9] to-[#0F172A] rounded-full mr-3"></span>
-          Performance Analysis
-        </h3>
-        <p className="text-[#64748B] text-sm">Comprehensive overview of your academic performance</p>
+    <div className="group relative bg-white/90 dark:bg-gray-800/90 backdrop-blur-2xl rounded-2xl shadow-xl border-2 border-slate-200/60 dark:border-gray-700/50 p-8 hover:shadow-2xl transition-all duration-300 overflow-hidden">
+      {/* Premium Decorative Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+
+      {/* Premium Header */}
+      <div className="relative mb-6">
+        <div className="flex items-center gap-4 mb-3">
+          <div className="relative">
+            <div className="absolute inset-0 bg-gradient-to-br from-cyan-500 via-blue-500 to-purple-500 rounded-xl blur opacity-50 animate-pulse"></div>
+            <div className="relative w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-600 via-blue-600 to-purple-600 flex items-center justify-center shadow-lg">
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>
+            </div>
+          </div>
+          <div>
+            <h3 className="text-2xl font-bold text-slate-900 dark:text-gray-100">
+              Performance Analysis
+            </h3>
+            <p className="text-slate-600 dark:text-gray-400 text-sm mt-1 flex items-center gap-2">
+              <div className="w-1.5 h-1.5 bg-cyan-500 rounded-full animate-pulse"></div>
+              Comprehensive overview of your academic performance
+            </p>
+          </div>
+        </div>
       </div>
       
-      {/* Summary of Key Performance Indicators */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+      {/* Premium KPI Cards Grid */}
+      <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-8">
         {/* Overall Score */}
-        <div className="bg-gradient-to-br from-[#0EA5E9]/10 to-[#0EA5E9]/5 p-5 rounded-xl border border-[#0EA5E9]/20 hover:shadow-md transition-all duration-300 hover:-translate-y-1">
-          <div className="flex items-center justify-between mb-3">
-            <div className="w-12 h-12 bg-[#0EA5E9]/20 rounded-xl flex items-center justify-center">
-              <svg className="w-6 h-6 text-[#0EA5E9]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+        <div className="group/card relative bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-cyan-900/20 dark:to-blue-900/20 p-5 rounded-xl border-2 border-cyan-200 dark:border-cyan-700 hover:shadow-xl transition-all duration-300 hover:scale-105 overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-blue-500/10 opacity-0 group-hover/card:opacity-100 transition-opacity"></div>
+          <div className="relative flex items-center justify-between mb-4">
+            <div className="w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-lg flex items-center justify-center shadow-lg group-hover/card:rotate-12 transition-transform">
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 01-2-2z" />
               </svg>
             </div>
           </div>
-          <p className="text-xs font-medium text-[#64748B] uppercase tracking-wide mb-1">Overall Score</p>
-          <p className="text-3xl font-bold text-[#0EA5E9]">{dummyPerformanceData.overallScore}%</p>
-        </div>
-
-        {/* Improvement */}
-        <div className="bg-gradient-to-br from-[#22C55E]/10 to-[#22C55E]/5 p-5 rounded-xl border border-[#22C55E]/20 hover:shadow-md transition-all duration-300 hover:-translate-y-1">
-          <div className="flex items-center justify-between mb-3">
-            <div className="w-12 h-12 bg-[#22C55E]/20 rounded-xl flex items-center justify-center">
-              <svg className="w-6 h-6 text-[#22C55E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-              </svg>
-            </div>
-            <span className="text-xs font-medium text-[#22C55E] bg-[#22C55E]/10 px-2 py-1 rounded-full border border-[#22C55E]/20">
-              Trending Up
-            </span>
-          </div>
-          <p className="text-xs font-medium text-[#64748B] uppercase tracking-wide mb-1">Last Month Improvement</p>
-          <p className="text-3xl font-bold text-[#22C55E]">+{dummyPerformanceData.lastMonthImprovement}%</p>
+          <p className="relative text-xs font-semibold text-slate-700 dark:text-gray-300 uppercase tracking-wide mb-2">Overall Score</p>
+          <p className="relative text-4xl font-bold text-cyan-600 dark:text-cyan-400">{overallScore}%</p>
         </div>
 
         {/* Strongest Subject */}
-        <div className="bg-gradient-to-br from-[#0EA5E9]/10 via-[#0F172A]/5 to-[#0EA5E9]/5 p-5 rounded-xl border border-[#0EA5E9]/20 hover:shadow-md transition-all duration-300 hover:-translate-y-1">
-          <div className="flex items-center justify-between mb-3">
-            <div className="w-12 h-12 bg-gradient-to-br from-[#0EA5E9]/20 to-[#0F172A]/20 rounded-xl flex items-center justify-center">
-              <svg className="w-6 h-6 text-[#0EA5E9]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+        <div className="group/card relative bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 p-5 rounded-xl border-2 border-purple-200 dark:border-purple-700 hover:shadow-xl transition-all duration-300 hover:scale-105 overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-pink-500/10 opacity-0 group-hover/card:opacity-100 transition-opacity"></div>
+          <div className="relative flex items-center justify-between mb-4">
+            <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center shadow-lg group-hover/card:rotate-12 transition-transform">
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
               </svg>
             </div>
           </div>
-          <p className="text-xs font-medium text-[#64748B] uppercase tracking-wide mb-1">Strongest Subject</p>
-          <p className="text-xl font-bold text-[#0EA5E9]">{dummyPerformanceData.strongestSubject}</p>
+          <p className="relative text-xs font-semibold text-slate-700 dark:text-gray-300 uppercase tracking-wide mb-2">Strongest Subject</p>
+          <p className="relative text-xl font-bold text-purple-600 dark:text-purple-400">{strongestSubject}</p>
         </div>
 
         {/* Weakest Subject */}
-        <div className="bg-gradient-to-br from-[#F97316]/10 to-[#F97316]/5 p-5 rounded-xl border border-[#F97316]/20 hover:shadow-md transition-all duration-300 hover:-translate-y-1">
-          <div className="flex items-center justify-between mb-3">
-            <div className="w-12 h-12 bg-[#F97316]/20 rounded-xl flex items-center justify-center">
-              <svg className="w-6 h-6 text-[#F97316]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6" />
+        <div className="group/card relative bg-gradient-to-br from-orange-50 to-red-50 dark:from-orange-900/20 dark:to-red-900/20 p-5 rounded-xl border-2 border-orange-200 dark:border-orange-700 hover:shadow-xl transition-all duration-300 hover:scale-105 overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-red-500/10 opacity-0 group-hover/card:opacity-100 transition-opacity"></div>
+          <div className="relative flex items-center justify-between mb-4">
+            <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-500 rounded-lg flex items-center justify-center shadow-lg group-hover/card:rotate-12 transition-transform">
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6" />
               </svg>
             </div>
-            <span className="text-xs font-medium text-[#F97316] bg-[#F97316]/10 px-2 py-1 rounded-full border border-[#F97316]/20">
+            <span className="relative text-xs font-semibold text-orange-600 dark:text-orange-400 bg-orange-100 dark:bg-orange-900/30 px-3 py-1.5 rounded-full border-2 border-orange-300 dark:border-orange-700 shadow-sm">
               Focus Area
             </span>
           </div>
-          <p className="text-xs font-medium text-[#64748B] uppercase tracking-wide mb-1">Needs Improvement</p>
-          <p className="text-xl font-bold text-[#F97316]">{dummyPerformanceData.weakestSubject}</p>
-        </div>
-
-        {/* Attendance Rate */}
-        <div className="bg-gradient-to-br from-[#0EA5E9]/10 to-[#0F172A]/5 p-5 rounded-xl border border-[#0EA5E9]/20 hover:shadow-md transition-all duration-300 hover:-translate-y-1 lg:col-span-2">
-          <div className="flex items-center justify-between mb-3">
-            <div className="w-12 h-12 bg-[#0EA5E9]/20 rounded-xl flex items-center justify-center">
-              <svg className="w-6 h-6 text-[#0EA5E9]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-          </div>
-          <p className="text-xs font-medium text-[#64748B] uppercase tracking-wide mb-2">Attendance Rate</p>
-          <div className="flex items-end gap-3">
-            <p className="text-3xl font-bold text-[#0EA5E9]">{dummyPerformanceData.attendanceRate}%</p>
-            <div className="flex-1 mb-2">
-              <div className="w-full bg-gray-100 rounded-full h-3 overflow-hidden">
-                <div 
-                  className="h-full bg-gradient-to-r from-[#0EA5E9] to-[#22C55E] rounded-full transition-all duration-500"
-                  style={{ width: `${dummyPerformanceData.attendanceRate}%` }}
-                ></div>
-              </div>
-            </div>
-          </div>
+          <p className="relative text-xs font-semibold text-slate-700 dark:text-gray-300 uppercase tracking-wide mb-2">Needs Improvement</p>
+          <p className="relative text-xl font-bold text-orange-600 dark:text-orange-400">{weakestSubject}</p>
         </div>
       </div>
 
-      {/* Subject-wise Performance Section */}
-      <div className="mt-6 p-6 border border-gray-100 rounded-xl bg-gradient-to-br from-gray-50 to-white">
-        <h4 className="text-xl font-semibold text-[#0F172A] mb-5 flex items-center">
-          <span className="w-1 h-6 bg-gradient-to-b from-[#0EA5E9] to-[#0F172A] rounded-full mr-3"></span>
-          Subject-wise Performance
-        </h4>
+      {/* Premium Subject-wise Performance Section */}
+      <div className="relative p-6 border-2 border-slate-200 dark:border-gray-600 rounded-2xl bg-gradient-to-br from-slate-50/50 via-white/50 to-slate-50/50 dark:from-gray-800/50 dark:via-gray-700/50 dark:to-gray-800/50 backdrop-blur-sm shadow-lg mb-6">
+        <div className="flex items-center gap-3 mb-6">
+          <div className="w-1.5 h-8 bg-gradient-to-b from-cyan-500 via-blue-500 to-purple-500 rounded-full"></div>
+          <h4 className="text-xl font-bold text-slate-900 dark:text-gray-100">
+            Subject-wise Performance
+          </h4>
+        </div>
         
-        <div className="mb-5">
-          <label htmlFor="subject-select" className="block text-sm font-medium text-[#64748B] mb-2">
+        {/* Premium Select Dropdown */}
+        <div className="mb-6">
+          <label htmlFor="subject-select" className="block text-sm font-semibold text-slate-700 dark:text-gray-300 mb-3 flex items-center gap-2">
+            <svg className="w-5 h-5 text-cyan-600 dark:text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            </svg>
             Select Subject
           </label>
-          <select
-            id="subject-select"
-            className="w-full md:w-64 px-4 py-3 text-sm border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#0EA5E9]/50 focus:border-[#0EA5E9] bg-white text-[#0F172A] rounded-xl transition-all duration-200 hover:border-[#0EA5E9]/50"
-            value={selectedSubject}
-            onChange={handleSubjectChange}
-          >
-            {subjects.map((subject) => (
-              <option key={subject} value={subject}>
-                {subject}
-              </option>
-            ))}
-          </select>
+          <div className="relative">
+            <select
+              id="subject-select"
+              className="w-full md:w-80 px-5 py-4 text-sm border-2 border-slate-200 dark:border-gray-600 focus:outline-none focus:ring-4 focus:ring-cyan-500/20 focus:border-cyan-500 dark:focus:border-cyan-600 bg-white dark:bg-gray-700 text-slate-900 dark:text-gray-100 rounded-xl transition-all duration-300 hover:border-cyan-300 dark:hover:border-cyan-700 appearance-none cursor-pointer font-medium shadow-sm"
+              value={currentSubject}
+              onChange={handleSubjectChange}
+            >
+              {subjects.map((subject) => (
+                <option key={subject} value={subject}>
+                  {subject}
+                </option>
+              ))}
+            </select>
+            <svg className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 dark:text-gray-500 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
         </div>
 
         {currentSubjectPerformance && (
-          <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
-            <div className="flex items-start justify-between mb-5">
+          <div className="bg-white/90 dark:bg-gray-700/90 backdrop-blur-sm p-6 rounded-2xl border-2 border-slate-200 dark:border-gray-600 shadow-lg">
+            <div className="flex flex-col md:flex-row items-start justify-between gap-6 mb-6">
               <div>
-                <h5 className="text-lg font-bold text-[#0F172A] mb-3">{selectedSubject}</h5>
-                <div className="flex items-center gap-6">
-                  <div>
-                    <p className="text-xs text-[#64748B] mb-1">Current Score</p>
-                    <p className="text-3xl font-bold text-[#0EA5E9]">{currentSubjectPerformance.score}%</p>
+                <h5 className="text-xl font-bold text-slate-900 dark:text-gray-100 mb-4">{currentSubject}</h5>
+                <div className="flex flex-wrap items-start gap-6">
+                  <div className="p-4 rounded-xl bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-cyan-900/20 dark:to-blue-900/20 border-2 border-cyan-300 dark:border-cyan-700 shadow-lg">
+                    <p className="text-xs text-slate-600 dark:text-gray-400 font-semibold mb-2">Current Score</p>
+                    <p className="text-3xl font-bold text-cyan-600 dark:text-cyan-400">{currentSubjectPerformance.score}%</p>
                   </div>
                   <div>
-                    <p className="text-xs text-[#64748B] mb-1">Performance Trend</p>
-                    <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold border ${
+                    <p className="text-xs text-slate-600 dark:text-gray-400 font-semibold mb-3">Performance Trend</p>
+                    <span className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold border-2 shadow-lg ${
                       currentSubjectPerformance.trend === 'up' 
-                        ? 'bg-[#22C55E]/10 text-[#22C55E] border-[#22C55E]/20' 
+                        ? 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 border-emerald-300 dark:border-emerald-700' 
                         : currentSubjectPerformance.trend === 'down'
-                        ? 'bg-[#E11D48]/10 text-[#E11D48] border-[#E11D48]/20'
-                        : 'bg-[#F97316]/10 text-[#F97316] border-[#F97316]/20'
+                        ? 'bg-rose-50 dark:bg-rose-900/30 text-rose-600 dark:text-rose-400 border-rose-300 dark:border-rose-700'
+                        : 'bg-orange-50 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 border-orange-300 dark:border-orange-700'
                     }`}>
                       {currentSubjectPerformance.trend === 'up' ? (
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                         </svg>
                       ) : currentSubjectPerformance.trend === 'down' ? (
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6" />
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6" />
                         </svg>
                       ) : (
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 12h14" />
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14" />
                         </svg>
                       )}
                       {currentSubjectPerformance.trend.charAt(0).toUpperCase() + currentSubjectPerformance.trend.slice(1)}
@@ -186,9 +197,9 @@ const PerformanceAnalysis = () => {
                 </div>
               </div>
             </div>
-            <div className="mt-5">
+            <div className="mt-6">
               <AnalyticsGraph 
-                title={`${selectedSubject} Performance Trend`} 
+                title={`${currentSubject} Performance Trend`} 
                 graphData={currentSubjectPerformance.graphData} 
               />
             </div>
@@ -196,17 +207,20 @@ const PerformanceAnalysis = () => {
         )}
       </div>
 
-      {/* Insights Section */}
-      <div className="mt-6 p-6 border border-gray-100 rounded-xl bg-gradient-to-br from-[#0EA5E9]/5 via-white to-[#0F172A]/5">
+      {/* Premium Insights Section */}
+      <div className="relative p-6 border-2 border-slate-200 dark:border-gray-600 rounded-2xl bg-gradient-to-br from-cyan-50/50 via-blue-50/50 to-purple-50/50 dark:from-cyan-900/10 dark:via-blue-900/10 dark:to-purple-900/10 backdrop-blur-sm shadow-lg">
         <div className="flex items-start gap-4">
-          <div className="w-12 h-12 bg-gradient-to-br from-[#0EA5E9]/20 to-[#0F172A]/20 rounded-xl flex items-center justify-center flex-shrink-0">
-            <svg className="w-6 h-6 text-[#0EA5E9]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
+          <div className="relative">
+            <div className="absolute inset-0 bg-gradient-to-br from-cyan-500 via-blue-500 to-purple-500 rounded-xl blur opacity-50 animate-pulse"></div>
+            <div className="relative w-14 h-14 bg-gradient-to-br from-cyan-600 via-blue-600 to-purple-600 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
+              <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
           </div>
           <div className="flex-1">
-            <h4 className="text-base font-semibold text-[#0F172A] mb-2">Performance Insights</h4>
-            <p className="text-sm text-[#64748B] leading-relaxed">
+            <h4 className="text-lg font-bold text-slate-900 dark:text-gray-100 mb-2">Performance Insights</h4>
+            <p className="text-sm text-slate-600 dark:text-gray-400 leading-relaxed">
               Detailed insights into your performance are displayed here, utilizing various data points and analytical models. Your overall performance shows a positive trend with consistent improvement across most subjects.
             </p>
           </div>

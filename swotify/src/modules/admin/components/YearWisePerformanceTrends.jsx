@@ -1,9 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import mockClasses from '../../../data/mockClasses';
 import AnalyticsGraph from '../../student/components/AnalyticsGraph';
 
-const YearWisePerformanceTrends = () => {
+const YearWisePerformanceTrends = ({ studentId }) => {
   const [selectedTrendGrade, setSelectedTrendGrade] = useState('All Grades');
+
+  // If studentId is provided, try to set the default grade to the student's grade
+  useEffect(() => {
+    if (studentId) {
+      let foundStudentClass = null;
+      for (const classData of mockClasses) {
+        if (classData.students.find(s => s.id === studentId)) {
+          foundStudentClass = classData;
+          break;
+        }
+      }
+      
+      if (foundStudentClass) {
+        // Ensure the grade exists in our historical data keys or available grades
+        // For this mock, we'll just set it if it matches 'Grade 10' or 'Grade 11'
+        // In a real app, we'd fetch historical data for this specific student or their grade
+        if (['Grade 10', 'Grade 11'].includes(foundStudentClass.grade)) {
+             setSelectedTrendGrade(foundStudentClass.grade);
+        }
+      }
+    }
+  }, [studentId]);
 
   // Mock historical data for different grades
   const historicalPerformanceData = {

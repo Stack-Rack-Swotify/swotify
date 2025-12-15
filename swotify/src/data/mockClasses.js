@@ -28,6 +28,13 @@ const mockClasses = [
           { id: 'a2', name: 'Science Project', dueDate: '2025-11-05', grade: 92, maxGrade: 100 },
           { id: 'a3', name: 'History Essay', dueDate: '2025-11-15', grade: null, maxGrade: 100 }, // No grade yet
         ],
+        performance: {
+          'Mathematics': { score: 90, trend: 'up', graphData: [65, 70, 75, 80, 90] },
+          'Physics': { score: 85, trend: 'up', graphData: [70, 75, 80, 82, 85] },
+          'Chemistry': { score: 78, trend: 'flat', graphData: [75, 78, 77, 78, 78] },
+          'Biology': { score: 92, trend: 'up', graphData: [80, 85, 88, 90, 92] },
+          'Computer Science': { score: 88, trend: 'down', graphData: [90, 89, 87, 88, 88] },
+        }
       },
       {
         id: 's2',
@@ -43,6 +50,13 @@ const mockClasses = [
           { id: 'a1', name: 'Math Homework 1', dueDate: '2025-10-20', grade: 70, maxGrade: 100 },
           { id: 'a2', name: 'Science Project', dueDate: '2025-11-05', grade: 80, maxGrade: 100 },
         ],
+        performance: {
+          'Mathematics': { score: 75, trend: 'flat', graphData: [60, 65, 70, 75, 75] },
+          'Physics': { score: 80, trend: 'up', graphData: [70, 72, 75, 78, 80] },
+          'Chemistry': { score: 65, trend: 'down', graphData: [75, 70, 68, 65, 65] },
+          'Biology': { score: 85, trend: 'up', graphData: [75, 78, 80, 82, 85] },
+          'Computer Science': { score: 92, trend: 'up', graphData: [85, 88, 90, 91, 92] },
+        }
       },
       {
         id: 's3',
@@ -58,6 +72,13 @@ const mockClasses = [
           { id: 'a1', name: 'Math Homework 1', dueDate: '2025-10-20', grade: 60, maxGrade: 100 },
           { id: 'a3', name: 'History Essay', dueDate: '2025-11-15', grade: 65, maxGrade: 100 },
         ],
+        performance: {
+          'Mathematics': { score: 60, trend: 'down', graphData: [70, 68, 65, 62, 60] },
+          'Physics': { score: 65, trend: 'flat', graphData: [65, 65, 64, 66, 65] },
+          'Chemistry': { score: 70, trend: 'up', graphData: [60, 62, 65, 68, 70] },
+          'Biology': { score: 72, trend: 'up', graphData: [65, 68, 70, 71, 72] },
+          'Computer Science': { score: 80, trend: 'up', graphData: [70, 75, 78, 79, 80] },
+        }
       },
       {
         id: 's4',
@@ -74,6 +95,13 @@ const mockClasses = [
           { id: 'a2', name: 'Science Project', dueDate: '2025-11-05', grade: 95, maxGrade: 100 },
           { id: 'a3', name: 'History Essay', dueDate: '2025-11-15', grade: null, maxGrade: 100 }, // No grade yet
         ],
+        performance: {
+          'Mathematics': { score: 95, trend: 'up', graphData: [85, 88, 90, 92, 95] },
+          'Physics': { score: 92, trend: 'up', graphData: [85, 88, 89, 90, 92] },
+          'Chemistry': { score: 88, trend: 'flat', graphData: [88, 87, 88, 88, 88] },
+          'Biology': { score: 90, trend: 'up', graphData: [85, 86, 88, 89, 90] },
+          'Computer Science': { score: 96, trend: 'up', graphData: [90, 92, 94, 95, 96] },
+        }
       },
     ],
   },
@@ -104,6 +132,13 @@ const mockClasses = [
           { id: 'a1', name: 'Math Homework 1', dueDate: '2025-10-20', grade: 75, maxGrade: 100 },
           { id: 'a2', name: 'Science Project', dueDate: '2025-11-05', grade: 88, maxGrade: 100 },
         ],
+        performance: {
+          'Mathematics': { score: 78, trend: 'up', graphData: [70, 72, 75, 76, 78] },
+          'Physics': { score: 75, trend: 'flat', graphData: [75, 74, 75, 75, 75] },
+          'Chemistry': { score: 80, trend: 'up', graphData: [72, 75, 78, 79, 80] },
+          'Biology': { score: 85, trend: 'up', graphData: [80, 82, 83, 84, 85] },
+          'Computer Science': { score: 70, trend: 'down', graphData: [78, 76, 74, 72, 70] },
+        }
       },
       {
         id: 's6',
@@ -119,6 +154,13 @@ const mockClasses = [
           { id: 'a1', name: 'Math Homework 1', dueDate: '2025-10-20', grade: 65, maxGrade: 100 },
           { id: 'a3', name: 'History Essay', dueDate: '2025-11-15', grade: 70, maxGrade: 100 },
         ],
+        performance: {
+          'Mathematics': { score: 65, trend: 'flat', graphData: [65, 64, 65, 65, 65] },
+          'Physics': { score: 60, trend: 'down', graphData: [68, 66, 64, 62, 60] },
+          'Chemistry': { score: 70, trend: 'up', graphData: [60, 65, 68, 69, 70] },
+          'Biology': { score: 72, trend: 'up', graphData: [68, 70, 71, 71, 72] },
+          'Computer Science': { score: 75, trend: 'up', graphData: [65, 68, 70, 72, 75] },
+        }
       },
       {
         id: 's7',
@@ -134,6 +176,13 @@ const mockClasses = [
           { id: 'a1', name: 'Math Homework 1', dueDate: '2025-10-20', grade: 90, maxGrade: 100 },
           { id: 'a2', name: 'Science Project', dueDate: '2025-11-05', grade: 85, maxGrade: 100 },
         ],
+        performance: {
+          'Mathematics': { score: 92, trend: 'up', graphData: [85, 88, 90, 91, 92] },
+          'Physics': { score: 88, trend: 'flat', graphData: [88, 88, 87, 88, 88] },
+          'Chemistry': { score: 90, trend: 'up', graphData: [82, 85, 88, 89, 90] },
+          'Biology': { score: 95, trend: 'up', graphData: [90, 92, 93, 94, 95] },
+          'Computer Science': { score: 85, trend: 'flat', graphData: [85, 84, 85, 85, 85] },
+        }
       },
     ],
   },
@@ -164,6 +213,13 @@ const mockClasses = [
           { id: 'a4', name: 'Physics Lab 1', dueDate: '2025-10-25', grade: 95, maxGrade: 100 },
           { id: 'a5', name: 'Chemistry Project', dueDate: '2025-11-10', grade: null, maxGrade: 100 },
         ],
+        performance: {
+          'Mathematics': { score: 88, trend: 'flat', graphData: [88, 87, 88, 88, 88] },
+          'Physics': { score: 95, trend: 'up', graphData: [85, 88, 90, 92, 95] },
+          'Chemistry': { score: 90, trend: 'up', graphData: [85, 88, 89, 90, 90] },
+          'Biology': { score: 85, trend: 'down', graphData: [90, 89, 88, 86, 85] },
+          'Computer Science': { score: 92, trend: 'up', graphData: [85, 88, 90, 91, 92] },
+        }
       },
       {
         id: 's9',
@@ -179,6 +235,13 @@ const mockClasses = [
           { id: 'a4', name: 'Physics Lab 1', dueDate: '2025-10-25', grade: 90, maxGrade: 100 },
           { id: 'a5', name: 'Chemistry Project', dueDate: '2025-11-10', grade: 88, maxGrade: 100 },
         ],
+        performance: {
+          'Mathematics': { score: 90, trend: 'up', graphData: [85, 88, 89, 90, 90] },
+          'Physics': { score: 88, trend: 'flat', graphData: [88, 88, 88, 88, 88] },
+          'Chemistry': { score: 92, trend: 'up', graphData: [85, 88, 90, 91, 92] },
+          'Biology': { score: 85, trend: 'down', graphData: [88, 87, 86, 85, 85] },
+          'Computer Science': { score: 94, trend: 'up', graphData: [88, 90, 92, 93, 94] },
+        }
       },
     ],
   },

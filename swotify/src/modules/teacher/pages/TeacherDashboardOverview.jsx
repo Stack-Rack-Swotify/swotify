@@ -4,17 +4,15 @@ import mockClasses from '../../../data/mockClasses';
 import mockEvents from '../../../data/mockEvents';
 import mockPTMHistory from '../../../data/mockPTMHistory';
 
-const TeacherDashboardOverview = () => {
+const TeacherDashboardOverview = ({ teacherName }) => {
   // --- Students Overview ---
   const totalStudents = mockClasses.reduce((acc, cls) => acc + cls.totalStudents, 0);
-  const recentStudents = mockClasses.flatMap(cls => cls.students).slice(0, 5); // Get 5 recent students
+  const recentStudents = mockClasses.flatMap(cls => cls.students).slice(0, 5);
 
   // --- Classes Overview ---
   const totalClasses = mockClasses.length;
   const classesWithHighAttendance = mockClasses.filter(cls => {
-    // Assuming attendance data is accessible or summarized
-    // For now, just a placeholder logic
-    return Math.random() > 0.5; // Placeholder
+    return Math.random() > 0.5;
   }).slice(0, 3);
 
   // --- Events Overview ---
@@ -26,237 +24,247 @@ const TeacherDashboardOverview = () => {
   const totalPTMs = mockPTMHistory.length;
 
   return (
-    <div className="bg-gradient-to-br from-white via-gray-50 to-white p-6">
+    <div className="bg-gradient-to-br from-white via-slate-50/50 to-white p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-[#0F172A] mb-2">Teacher Dashboard Overview</h1>
-          <p className="text-[#64748B] text-sm">Welcome back! Here's what's happening with your classes today.</p>
+          <h1 className="text-4xl font-semibold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-3">
+            Welcome, {teacherName}!
+          </h1>
+          <p className="text-slate-600 text-sm font-medium">Here's what's happening with your classes today.</p>
         </div>
 
         {/* Quick Stats Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-lg transition-all duration-300">
+          <div className="bg-white rounded-2xl shadow-lg border border-slate-200/60 p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
             <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-[#0EA5E9]/10 to-[#0EA5E9]/5 rounded-xl flex items-center justify-center">
-                <svg className="w-6 h-6 text-[#0EA5E9]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+              <div className="w-14 h-14 bg-gradient-to-br from-blue-100 to-blue-200 rounded-xl flex items-center justify-center shadow-md">
+                <svg className="w-7 h-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
               </div>
             </div>
-            <p className="text-sm text-[#64748B] font-medium mb-1">Total Students</p>
-            <p className="text-3xl font-bold text-[#0EA5E9]">{totalStudents}</p>
+            <p className="text-sm text-slate-600 font-semibold mb-2">Total Students</p>
+            <p className="text-3xl font-semibold text-blue-600">{totalStudents}</p>
           </div>
 
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-lg transition-all duration-300">
+          <div className="bg-white rounded-2xl shadow-lg border border-slate-200/60 p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
             <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-[#22C55E]/10 to-[#22C55E]/5 rounded-xl flex items-center justify-center">
-                <svg className="w-6 h-6 text-[#22C55E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              <div className="w-14 h-14 bg-gradient-to-br from-emerald-100 to-emerald-200 rounded-xl flex items-center justify-center shadow-md">
+                <svg className="w-7 h-7 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                 </svg>
               </div>
             </div>
-            <p className="text-sm text-[#64748B] font-medium mb-1">Total Classes</p>
-            <p className="text-3xl font-bold text-[#22C55E]">{totalClasses}</p>
+            <p className="text-sm text-slate-600 font-semibold mb-2">Total Classes</p>
+            <p className="text-3xl font-semibold text-emerald-600">{totalClasses}</p>
           </div>
 
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-lg transition-all duration-300">
+          <div className="bg-white rounded-2xl shadow-lg border border-slate-200/60 p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
             <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-[#F97316]/10 to-[#F97316]/5 rounded-xl flex items-center justify-center">
-                <svg className="w-6 h-6 text-[#F97316]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              <div className="w-14 h-14 bg-gradient-to-br from-amber-100 to-amber-200 rounded-xl flex items-center justify-center shadow-md">
+                <svg className="w-7 h-7 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
               </div>
             </div>
-            <p className="text-sm text-[#64748B] font-medium mb-1">Upcoming Events</p>
-            <p className="text-3xl font-bold text-[#F97316]">{upcomingEvents.length}</p>
+            <p className="text-sm text-slate-600 font-semibold mb-2">Upcoming Events</p>
+            <p className="text-3xl font-semibold text-amber-600">{upcomingEvents.length}</p>
           </div>
 
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-lg transition-all duration-300">
+          <div className="bg-white rounded-2xl shadow-lg border border-slate-200/60 p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
             <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-[#0F172A]/10 to-[#64748B]/5 rounded-xl flex items-center justify-center">
-                <svg className="w-6 h-6 text-[#0F172A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+              <div className="w-14 h-14 bg-gradient-to-br from-purple-100 to-purple-200 rounded-xl flex items-center justify-center shadow-md">
+                <svg className="w-7 h-7 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                 </svg>
               </div>
             </div>
-            <p className="text-sm text-[#64748B] font-medium mb-1">Recent PTMs</p>
-            <p className="text-3xl font-bold text-[#0F172A]">{recentPTMs.length}</p>
+            <p className="text-sm text-slate-600 font-semibold mb-2">Recent PTMs</p>
+            <p className="text-3xl font-semibold text-purple-600">{recentPTMs.length}</p>
           </div>
         </div>
 
         {/* Combined Information Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Recent Students */}
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-lg transition-all duration-300">
-            <h2 className="text-xl font-semibold text-[#0F172A] mb-5 flex items-center">
-              <span className="w-1 h-6 bg-gradient-to-b from-[#0EA5E9] to-[#22C55E] rounded-full mr-3"></span>
+          <div className="bg-white rounded-2xl shadow-lg border border-slate-200/60 p-6 hover:shadow-xl transition-all duration-300">
+            <h2 className="text-xl font-semibold text-slate-900 mb-6 flex items-center">
+              <span className="w-1.5 h-7 bg-gradient-to-b from-blue-600 via-purple-600 to-pink-600 rounded-full mr-3"></span>
               Recent Students
             </h2>
-            <ul className="space-y-3 mb-4">
+            <ul className="space-y-3 mb-5">
               {recentStudents.length > 0 ? (
                 recentStudents.map(student => (
-                  <li key={student.id} className="flex items-center gap-3 p-3 rounded-xl bg-gradient-to-r from-gray-50 to-white border border-gray-100 hover:border-[#0EA5E9]/20 hover:shadow-sm transition-all duration-200">
+                  <li key={student.id} className="flex items-center gap-4 p-4 rounded-xl bg-gradient-to-r from-slate-50 to-blue-50/30 border border-slate-200 hover:border-blue-300 hover:shadow-md transition-all duration-200">
                     <div className="relative flex-shrink-0">
-                      <img src={student.photo} alt={student.name} className="w-12 h-12 rounded-full object-cover border-2 border-[#0EA5E9]" />
-                      <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-[#22C55E] rounded-full border-2 border-white"></div>
+                      <div className="absolute inset-0 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-full blur-md opacity-30"></div>
+                      <img 
+                        src={student.photo} 
+                        alt={student.name} 
+                        className="relative w-14 h-14 rounded-full object-cover border-2 border-white shadow-lg ring-2 ring-blue-200" 
+                      />
+                      <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-emerald-600 rounded-full border-2 border-white shadow-md"></div>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="font-semibold text-[#0F172A] truncate">{student.name}</p>
-                      <p className="text-sm text-[#64748B]">{student.details?.grade || 'N/A'}</p>
+                      <p className="font-semibold text-slate-900 truncate">{student.name}</p>
+                      <p className="text-sm text-slate-600 font-medium">{student.details?.grade || 'N/A'}</p>
                     </div>
                   </li>
                 ))
               ) : (
-                <div className="text-center py-8">
-                  <svg className="w-12 h-12 text-[#94A3B8] mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                <div className="text-center py-12">
+                  <svg className="w-16 h-16 text-slate-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                   </svg>
-                  <p className="text-[#64748B] text-sm">No recent students to display.</p>
+                  <p className="text-slate-600 text-sm font-medium">No recent students to display.</p>
                 </div>
               )}
             </ul>
             <Link 
               to="/teacher-dashboard/students" 
-              className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-gradient-to-r from-[#0EA5E9]/10 to-[#22C55E]/10 text-[#0EA5E9] hover:from-[#0EA5E9] hover:to-[#22C55E] hover:text-white rounded-xl transition-all duration-300 font-semibold text-sm border border-[#0EA5E9]/20 hover:border-transparent"
+              className="flex items-center justify-center gap-2 w-full px-5 py-3 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white hover:shadow-xl rounded-xl transition-all duration-300 font-semibold text-sm hover:scale-105"
             >
               View All Students
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
               </svg>
             </Link>
           </div>
 
           {/* Upcoming Events */}
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-lg transition-all duration-300">
-            <h2 className="text-xl font-semibold text-[#0F172A] mb-5 flex items-center">
-              <span className="w-1 h-6 bg-gradient-to-b from-[#F97316] to-[#0EA5E9] rounded-full mr-3"></span>
+          <div className="bg-white rounded-2xl shadow-lg border border-slate-200/60 p-6 hover:shadow-xl transition-all duration-300">
+            <h2 className="text-xl font-semibold text-slate-900 mb-6 flex items-center">
+              <span className="w-1.5 h-7 bg-gradient-to-b from-amber-600 to-blue-600 rounded-full mr-3"></span>
               Upcoming Events
             </h2>
-            <ul className="space-y-3 mb-4">
+            <ul className="space-y-3 mb-5">
               {upcomingEvents.length > 0 ? (
                 upcomingEvents.map(event => (
-                  <li key={event.id} className="p-4 rounded-xl bg-gradient-to-r from-gray-50 to-white border border-gray-100 hover:border-[#F97316]/20 hover:shadow-sm transition-all duration-200">
+                  <li key={event.id} className="p-4 rounded-xl bg-gradient-to-r from-slate-50 to-amber-50/30 border border-slate-200 hover:border-amber-300 hover:shadow-md transition-all duration-200">
                     <div className="flex items-start gap-3">
-                      <div className="w-10 h-10 bg-gradient-to-br from-[#F97316]/10 to-[#F97316]/5 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <svg className="w-5 h-5 text-[#F97316]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      <div className="w-12 h-12 bg-gradient-to-br from-amber-100 to-amber-200 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm">
+                        <svg className="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="font-semibold text-[#0F172A]">{event.title}</p>
-                        <p className="text-sm text-[#64748B]">{event.date} at {event.time}</p>
+                        <p className="font-semibold text-slate-900">{event.title}</p>
+                        <p className="text-sm text-slate-600 font-medium">{event.date} at {event.time}</p>
                       </div>
                     </div>
                   </li>
                 ))
               ) : (
-                <div className="text-center py-8">
-                  <svg className="w-12 h-12 text-[#94A3B8] mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                <div className="text-center py-12">
+                  <svg className="w-16 h-16 text-slate-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
-                  <p className="text-[#64748B] text-sm">No upcoming events.</p>
+                  <p className="text-slate-600 text-sm font-medium">No upcoming events.</p>
                 </div>
               )}
             </ul>
             <Link 
               to="/teacher-dashboard/events" 
-              className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-gradient-to-r from-[#F97316]/10 to-[#0EA5E9]/10 text-[#F97316] hover:from-[#F97316] hover:to-[#0EA5E9] hover:text-white rounded-xl transition-all duration-300 font-semibold text-sm border border-[#F97316]/20 hover:border-transparent"
+              className="flex items-center justify-center gap-2 w-full px-5 py-3 bg-gradient-to-r from-amber-600 to-blue-600 text-white hover:shadow-xl rounded-xl transition-all duration-300 font-semibold text-sm hover:scale-105"
             >
               View All Events
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
               </svg>
             </Link>
           </div>
 
           {/* Recent PTMs */}
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-lg transition-all duration-300">
-            <h2 className="text-xl font-semibold text-[#0F172A] mb-5 flex items-center">
-              <span className="w-1 h-6 bg-gradient-to-b from-[#22C55E] to-[#0EA5E9] rounded-full mr-3"></span>
+          <div className="bg-white rounded-2xl shadow-lg border border-slate-200/60 p-6 hover:shadow-xl transition-all duration-300">
+            <h2 className="text-xl font-semibold text-slate-900 mb-6 flex items-center">
+              <span className="w-1.5 h-7 bg-gradient-to-b from-emerald-600 to-blue-600 rounded-full mr-3"></span>
               Recent PTMs
             </h2>
-            <ul className="space-y-3 mb-4">
+            <ul className="space-y-3 mb-5">
               {recentPTMs.length > 0 ? (
                 recentPTMs.map(ptm => (
-                  <li key={ptm.id} className="p-4 rounded-xl bg-gradient-to-r from-gray-50 to-white border border-gray-100 hover:border-[#22C55E]/20 hover:shadow-sm transition-all duration-200">
+                  <li key={ptm.id} className="p-4 rounded-xl bg-gradient-to-r from-slate-50 to-emerald-50/30 border border-slate-200 hover:border-emerald-300 hover:shadow-md transition-all duration-200">
                     <div className="flex items-start gap-3">
-                      <div className="w-10 h-10 bg-gradient-to-br from-[#22C55E]/10 to-[#22C55E]/5 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <svg className="w-5 h-5 text-[#22C55E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                      <div className="w-12 h-12 bg-gradient-to-br from-emerald-100 to-emerald-200 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm">
+                        <svg className="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                         </svg>
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="font-semibold text-[#0F172A]">PTM with {ptm.studentName}</p>
-                        <p className="text-sm text-[#64748B]">{ptm.date} • Grade: <span className="font-semibold text-[#22C55E]">{ptm.performanceSummary.overallGrade}</span></p>
+                        <p className="font-semibold text-slate-900">PTM with {ptm.studentName}</p>
+                        <p className="text-sm text-slate-600 font-medium">{ptm.date} • Grade: <span className="font-semibold text-emerald-600">{ptm.performanceSummary.overallGrade}</span></p>
                       </div>
                     </div>
                   </li>
                 ))
               ) : (
-                <div className="text-center py-8">
-                  <svg className="w-12 h-12 text-[#94A3B8] mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                <div className="text-center py-12">
+                  <svg className="w-16 h-16 text-slate-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                   </svg>
-                  <p className="text-[#64748B] text-sm">No recent PTMs.</p>
+                  <p className="text-slate-600 text-sm font-medium">No recent PTMs.</p>
                 </div>
               )}
             </ul>
             <Link 
               to="/teacher-dashboard/ptm-history" 
-              className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-gradient-to-r from-[#22C55E]/10 to-[#0EA5E9]/10 text-[#22C55E] hover:from-[#22C55E] hover:to-[#0EA5E9] hover:text-white rounded-xl transition-all duration-300 font-semibold text-sm border border-[#22C55E]/20 hover:border-transparent"
+              className="flex items-center justify-center gap-2 w-full px-5 py-3 bg-gradient-to-r from-emerald-600 to-blue-600 text-white hover:shadow-xl rounded-xl transition-all duration-300 font-semibold text-sm hover:scale-105"
             >
               View PTM History
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
               </svg>
             </Link>
           </div>
 
           {/* AI Chatbot Quick Access */}
-          <div className="bg-gradient-to-br from-[#0EA5E9]/5 via-[#22C55E]/5 to-[#F97316]/5 rounded-2xl shadow-sm border border-[#0EA5E9]/20 p-6 hover:shadow-lg transition-all duration-300">
-            <h2 className="text-xl font-semibold text-[#0F172A] mb-4 flex items-center">
-              <span className="w-1 h-6 bg-gradient-to-b from-[#0EA5E9] to-[#22C55E] rounded-full mr-3"></span>
+          <div className="bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 rounded-2xl shadow-lg border-2 border-purple-200 p-6 hover:shadow-2xl transition-all duration-300">
+            <h2 className="text-xl font-semibold text-slate-900 mb-5 flex items-center">
+              <span className="w-1.5 h-7 bg-gradient-to-b from-blue-600 via-purple-600 to-pink-600 rounded-full mr-3"></span>
               AI Chatbot Assistant
             </h2>
             <div className="flex items-start gap-4 mb-6">
-              <div className="w-14 h-14 bg-gradient-to-br from-[#0EA5E9] to-[#22C55E] rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg">
-                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-                </svg>
+              <div className="relative flex-shrink-0">
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-2xl blur-lg opacity-40"></div>
+                <div className="relative w-16 h-16 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 rounded-2xl flex items-center justify-center shadow-xl">
+                  <svg className="w-9 h-9 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                  </svg>
+                </div>
               </div>
               <div className="flex-1">
-                <p className="text-[#0F172A] mb-2 leading-relaxed">
+                <p className="text-slate-900 mb-3 leading-relaxed font-medium">
                   Get quick answers about student performance, class schedules, and more from your AI assistant.
                 </p>
-                <ul className="space-y-1 text-sm text-[#64748B]">
+                <ul className="space-y-2 text-sm text-slate-700">
                   <li className="flex items-center gap-2">
-                    <svg className="w-4 h-4 text-[#22C55E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                    <svg className="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                     </svg>
-                    Student performance insights
+                    <span className="font-medium">Student performance insights</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <svg className="w-4 h-4 text-[#22C55E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                    <svg className="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                     </svg>
-                    Class schedule assistance
+                    <span className="font-medium">Class schedule assistance</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <svg className="w-4 h-4 text-[#22C55E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                    <svg className="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                     </svg>
-                    Assignment recommendations
+                    <span className="font-medium">Assignment recommendations</span>
                   </li>
                 </ul>
               </div>
             </div>
             <Link 
               to="/teacher-dashboard/ai-chatbot" 
-              className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-gradient-to-r from-[#0EA5E9] to-[#22C55E] text-white font-semibold rounded-xl hover:shadow-xl transition-all duration-300 text-sm"
+              className="flex items-center justify-center gap-2 w-full px-5 py-3 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white font-semibold rounded-xl hover:shadow-2xl transition-all duration-300 text-sm hover:scale-105"
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
               Launch AI Chatbot
             </Link>

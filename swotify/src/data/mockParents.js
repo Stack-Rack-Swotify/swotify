@@ -6,7 +6,7 @@ const mockParents = [
     phone: '555-111-0001',
     username: 'david.j@example.com',
     password: '555-111-0001',
-    childrenIds: ['s1'],
+    childrenIds: ['s1', 's2'],
   },
   {
     id: 'p2',

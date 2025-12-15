@@ -7,7 +7,7 @@ const StaffPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedRole, setSelectedRole] = useState('All');
   const [selectedAcademicYear, setSelectedAcademicYear] = useState('All'); 
-  const [viewMode, setViewMode] = useState('grid'); // grid or list
+  const [viewMode, setViewMode] = useState('grid');
   
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -54,74 +54,74 @@ const StaffPage = () => {
       'Teacher': { 
         gradient: 'from-blue-500 to-cyan-500', 
         bg: 'bg-blue-500', 
-        light: 'bg-blue-50', 
-        border: 'border-blue-200', 
-        text: 'text-blue-600',
-        icon: '👨‍🏫'
+        light: 'bg-blue-50 dark:bg-blue-900/20', 
+        border: 'border-blue-300 dark:border-blue-700', 
+        text: 'text-blue-600 dark:text-blue-400',
+        icon: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253'
       },
       'Principal': { 
         gradient: 'from-orange-500 to-red-500', 
         bg: 'bg-orange-500', 
-        light: 'bg-orange-50', 
-        border: 'border-orange-200', 
-        text: 'text-orange-600',
-        icon: '🎓'
+        light: 'bg-orange-50 dark:bg-orange-900/20', 
+        border: 'border-orange-300 dark:border-orange-700', 
+        text: 'text-orange-600 dark:text-orange-400',
+        icon: 'M12 14l9-5-9-5-9 5 9 5z M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z'
       },
       'Admin': { 
         gradient: 'from-emerald-500 to-teal-500', 
         bg: 'bg-emerald-500', 
-        light: 'bg-emerald-50', 
-        border: 'border-emerald-200', 
-        text: 'text-emerald-600',
-        icon: '⚙️'
+        light: 'bg-emerald-50 dark:bg-emerald-900/20', 
+        border: 'border-emerald-300 dark:border-emerald-700', 
+        text: 'text-emerald-600 dark:text-emerald-400',
+        icon: 'M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z M15 12a3 3 0 11-6 0 3 3 0 016 0z'
       },
       'Librarian': { 
         gradient: 'from-purple-500 to-pink-500', 
         bg: 'bg-purple-500', 
-        light: 'bg-purple-50', 
-        border: 'border-purple-200', 
-        text: 'text-purple-600',
-        icon: '📚'
+        light: 'bg-purple-50 dark:bg-purple-900/20', 
+        border: 'border-purple-300 dark:border-purple-700', 
+        text: 'text-purple-600 dark:text-purple-400',
+        icon: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253'
       },
       'Counselor': { 
         gradient: 'from-teal-500 to-emerald-500', 
         bg: 'bg-teal-500', 
-        light: 'bg-teal-50', 
-        border: 'border-teal-200', 
-        text: 'text-teal-600',
-        icon: '🧠'
+        light: 'bg-teal-50 dark:bg-teal-900/20', 
+        border: 'border-teal-300 dark:border-teal-700', 
+        text: 'text-teal-600 dark:text-teal-400',
+        icon: 'M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z'
       },
       'Accountant': { 
         gradient: 'from-indigo-500 to-purple-500', 
         bg: 'bg-indigo-500', 
-        light: 'bg-indigo-50', 
-        border: 'border-indigo-200', 
-        text: 'text-indigo-600',
-        icon: '💼'
+        light: 'bg-indigo-50 dark:bg-indigo-900/20', 
+        border: 'border-indigo-300 dark:border-indigo-700', 
+        text: 'text-indigo-600 dark:text-indigo-400',
+        icon: 'M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'
       },
       'Nurse': { 
         gradient: 'from-pink-500 to-rose-500', 
         bg: 'bg-pink-500', 
-        light: 'bg-pink-50', 
-        border: 'border-pink-200', 
-        text: 'text-pink-600',
-        icon: '⚕️'
+        light: 'bg-pink-50 dark:bg-pink-900/20', 
+        border: 'border-pink-300 dark:border-pink-700', 
+        text: 'text-pink-600 dark:text-pink-400',
+        icon: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z'
       },
       'IT Administrator': { 
         gradient: 'from-slate-600 to-slate-700', 
         bg: 'bg-slate-600', 
-        light: 'bg-slate-50', 
-        border: 'border-slate-200', 
-        text: 'text-slate-600',
-        icon: '💻'
+        light: 'bg-slate-50 dark:bg-slate-900/20', 
+        border: 'border-slate-300 dark:border-slate-700', 
+        text: 'text-slate-600 dark:text-slate-400',
+        icon: 'M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'
       },
       'Staff': { 
         gradient: 'from-gray-500 to-gray-600', 
         bg: 'bg-gray-500', 
-        light: 'bg-gray-50', 
-        border: 'border-gray-200', 
-        text: 'text-gray-600',
-        icon: '👤'
+        light: 'bg-gray-50 dark:bg-gray-900/20', 
+        border: 'border-gray-300 dark:border-gray-700', 
+        text: 'text-gray-600 dark:text-gray-400',
+        icon: 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z'
       },
     };
     return configs[role] || configs['Staff'];
@@ -204,764 +204,247 @@ const StaffPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/20 p-6">
-      {/* Modern Header with Gradient */}
-      <div className="mb-8">
-        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-6">
-          <div className="flex items-center gap-4">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 flex items-center justify-center shadow-2xl">
-              <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-              </svg>
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-slate-900 via-blue-900 to-purple-900 bg-clip-text text-transparent">
-                Staff Directory
-              </h1>
-              <p className="text-slate-600 text-sm mt-1">Manage and view all school staff members</p>
-            </div>
-          </div>
-          <button
-            onClick={handleAdd}
-            className="px-6 py-3 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white font-bold rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 flex items-center gap-2"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
-            </svg>
-            Add New Staff
-          </button>
-        </div>
-
-        {/* Stats Bar */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-white/60 p-4 hover:scale-105 transition-all">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shadow-lg">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                </svg>
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-slate-900">{staffList.length}</p>
-                <p className="text-xs text-slate-600 font-semibold">Total Staff</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-white/60 p-4 hover:scale-105 transition-all">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center shadow-lg">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-slate-900">
-                  {staffList.filter(s => s.status === 'Active').length}
-                </p>
-                <p className="text-xs text-slate-600 font-semibold">Active</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-white/60 p-4 hover:scale-105 transition-all">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center shadow-lg">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                </svg>
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-slate-900">
-                  {staffList.filter(s => s.role === 'Teacher').length}
-                </p>
-                <p className="text-xs text-slate-600 font-semibold">Teachers</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-white/60 p-4 hover:scale-105 transition-all">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-lg">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-slate-900">
-                  {roles.length - 1}
-                </p>
-                <p className="text-xs text-slate-600 font-semibold">Departments</p>
-              </div>
-            </div>
-          </div>
-        </div>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 relative overflow-hidden">
+      {/* Premium Decorative Background Elements */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div className="absolute -top-40 -right-40 w-96 h-96 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-tr from-emerald-500/10 via-teal-500/10 to-cyan-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-br from-purple-500/5 to-pink-500/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
       </div>
 
-      {/* Enhanced Filters Section */}
-      <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl border border-white/60 p-6 mb-6">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
-            <div className="w-1 h-6 bg-gradient-to-b from-blue-500 to-purple-500 rounded-full"></div>
-            Search & Filter
-          </h2>
-          
-          {/* View Toggle */}
-          <div className="flex items-center gap-2 bg-slate-100 rounded-xl p-1">
+      <div className="relative z-10 p-6">
+        {/* Premium Enhanced Header */}
+        <div className="mb-8">
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-6">
+            <div className="flex items-center gap-4">
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-2xl blur opacity-50 animate-pulse"></div>
+                <div className="relative w-18 h-18 rounded-2xl bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 flex items-center justify-center shadow-2xl">
+                  <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                  </svg>
+                </div>
+              </div>
+              <div>
+                <h1 className="text-4xl font-extrabold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+                  Staff Directory
+                </h1>
+                <p className="text-slate-600 dark:text-gray-400 text-sm mt-1 font-bold">Manage and view all school staff members</p>
+              </div>
+            </div>
             <button
-              onClick={() => setViewMode('grid')}
-              className={`p-2 rounded-lg transition-all ${
-                viewMode === 'grid' 
-                  ? 'bg-white shadow-sm text-blue-600' 
-                  : 'text-slate-600 hover:text-slate-900'
-              }`}
-              title="Grid View"
+              onClick={handleAdd}
+              className="group px-8 py-4 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white font-extrabold rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-110 flex items-center gap-3 border-2 border-white/20"
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+              <svg className="w-6 h-6 group-hover:rotate-90 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
               </svg>
-            </button>
-            <button
-              onClick={() => setViewMode('list')}
-              className={`p-2 rounded-lg transition-all ${
-                viewMode === 'list' 
-                  ? 'bg-white shadow-sm text-blue-600' 
-                  : 'text-slate-600 hover:text-slate-900'
-              }`}
-              title="List View"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
-              </svg>
+              Add New Staff
             </button>
           </div>
+
+          {/* Premium Stats Bar */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+            {[
+              { label: 'Total Staff', value: staffList.length, icon: 'M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z', gradient: 'from-blue-500 to-cyan-500' },
+              { label: 'Active', value: staffList.filter(s => s.status === 'Active').length, icon: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z', gradient: 'from-emerald-500 to-teal-500' },
+              { label: 'Teachers', value: staffList.filter(s => s.role === 'Teacher').length, icon: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253', gradient: 'from-orange-500 to-red-500' },
+              { label: 'Departments', value: roles.length - 1, icon: 'M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z', gradient: 'from-purple-500 to-pink-500' }
+            ].map((stat, idx) => (
+              <div key={idx} className="group bg-white/90 dark:bg-gray-800/90 backdrop-blur-2xl rounded-2xl shadow-xl border-2 border-slate-200/60 dark:border-gray-700/50 p-6 hover:shadow-2xl hover:scale-105 transition-all">
+                <div className="flex items-center gap-4">
+                  <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${stat.gradient} flex items-center justify-center shadow-lg`}>
+                    <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                      <path strokeLinecap="round" strokeLinejoin="round" d={stat.icon} />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-3xl font-extrabold text-slate-900 dark:text-gray-100">{stat.value}</p>
+                    <p className="text-xs text-slate-600 dark:text-gray-400 font-bold">{stat.label}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {/* Search Bar */}
-          <div className="md:col-span-1">
-            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 flex items-center gap-2">
-              <svg className="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-              Search
-            </label>
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Search by name or email..."
-                className="w-full pl-11 pr-4 py-3 text-sm border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all text-slate-900 bg-white hover:border-emerald-300"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-              <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-              {searchTerm && (
+
+        {/* Premium Enhanced Filters Section */}
+        <div className="group bg-white/90 dark:bg-gray-800/90 backdrop-blur-2xl rounded-2xl shadow-xl border-2 border-slate-200/60 dark:border-gray-700/50 p-7 mb-6 hover:shadow-2xl transition-all overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div className="relative flex items-center justify-between mb-7">
+            <div className="flex items-center gap-3">
+              <div className="w-2 h-10 bg-gradient-to-b from-blue-500 via-purple-500 to-pink-500 rounded-full"></div>
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-gray-100">Search & Filter</h2>
+            </div>
+            
+            {/* View Toggle */}
+            <div className="flex items-center gap-2 bg-slate-100 dark:bg-gray-700 rounded-xl p-1 shadow-inner">
+              {['grid', 'list'].map((mode) => (
                 <button
-                  onClick={() => setSearchTerm('')}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                  key={mode}
+                  onClick={() => setViewMode(mode)}
+                  className={`p-3 rounded-lg transition-all ${viewMode === mode ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-xl scale-105' : 'text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-gray-100'}`}
+                  title={`${mode.charAt(0).toUpperCase() + mode.slice(1)} View`}
                 >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d={mode === 'grid' ? 'M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z' : 'M4 6h16M4 10h16M4 14h16M4 18h16'} />
                   </svg>
                 </button>
-              )}
+              ))}
             </div>
           </div>
-
-          {/* Role Filter */}
-          <div>
-            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 flex items-center gap-2">
-              <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-              </svg>
-              Role
-            </label>
-            <div className="relative">
-              <select
-                value={selectedRole}
-                onChange={(e) => setSelectedRole(e.target.value)}
-                className="w-full px-4 py-3 text-sm border-2 border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-slate-900 rounded-xl transition-all hover:border-blue-300 appearance-none cursor-pointer"
-              >
-                {roles.map(role => (
-                  <option key={role} value={role}>
-                    {role === 'All' ? '🔍 All Roles' : `${getRoleConfig(role).icon} ${role}`}
-                  </option>
-                ))}
-              </select>
-              <svg className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-              </svg>
-            </div>
-          </div>
-
-          {/* Academic Year Filter */}
-          <div>
-            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 flex items-center gap-2">
-              <svg className="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-              Academic Year
-            </label>
-            <div className="relative">
-              <select
-                value={selectedAcademicYear}
-                onChange={(e) => setSelectedAcademicYear(e.target.value)}
-                className="w-full px-4 py-3 text-sm border-2 border-slate-200 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white text-slate-900 rounded-xl transition-all hover:border-purple-300 appearance-none cursor-pointer"
-              >
-                <option value="All">📅 All Years</option>
-                {academicYears.filter(y => y !== 'All').map(year => (
-                  <option key={year} value={year}>{year}</option>
-                ))}
-              </select>
-              <svg className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-              </svg>
-            </div>
-          </div>
-        </div>
-
-        {/* Active Filters */}
-        {(selectedRole !== 'All' || selectedAcademicYear !== 'All' || searchTerm) && (
-          <div className="mt-4 pt-4 border-t border-slate-200">
-            <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-xs font-bold text-slate-600">Active Filters:</span>
-              {selectedRole !== 'All' && (
-                <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold flex items-center gap-1">
-                  Role: {selectedRole}
-                  <button onClick={() => setSelectedRole('All')} className="ml-1 hover:text-blue-900">
-                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
-                </span>
-              )}
-              {selectedAcademicYear !== 'All' && (
-                <span className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-semibold flex items-center gap-1">
-                  Year: {selectedAcademicYear}
-                  <button onClick={() => setSelectedAcademicYear('All')} className="ml-1 hover:text-purple-900">
-                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
-                </span>
-              )}
-              {searchTerm && (
-                <span className="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs font-semibold flex items-center gap-1">
-                  Search: "{searchTerm}"
-                  <button onClick={() => setSearchTerm('')} className="ml-1 hover:text-emerald-900">
-                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
-                </span>
-              )}
-              <button
-                onClick={() => {
-                  setSearchTerm('');
-                  setSelectedRole('All');
-                  setSelectedAcademicYear('All');
-                }}
-                className="px-3 py-1 text-xs font-semibold text-rose-600 hover:text-rose-700 hover:bg-rose-50 rounded-full transition-all"
-              >
-                Clear All
-              </button>
-            </div>
-          </div>
-        )}
-      </div>
-
-      {/* Results Header */}
-      <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-white/60 p-4 mb-6 flex items-center justify-between">
-        <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-          <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
-          Showing Results
-        </h3>
-        <span className="px-4 py-2 bg-gradient-to-r from-blue-50 to-purple-50 text-slate-900 rounded-xl text-sm font-bold border border-blue-200 shadow-sm">
-          {filteredStaff.length} {filteredStaff.length === 1 ? 'Staff Member' : 'Staff Members'}
-        </span>
-      </div>
-
-      {/* Staff Display */}
-      {filteredStaff.length > 0 ? (
-        viewMode === 'grid' ? (
-          // Grid View
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filteredStaff.map((staff) => {
-              const roleConfig = getRoleConfig(staff.role);
-              return (
-                <div
-                  key={staff.id}
-                  onClick={() => navigate(`/admin-dashboard/staff-profile/${staff.id}`)}
-                  className="group bg-white/80 backdrop-blur-sm rounded-3xl shadow-lg border border-white/60 p-6 flex flex-col items-center text-center hover:shadow-2xl hover:scale-105 transition-all duration-300 cursor-pointer relative"
-                >
-                  {/* Menu Button */}
-                  <div className="absolute top-4 right-4 z-10">
-                    <button 
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        setActiveMenuId(activeMenuId === staff.id ? null : staff.id);
-                      }}
-                      className="p-2 text-slate-400 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition-all"
-                    >
-                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
-                      </svg>
-                    </button>
-                    {activeMenuId === staff.id && (
-                      <div className="absolute right-0 mt-2 w-40 bg-white rounded-2xl shadow-2xl border border-slate-200 z-20 overflow-hidden">
-                        <button 
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleEdit(staff);
-                          }}
-                          className="w-full text-left px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-all flex items-center gap-2"
-                        >
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                          </svg>
-                          Edit Profile
-                        </button>
-                        <button 
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            confirmDelete(staff);
-                          }}
-                          className="w-full text-left px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-rose-50 hover:text-rose-600 transition-all flex items-center gap-2"
-                        >
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                          </svg>
-                          Delete
-                        </button>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Profile Photo */}
-                  <div className="relative mb-4">
-                    <div className={`w-24 h-24 rounded-3xl bg-gradient-to-br ${roleConfig.gradient} p-1 shadow-2xl`}>
-                      <img
-                        src={staff.photo}
-                        alt={staff.name}
-                        className="w-full h-full rounded-3xl object-cover bg-white"
-                      />
-                    </div>
-                    {/* Role Badge */}
-                    <div className={`absolute -bottom-2 -right-2 px-3 py-1 bg-gradient-to-r ${roleConfig.gradient} rounded-full border-4 border-white shadow-xl flex items-center justify-center`}>
-                      <span className="text-xs text-white font-bold whitespace-nowrap">
-                        {roleConfig.icon}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Status Badge */}
-                  <div className="mb-3">
-                    <span className={`px-3 py-1 rounded-full text-xs font-bold border-2 shadow-sm ${
-                      staff.status === 'Active' 
-                        ? 'bg-emerald-50 text-emerald-600 border-emerald-200' 
-                        : 'bg-rose-50 text-rose-600 border-rose-200'
-                    }`}>
-                      <span className={`inline-block w-2 h-2 rounded-full mr-1 ${
-                        staff.status === 'Active' ? 'bg-emerald-500' : 'bg-rose-500'
-                      }`}></span>
-                      {staff.status || 'Active'}
-                    </span>
-                  </div>
-
-                  {/* Staff Name */}
-                  <h3 className="text-lg font-bold text-slate-900 mb-2 group-hover:text-blue-600 transition-colors">
-                    {staff.name}
-                  </h3>
-
-                  {/* Role & Year */}
-                  <div className="flex items-center gap-2 mb-4 flex-wrap justify-center">
-                    <span className={`${roleConfig.light} ${roleConfig.text} px-3 py-1 rounded-full text-xs font-bold border ${roleConfig.border} shadow-sm`}>
-                      {staff.role}
-                    </span>
-                    {staff.subject && (
-                      <span className="bg-orange-50 text-orange-600 px-3 py-1 rounded-full text-xs font-bold border border-orange-200 shadow-sm">
-                        {staff.subject}
-                      </span>
-                    )}
-                  </div>
-
-                  <span className="bg-purple-50 text-purple-600 px-3 py-1 rounded-full text-xs font-bold border border-purple-200 shadow-sm mb-4">
-                    📅 {staff.academicYear}
-                  </span>
-
-                  {/* Contact Info */}
-                  <div className="w-full space-y-2 pt-4 border-t border-slate-200">
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="text-slate-600 font-semibold flex items-center gap-1">
-                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                        </svg>
-                        Email
-                      </span>
-                      <span className="text-slate-900 font-bold truncate ml-2 max-w-[120px]" title={staff.email}>
-                        {staff.email.split('@')[0]}
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="text-slate-600 font-semibold flex items-center gap-1">
-                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                        </svg>
-                        Phone
-                      </span>
-                      <span className="text-slate-900 font-bold">{staff.details.phone || 'N/A'}</span>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        ) : (
-          // List View
-          <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl border border-white/60 overflow-hidden">
-            <table className="w-full">
-              <thead>
-                <tr className="bg-gradient-to-r from-slate-50 to-blue-50 border-b border-slate-200">
-                  <th className="px-6 py-4 text-left text-xs font-bold text-slate-700 uppercase tracking-wider">Staff Member</th>
-                  <th className="px-6 py-4 text-left text-xs font-bold text-slate-700 uppercase tracking-wider">Role</th>
-                  <th className="px-6 py-4 text-left text-xs font-bold text-slate-700 uppercase tracking-wider">Subject/Department</th>
-                  <th className="px-6 py-4 text-left text-xs font-bold text-slate-700 uppercase tracking-wider">Academic Year</th>
-                  <th className="px-6 py-4 text-left text-xs font-bold text-slate-700 uppercase tracking-wider">Contact</th>
-                  <th className="px-6 py-4 text-left text-xs font-bold text-slate-700 uppercase tracking-wider">Status</th>
-                  <th className="px-6 py-4 text-right text-xs font-bold text-slate-700 uppercase tracking-wider">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-200">
-                {filteredStaff.map((staff) => {
-                  const roleConfig = getRoleConfig(staff.role);
-                  return (
-                    <tr
-                      key={staff.id}
-                      onClick={() => navigate(`/admin-dashboard/staff-profile/${staff.id}`)}
-                      className="hover:bg-blue-50/50 transition-all cursor-pointer"
-                    >
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="flex items-center gap-3">
-                          <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${roleConfig.gradient} p-0.5 shadow-lg flex-shrink-0`}>
-                            <img
-                              src={staff.photo}
-                              alt={staff.name}
-                              className="w-full h-full rounded-xl object-cover bg-white"
-                            />
-                          </div>
-                          <div>
-                            <p className="text-sm font-bold text-slate-900">{staff.name}</p>
-                            <p className="text-xs text-slate-600">{staff.email}</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`inline-flex items-center gap-1 px-3 py-1 ${roleConfig.light} ${roleConfig.text} rounded-full text-xs font-bold border ${roleConfig.border}`}>
-                          <span>{roleConfig.icon}</span>
-                          {staff.role}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="text-sm font-semibold text-slate-900">
-                          {staff.subject || staff.details?.department || '-'}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="text-sm font-semibold text-slate-900">{staff.academicYear}</span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="text-sm font-semibold text-slate-900">{staff.details.phone || 'N/A'}</span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold border-2 ${
-                          staff.status === 'Active' 
-                            ? 'bg-emerald-50 text-emerald-600 border-emerald-200' 
-                            : 'bg-rose-50 text-rose-600 border-rose-200'
-                        }`}>
-                          <span className={`inline-block w-2 h-2 rounded-full mr-1 ${
-                            staff.status === 'Active' ? 'bg-emerald-500' : 'bg-rose-500'
-                          }`}></span>
-                          {staff.status || 'Active'}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-right">
-                        <div className="relative inline-block">
-                          <button 
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setActiveMenuId(activeMenuId === staff.id ? null : staff.id);
-                            }}
-                            className="p-2 text-slate-400 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition-all"
-                          >
-                            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                              <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
-                            </svg>
-                          </button>
-                          {activeMenuId === staff.id && (
-                            <div className="absolute right-0 mt-2 w-40 bg-white rounded-2xl shadow-2xl border border-slate-200 z-20 overflow-hidden">
-                              <button 
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  handleEdit(staff);
-                                }}
-                                className="w-full text-left px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-all flex items-center gap-2"
-                              >
-                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                </svg>
-                                Edit
-                              </button>
-                              <button 
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  confirmDelete(staff);
-                                }}
-                                className="w-full text-left px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-rose-50 hover:text-rose-600 transition-all flex items-center gap-2"
-                              >
-                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                </svg>
-                                Delete
-                              </button>
-                            </div>
-                          )}
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-        )
-      ) : (
-        // Empty State
-        <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl border border-white/60 p-12 text-center">
-          <div className="w-24 h-24 bg-gradient-to-br from-blue-100 to-purple-100 rounded-3xl flex items-center justify-center mx-auto mb-6 border-2 border-blue-200">
-            <svg className="w-12 h-12 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-            </svg>
-          </div>
-          <h3 className="text-2xl font-bold text-slate-900 mb-2">No Staff Found</h3>
-          <p className="text-slate-600 text-sm max-w-md mx-auto mb-6">
-            We couldn't find any staff members matching your criteria. Try adjusting your filters or search term.
-          </p>
-          <button
-            onClick={() => {
-              setSearchTerm('');
-              setSelectedRole('All');
-              setSelectedAcademicYear('All');
-            }}
-            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold rounded-xl hover:shadow-xl transition-all duration-300 hover:scale-105"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-            </svg>
-            Reset All Filters
-          </button>
-        </div>
-      )}
-
-      {/* Add/Edit Modal */}
-      {isModalOpen && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl w-full max-w-2xl shadow-2xl overflow-hidden animate-scale-in">
-            <div className="px-6 py-5 border-b border-slate-200 flex justify-between items-center bg-gradient-to-r from-blue-50 via-purple-50 to-pink-50">
-              <h3 className="text-xl font-bold text-slate-900">{currentStaff ? '✏️ Edit Staff Member' : '✨ Add New Staff'}</h3>
-              <button onClick={() => setIsModalOpen(false)} className="p-2 text-slate-400 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition-all">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+          
+          <div className="relative grid grid-cols-1 md:grid-cols-3 gap-5">
+            {/* Search Bar */}
+            <div className="md:col-span-1">
+              <label className="block text-xs font-extrabold text-slate-700 dark:text-gray-300 uppercase tracking-wider mb-3 flex items-center gap-2">
+                <svg className="w-4 h-4 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
-              </button>
-            </div>
-            <form onSubmit={handleFormSubmit} className="p-6 space-y-4 max-h-[600px] overflow-y-auto custom-scrollbar">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="md:col-span-2">
-                  <label className="block text-sm font-bold text-slate-700 mb-2 flex items-center gap-2">
-                    <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
-                    Full Name *
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={formData.name}
-                    onChange={(e) => setFormData({...formData, name: e.target.value})}
-                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-slate-900"
-                    placeholder="e.g. John Doe"
-                  />
-                </div>
-                <div className="md:col-span-2">
-                  <label className="block text-sm font-bold text-slate-700 mb-2 flex items-center gap-2">
-                    <span className="w-2 h-2 bg-emerald-500 rounded-full"></span>
-                    Email Address *
-                  </label>
-                  <input
-                    type="email"
-                    required
-                    value={formData.email}
-                    onChange={(e) => setFormData({...formData, email: e.target.value})}
-                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all text-slate-900"
-                    placeholder="e.g. john.doe@school.com"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-bold text-slate-700 mb-2 flex items-center gap-2">
-                    <span className="w-2 h-2 bg-purple-500 rounded-full"></span>
-                    Role *
-                  </label>
-                  <select
-                    value={formData.role}
-                    onChange={(e) => setFormData({...formData, role: e.target.value})}
-                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all text-slate-900 cursor-pointer"
+                Search
+              </label>
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="Search by name or email..."
+                  className="w-full pl-12 pr-4 py-4 text-sm border-2 border-slate-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-4 focus:ring-emerald-500/20 focus:border-emerald-500 dark:focus:border-emerald-600 transition-all text-slate-900 dark:text-gray-100 bg-white dark:bg-gray-700 hover:border-emerald-300 dark:hover:border-emerald-700 font-bold shadow-sm"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                {searchTerm && (
+                  <button
+                    onClick={() => setSearchTerm('')}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-gray-500 hover:text-slate-600 dark:hover:text-gray-300"
                   >
-                    {availableRoles.map(role => (
-                      <option key={role} value={role}>{getRoleConfig(role).icon} {role}</option>
-                    ))}
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-sm font-bold text-slate-700 mb-2 flex items-center gap-2">
-                    <span className="w-2 h-2 bg-orange-500 rounded-full"></span>
-                    Status *
-                  </label>
-                  <select
-                    value={formData.status}
-                    onChange={(e) => setFormData({...formData, status: e.target.value})}
-                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all text-slate-900 cursor-pointer"
-                  >
-                    <option value="Active">✅ Active</option>
-                    <option value="Inactive">❌ Inactive</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-sm font-bold text-slate-700 mb-2 flex items-center gap-2">
-                    <span className="w-2 h-2 bg-indigo-500 rounded-full"></span>
-                    Academic Year *
-                  </label>
-                  <select
-                    value={formData.academicYear}
-                    onChange={(e) => setFormData({...formData, academicYear: e.target.value})}
-                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-slate-900 cursor-pointer"
-                  >
-                    {academicYears.filter(y => y !== 'All').map(year => (
-                      <option key={year} value={year}>📅 {year}</option>
-                    ))}
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-sm font-bold text-slate-700 mb-2 flex items-center gap-2">
-                    <span className="w-2 h-2 bg-teal-500 rounded-full"></span>
-                    Phone Number
-                  </label>
-                  <input
-                    type="tel"
-                    value={formData.phone}
-                    onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all text-slate-900"
-                    placeholder="e.g. +1 (555) 123-4567"
-                  />
-                </div>
-                {formData.role === 'Teacher' && (
-                  <div className="md:col-span-2">
-                    <label className="block text-sm font-bold text-slate-700 mb-2 flex items-center gap-2">
-                      <span className="w-2 h-2 bg-pink-500 rounded-full"></span>
-                      Subject *
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={formData.subject}
-                      onChange={(e) => setFormData({...formData, subject: e.target.value})}
-                      className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all text-slate-900"
-                      placeholder="e.g. Mathematics, Physics, English"
-                    />
-                  </div>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
                 )}
               </div>
-              <div className="pt-4 flex gap-3">
-                <button
-                  type="button"
-                  onClick={() => setIsModalOpen(false)}
-                  className="flex-1 px-6 py-3 border-2 border-slate-200 text-slate-700 font-bold rounded-xl hover:bg-slate-50 transition-all"
+            </div>
+
+            {/* Role Filter */}
+            <div>
+              <label className="block text-xs font-extrabold text-slate-700 dark:text-gray-300 uppercase tracking-wider mb-3 flex items-center gap-2">
+                <svg className="w-4 h-4 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                Role
+              </label>
+              <div className="relative">
+                <select
+                  value={selectedRole}
+                  onChange={(e) => setSelectedRole(e.target.value)}
+                  className="w-full px-4 py-4 text-sm border-2 border-slate-200 dark:border-gray-600 focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 dark:focus:border-blue-600 bg-white dark:bg-gray-700 text-slate-900 dark:text-gray-100 rounded-xl transition-all hover:border-blue-300 dark:hover:border-blue-700 appearance-none cursor-pointer font-bold shadow-sm"
                 >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="flex-1 px-6 py-3 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white font-bold rounded-xl hover:shadow-xl transition-all hover:scale-105"
+                  {roles.map(role => (
+                    <option key={role} value={role}>
+                      {role === 'All' ? '🔍 All Roles' : role}
+                    </option>
+                  ))}
+                </select>
+                <svg className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 dark:text-gray-500 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
+            </div>
+
+            {/* Academic Year Filter */}
+            <div>
+              <label className="block text-xs font-extrabold text-slate-700 dark:text-gray-300 uppercase tracking-wider mb-3 flex items-center gap-2">
+                <svg className="w-4 h-4 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                Academic Year
+              </label>
+              <div className="relative">
+                <select
+                  value={selectedAcademicYear}
+                  onChange={(e) => setSelectedAcademicYear(e.target.value)}
+                  className="w-full px-4 py-4 text-sm border-2 border-slate-200 dark:border-gray-600 focus:outline-none focus:ring-4 focus:ring-purple-500/20 focus:border-purple-500 dark:focus:border-purple-600 bg-white dark:bg-gray-700 text-slate-900 dark:text-gray-100 rounded-xl transition-all hover:border-purple-300 dark:hover:border-purple-700 appearance-none cursor-pointer font-bold shadow-sm"
                 >
-                  {currentStaff ? '💾 Save Changes' : '✨ Add Staff'}
+                  <option value="All">📅 All Years</option>
+                  {academicYears.filter(y => y !== 'All').map(year => (
+                    <option key={year} value={year}>{year}</option>
+                  ))}
+                </select>
+                <svg className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 dark:text-gray-500 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          {/* Active Filters */}
+          {(selectedRole !== 'All' || selectedAcademicYear !== 'All' || searchTerm) && (
+            <div className="relative mt-6 pt-6 border-t-2 border-slate-200 dark:border-gray-700">
+              <div className="flex items-center gap-3 flex-wrap">
+                <span className="text-xs font-extrabold text-slate-600 dark:text-gray-400">Active Filters:</span>
+                {selectedRole !== 'All' && (
+                  <span className="px-4 py-2 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 rounded-full text-xs font-extrabold flex items-center gap-2 shadow-sm border-2 border-blue-300 dark:border-blue-700">
+                    Role: {selectedRole}
+                    <button onClick={() => setSelectedRole('All')} className="ml-1 hover:text-blue-900 dark:hover:text-blue-300">
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                  </span>
+                )}
+                {selectedAcademicYear !== 'All' && (
+                  <span className="px-4 py-2 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400 rounded-full text-xs font-extrabold flex items-center gap-2 shadow-sm border-2 border-purple-300 dark:border-purple-700">
+                    Year: {selectedAcademicYear}
+                    <button onClick={() => setSelectedAcademicYear('All')} className="ml-1 hover:text-purple-900 dark:hover:text-purple-300">
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                  </span>
+                )}
+                {searchTerm && (
+                  <span className="px-4 py-2 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 rounded-full text-xs font-extrabold flex items-center gap-2 shadow-sm border-2 border-emerald-300 dark:border-emerald-700">
+                    Search: "{searchTerm}"
+                    <button onClick={() => setSearchTerm('')} className="ml-1 hover:text-emerald-900 dark:hover:text-emerald-300">
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                  </span>
+                )}
+                <button
+                  onClick={() => {
+                    setSearchTerm('');
+                    setSelectedRole('All');
+                    setSelectedAcademicYear('All');
+                  }}
+                  className="px-4 py-2 text-xs font-extrabold text-rose-600 dark:text-rose-400 hover:text-rose-700 dark:hover:text-rose-300 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded-full transition-all shadow-sm"
+                >
+                  Clear All
                 </button>
               </div>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* Delete Confirmation Modal */}
-      {isDeleteModalOpen && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl w-full max-w-md shadow-2xl p-8 text-center animate-scale-in">
-            <div className="w-20 h-20 bg-gradient-to-br from-rose-100 to-red-100 rounded-3xl flex items-center justify-center mx-auto mb-4 border-2 border-rose-200">
-              <svg className="w-10 h-10 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-              </svg>
             </div>
-            <h3 className="text-2xl font-bold text-slate-900 mb-2">Delete Staff Member?</h3>
-            <p className="text-slate-600 text-sm mb-6">
-              Are you sure you want to delete <span className="font-bold text-slate-900">{currentStaff?.name}</span>? This action cannot be undone.
-            </p>
-            <div className="flex gap-3">
-              <button
-                onClick={() => setIsDeleteModalOpen(false)}
-                className="flex-1 px-6 py-3 border-2 border-slate-200 text-slate-700 font-bold rounded-xl hover:bg-slate-50 transition-all"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleDelete}
-                className="flex-1 px-6 py-3 bg-gradient-to-r from-rose-500 to-red-500 text-white font-bold rounded-xl hover:shadow-xl transition-all hover:scale-105"
-              >
-                🗑️ Delete
-              </button>
-            </div>
-          </div>
+          )}
         </div>
-      )}
 
-      <style jsx>{`
-        @keyframes scale-in {
-          from {
-            opacity: 0;
-            transform: scale(0.9);
-          }
-          to {
-            opacity: 1;
-            transform: scale(1);
-          }
-        }
-        .animate-scale-in {
-          animation: scale-in 0.2s ease-out;
-        }
-        .custom-scrollbar::-webkit-scrollbar {
-          width: 6px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-          background: transparent;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: linear-gradient(180deg, #3B82F6 0%, #8B5CF6 100%);
-          border-radius: 10px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: linear-gradient(180deg, #8B5CF6 0%, #3B82F6 100%);
-        }
-      `}</style>
+        {/* Results Header */}
+        <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-2xl rounded-2xl shadow-xl border-2 border-slate-200/60 dark:border-gray-700/50 p-5 mb-6 flex items-center justify-between">
+          <h3 className="text-sm font-extrabold text-slate-900 dark:text-gray-100 flex items-center gap-2">
+            <div className="w-2.5 h-2.5 bg-blue-500 rounded-full animate-pulse"></div>
+            Showing Results
+          </h3>
+          <span className="px-6 py-3 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 text-slate-900 dark:text-gray-100 rounded-xl text-sm font-extrabold border-2 border-blue-300 dark:border-blue-700 shadow-lg">
+            {filteredStaff.length} {filteredStaff.length === 1 ? 'Staff Member' : 'Staff Members'}
+          </span>
+        </div>
+
+        {/* Continued in next response due to length... */}
+      </div>
     </div>
   );
 };
 
 export default StaffPage;
+
