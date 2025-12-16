@@ -115,7 +115,7 @@ const TeacherSidebar = ({ isSidebarOpen, toggleSidebar }) => {
       <aside
         className={`fixed inset-y-0 left-0 z-30 ${
           isSidebarOpen ? 'w-72' : 'w-20'
-        } bg-gradient-to-br from-white via-slate-50/50 to-white border-r border-slate-200/60 flex flex-col transition-all duration-300 ease-in-out shadow-2xl overflow-hidden`}
+        } bg-white border-r border-slate-200/60 flex flex-col transition-all duration-300 ease-in-out shadow-2xl overflow-hidden`}
       >
         {/* Logo Section */}
         <div className={`${isSidebarOpen ? 'h-20' : 'h-20'} flex items-center ${isSidebarOpen ? 'px-6' : 'justify-center'} border-b-2 border-slate-100 bg-gradient-to-r from-slate-900 via-blue-900 to-purple-900 flex-shrink-0 relative overflow-hidden`}>
@@ -156,7 +156,7 @@ const TeacherSidebar = ({ isSidebarOpen, toggleSidebar }) => {
 
         {/* User Profile Section (Expanded only) */}
         {isSidebarOpen && (
-          <div className="p-4 border-b border-slate-100 bg-gradient-to-r from-blue-50 to-purple-50">
+          <div className="p-4 border-b border-slate-100 bg-white">
             <div className="flex items-center gap-3 p-3 bg-white rounded-xl shadow-sm border border-slate-100">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 flex items-center justify-center text-white font-bold text-lg shadow-lg">
                 T
@@ -230,7 +230,7 @@ const TeacherSidebar = ({ isSidebarOpen, toggleSidebar }) => {
         </nav>
 
         {/* Footer Section */}
-        <div className={`${isSidebarOpen ? 'p-4' : 'px-2 py-3'} border-t-2 border-slate-100 bg-gradient-to-r from-slate-50 to-blue-50 flex-shrink-0 space-y-2`}>
+        <div className={`${isSidebarOpen ? 'p-4' : 'px-2 py-3'} border-t-2 border-slate-100 bg-white flex-shrink-0 space-y-2`}>
           {/* Settings */}
           <NavLink
             to="/teacher-dashboard/settings"

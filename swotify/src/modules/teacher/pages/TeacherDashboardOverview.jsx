@@ -24,7 +24,7 @@ const TeacherDashboardOverview = ({ teacherName }) => {
   const totalPTMs = mockPTMHistory.length;
 
   return (
-    <div className="bg-gradient-to-br from-white via-slate-50/50 to-white p-6">
+    <div className="bg-white p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">

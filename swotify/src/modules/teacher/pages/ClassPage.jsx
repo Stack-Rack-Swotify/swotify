@@ -82,7 +82,7 @@ const ClassPage = () => {
   const allAvailableYears = [currentAcademicYear, ...Object.keys(archivedDataByYear)].sort().reverse();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white via-slate-50/50 to-white p-6">
+    <div className="min-h-screen bg-white p-6">
       {/* Header */}
       <div className="mb-6 flex flex-col md:flex-row md:justify-between md:items-center gap-4">
         <div>

@@ -61,7 +61,7 @@ const TeacherDashboard = () => {
   };
 
   return (
-    <div className="flex min-h-screen bg-gradient-to-br from-white via-slate-50/50 to-white text-slate-900 relative overflow-hidden">
+    <div className="flex min-h-screen bg-white text-slate-900 relative overflow-hidden">
       <TeacherSidebar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
       <div className={`flex-1 flex flex-col transition-all duration-300 ${isSidebarOpen ? 'lg:ml-72' : 'lg:ml-20'}`}>
         {/* Header */}

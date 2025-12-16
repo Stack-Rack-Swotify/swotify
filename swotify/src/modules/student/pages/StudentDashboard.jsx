@@ -135,7 +135,7 @@ const StudentDashboard = () => {
   };
 
   return (
-    <div className="flex min-h-screen bg-gradient-to-br from-white via-slate-50/50 to-white relative overflow-hidden">
+    <div className="flex min-h-screen bg-white relative overflow-hidden">
       {/* Mobile Overlay */}
       {isSidebarOpen && (
         <div 
