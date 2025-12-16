@@ -14,6 +14,7 @@ import TeacherSettingsPage from './TeacherSettingsPage';
 import PerformanceReportPage from '../../admin/pages/PerformanceReportPage';
 import TeacherEventDetailPage from './TeacherEventDetailPage';
 import TeacherAttendancePage from './TeacherAttendancePage';
+import TeacherApprovalPage from './TeacherApprovalPage';
 
 import mockStaff from '../../../data/mockStaff'; // Import mock staff data
 
@@ -220,6 +221,7 @@ const TeacherDashboard = () => {
             <Route path="/student-profile/:studentId" element={<TeacherStudentProfilePage />} />
             <Route path="/ai-chatbot" element={<AIChatbot />} />
             <Route path="/ptm-history/:ptmId?" element={<PTMHistoryPage />} />
+            <Route path="/approval" element={<TeacherApprovalPage />} />
             <Route path="/report" element={<ReportPage />} />
             <Route path="/settings" element={<TeacherSettingsPage />} />
             <Route path="/performance-report" element={<PerformanceReportPage />} />

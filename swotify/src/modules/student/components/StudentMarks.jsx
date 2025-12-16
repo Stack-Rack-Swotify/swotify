@@ -45,24 +45,24 @@ const StudentMarks = ({ studentId = 's1' }) => {
 
   // Function to determine score color based on educational standards
   const getScoreColor = (score) => {
-    if (score >= 90) return 'text-emerald-600 dark:text-emerald-400 font-bold';
-    if (score >= 75) return 'text-cyan-600 dark:text-cyan-400 font-bold';
-    return 'text-orange-600 dark:text-orange-400 font-bold';
+    if (score >= 90) return 'text-emerald-600 font-bold';
+    if (score >= 75) return 'text-cyan-600 font-bold';
+    return 'text-orange-600 font-bold';
   };
 
   // Function to determine grade badge style
   const getGradeBadgeStyle = (grade) => {
     if (grade.startsWith('A')) {
-      return 'bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-emerald-900/30 dark:to-teal-900/30 text-emerald-600 dark:text-emerald-400 border-2 border-emerald-300 dark:border-emerald-700 shadow-sm';
+      return 'bg-gradient-to-r from-emerald-50 to-teal-50 text-emerald-600 border-2 border-emerald-300 shadow-sm';
     }
     if (grade.startsWith('B')) {
-      return 'bg-gradient-to-r from-cyan-50 to-blue-50 dark:from-cyan-900/30 dark:to-blue-900/30 text-cyan-600 dark:text-cyan-400 border-2 border-cyan-300 dark:border-cyan-700 shadow-sm';
+      return 'bg-gradient-to-r from-cyan-50 to-blue-50 text-cyan-600 border-2 border-cyan-300 shadow-sm';
     }
-    return 'bg-gradient-to-r from-orange-50 to-amber-50 dark:from-orange-900/30 dark:to-amber-900/30 text-orange-600 dark:text-orange-400 border-2 border-orange-300 dark:border-orange-700 shadow-sm';
+    return 'bg-gradient-to-r from-orange-50 to-amber-50 text-orange-600 border-2 border-orange-300 shadow-sm';
   };
 
   return (
-    <div className="group relative bg-white/90 dark:bg-gray-800/90 backdrop-blur-2xl rounded-2xl shadow-xl border-2 border-slate-200/60 dark:border-gray-700/50 p-8 hover:shadow-2xl transition-all duration-300 overflow-hidden">
+    <div className="group relative bg-white/90 backdrop-blur-2xl rounded-2xl shadow-xl border-2 border-slate-200/60 p-8 hover:shadow-2xl transition-all duration-300 overflow-hidden">
       {/* Premium Decorative Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
 
@@ -78,10 +78,10 @@ const StudentMarks = ({ studentId = 's1' }) => {
             </div>
           </div>
           <div>
-            <h3 className="text-2xl font-bold text-slate-900 dark:text-gray-100">
+            <h3 className="text-2xl font-bold text-slate-900">
               Student Marks
             </h3>
-            <p className="text-slate-600 dark:text-gray-400 text-sm mt-1 flex items-center gap-2">
+            <p className="text-slate-600 text-sm mt-1 flex items-center gap-2">
               <div className="w-1.5 h-1.5 bg-cyan-500 rounded-full animate-pulse"></div>
               All your academic marks and grades listed by assignment
             </p>
@@ -92,11 +92,11 @@ const StudentMarks = ({ studentId = 's1' }) => {
       {studentMarks.length > 0 ? (
         <>
           {/* Premium Table */}
-          <div className="relative overflow-x-auto rounded-xl border-2 border-slate-200 dark:border-gray-600 shadow-lg mb-6">
-            <table className="min-w-full bg-white/80 dark:bg-gray-700/80 backdrop-blur-sm">
+          <div className="relative overflow-x-auto rounded-xl border-2 border-slate-200 shadow-lg mb-6">
+            <table className="min-w-full bg-white/80 backdrop-blur-sm">
               <thead>
-                <tr className="bg-gradient-to-r from-slate-50 via-white to-slate-50 dark:from-gray-800 dark:via-gray-700 dark:to-gray-800 border-b-2 border-slate-200 dark:border-gray-600">
-                  <th className="py-4 px-6 text-left text-xs font-semibold text-slate-700 dark:text-gray-300 uppercase tracking-wide">
+                <tr className="bg-gradient-to-r from-slate-50 via-white to-slate-50 border-b-2 border-slate-200">
+                  <th className="py-4 px-6 text-left text-xs font-semibold text-slate-700 uppercase tracking-wide">
                     <div className="flex items-center gap-2">
                       <div className="w-8 h-8 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-lg flex items-center justify-center shadow-lg">
                         <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
@@ -106,7 +106,7 @@ const StudentMarks = ({ studentId = 's1' }) => {
                       Assignment
                     </div>
                   </th>
-                  <th className="py-4 px-6 text-left text-xs font-semibold text-slate-700 dark:text-gray-300 uppercase tracking-wide">
+                  <th className="py-4 px-6 text-left text-xs font-semibold text-slate-700 uppercase tracking-wide">
                     <div className="flex items-center gap-2">
                       <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center shadow-lg">
                         <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
@@ -116,7 +116,7 @@ const StudentMarks = ({ studentId = 's1' }) => {
                       Score
                     </div>
                   </th>
-                  <th className="py-4 px-6 text-left text-xs font-semibold text-slate-700 dark:text-gray-300 uppercase tracking-wide">
+                  <th className="py-4 px-6 text-left text-xs font-semibold text-slate-700 uppercase tracking-wide">
                     <div className="flex items-center gap-2">
                       <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-lg flex items-center justify-center shadow-lg">
                         <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
@@ -126,7 +126,7 @@ const StudentMarks = ({ studentId = 's1' }) => {
                       Grade
                     </div>
                   </th>
-                  <th className="py-4 px-6 text-left text-xs font-semibold text-slate-700 dark:text-gray-300 uppercase tracking-wide">
+                  <th className="py-4 px-6 text-left text-xs font-semibold text-slate-700 uppercase tracking-wide">
                     <div className="flex items-center gap-2">
                       <div className="w-8 h-8 bg-gradient-to-br from-slate-600 to-gray-600 rounded-lg flex items-center justify-center shadow-lg">
                         <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
@@ -142,12 +142,12 @@ const StudentMarks = ({ studentId = 's1' }) => {
                 {studentMarks.map((mark, index) => (
                   <tr 
                     key={mark.id} 
-                    className={`group/row border-b border-slate-200 dark:border-gray-600 last:border-b-0 hover:bg-gradient-to-r hover:from-cyan-50/50 hover:via-blue-50/50 hover:to-purple-50/50 dark:hover:from-cyan-900/10 dark:hover:via-blue-900/10 dark:hover:to-purple-900/10 transition-all duration-300 ${
-                      index % 2 === 0 ? 'bg-white/50 dark:bg-gray-700/50' : 'bg-slate-50/50 dark:bg-gray-800/50'
+                    className={`group/row border-b border-slate-200 last:border-b-0 hover:bg-gradient-to-r hover:from-cyan-50/50 hover:via-blue-50/50 hover:to-purple-50/50 transition-all duration-300 ${
+                      index % 2 === 0 ? 'bg-white/50' : 'bg-slate-50/50'
                     }`}
                   >
                     <td className="py-4 px-6 whitespace-nowrap">
-                      <span className="text-sm font-semibold text-slate-900 dark:text-gray-100 group-hover/row:text-cyan-600 dark:group-hover/row:text-cyan-400 transition-colors">
+                      <span className="text-sm font-semibold text-slate-900 group-hover/row:text-cyan-600 transition-colors">
                         {mark.subject}
                       </span>
                     </td>
@@ -156,7 +156,7 @@ const StudentMarks = ({ studentId = 's1' }) => {
                         <span className={`text-lg ${getScoreColor(mark.score)}`}>
                           {mark.score}
                         </span>
-                        <span className="text-xs text-slate-500 dark:text-gray-400 font-medium">/ 100</span>
+                        <span className="text-xs text-slate-500 font-medium">/ 100</span>
                       </div>
                     </td>
                     <td className="py-4 px-6 whitespace-nowrap">
@@ -165,7 +165,7 @@ const StudentMarks = ({ studentId = 's1' }) => {
                       </span>
                     </td>
                     <td className="py-4 px-6 whitespace-nowrap">
-                      <span className="text-sm text-slate-600 dark:text-gray-400 font-medium">{mark.semester}</span>
+                      <span className="text-sm text-slate-600 font-medium">{mark.semester}</span>
                     </td>
                   </tr>
                 ))}
@@ -176,7 +176,7 @@ const StudentMarks = ({ studentId = 's1' }) => {
           {/* Premium Summary Stats */}
           <div className="relative grid grid-cols-1 md:grid-cols-3 gap-5">
             {/* Highest Score */}
-            <div className="group/stat relative bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20 p-5 rounded-xl border-2 border-emerald-200 dark:border-emerald-700 hover:shadow-xl transition-all duration-300 hover:scale-105 overflow-hidden">
+            <div className="group/stat relative bg-gradient-to-br from-emerald-50 to-teal-50 p-5 rounded-xl border-2 border-emerald-200 hover:shadow-xl transition-all duration-300 hover:scale-105 overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-teal-500/10 opacity-0 group-hover/stat:opacity-100 transition-opacity"></div>
               <div className="relative flex items-center gap-4">
                 <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-lg flex items-center justify-center shadow-lg group-hover/stat:rotate-12 transition-transform">
@@ -185,8 +185,8 @@ const StudentMarks = ({ studentId = 's1' }) => {
                   </svg>
                 </div>
                 <div>
-                  <p className="text-xs font-semibold text-slate-700 dark:text-gray-300 uppercase tracking-wide mb-1">Highest</p>
-                  <p className="text-3xl font-bold text-emerald-600 dark:text-emerald-400">
+                  <p className="text-xs font-semibold text-slate-700 uppercase tracking-wide mb-1">Highest</p>
+                  <p className="text-3xl font-bold text-emerald-600">
                     {Math.max(...studentMarks.map(m => m.score))}
                   </p>
                 </div>
@@ -194,7 +194,7 @@ const StudentMarks = ({ studentId = 's1' }) => {
             </div>
 
             {/* Average Score */}
-            <div className="group/stat relative bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-cyan-900/20 dark:to-blue-900/20 p-5 rounded-xl border-2 border-cyan-200 dark:border-cyan-700 hover:shadow-xl transition-all duration-300 hover:scale-105 overflow-hidden">
+            <div className="group/stat relative bg-gradient-to-br from-cyan-50 to-blue-50 p-5 rounded-xl border-2 border-cyan-200 hover:shadow-xl transition-all duration-300 hover:scale-105 overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-blue-500/10 opacity-0 group-hover/stat:opacity-100 transition-opacity"></div>
               <div className="relative flex items-center gap-4">
                 <div className="w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-lg flex items-center justify-center shadow-lg group-hover/stat:rotate-12 transition-transform">
@@ -203,8 +203,8 @@ const StudentMarks = ({ studentId = 's1' }) => {
                   </svg>
                 </div>
                 <div>
-                  <p className="text-xs font-semibold text-slate-700 dark:text-gray-300 uppercase tracking-wide mb-1">Average</p>
-                  <p className="text-3xl font-bold text-cyan-600 dark:text-cyan-400">
+                  <p className="text-xs font-semibold text-slate-700 uppercase tracking-wide mb-1">Average</p>
+                  <p className="text-3xl font-bold text-cyan-600">
                     {Math.round(studentMarks.reduce((sum, m) => sum + m.score, 0) / studentMarks.length)}
                   </p>
                 </div>
@@ -212,7 +212,7 @@ const StudentMarks = ({ studentId = 's1' }) => {
             </div>
 
             {/* Total Assignments */}
-            <div className="group/stat relative bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 p-5 rounded-xl border-2 border-purple-200 dark:border-purple-700 hover:shadow-xl transition-all duration-300 hover:scale-105 overflow-hidden">
+            <div className="group/stat relative bg-gradient-to-br from-purple-50 to-pink-50 p-5 rounded-xl border-2 border-purple-200 hover:shadow-xl transition-all duration-300 hover:scale-105 overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-pink-500/10 opacity-0 group-hover/stat:opacity-100 transition-opacity"></div>
               <div className="relative flex items-center gap-4">
                 <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center shadow-lg group-hover/stat:rotate-12 transition-transform">
@@ -221,26 +221,26 @@ const StudentMarks = ({ studentId = 's1' }) => {
                   </svg>
                 </div>
                 <div>
-                  <p className="text-xs font-semibold text-slate-700 dark:text-gray-300 uppercase tracking-wide mb-1">Assignments</p>
-                  <p className="text-3xl font-bold text-purple-600 dark:text-purple-400">{studentMarks.length}</p>
+                  <p className="text-xs font-semibold text-slate-700 uppercase tracking-wide mb-1">Assignments</p>
+                  <p className="text-3xl font-bold text-purple-600">{studentMarks.length}</p>
                 </div>
               </div>
             </div>
           </div>
         </>
       ) : (
-        <div className="relative mt-6 p-12 border-2 border-dashed border-slate-200 dark:border-gray-600 rounded-2xl bg-gradient-to-br from-slate-50/50 via-white/50 to-slate-50/50 dark:from-gray-800/50 dark:via-gray-700/50 dark:to-gray-800/50 backdrop-blur-sm">
+        <div className="relative mt-6 p-12 border-2 border-dashed border-slate-200 rounded-2xl bg-gradient-to-br from-slate-50/50 via-white/50 to-slate-50/50 backdrop-blur-sm">
           <div className="flex flex-col items-center justify-center">
             <div className="relative w-20 h-20 mb-6">
               <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 to-blue-500/20 rounded-2xl animate-pulse"></div>
-              <div className="relative w-full h-full bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-cyan-900/20 dark:to-blue-900/20 rounded-2xl flex items-center justify-center border-2 border-cyan-300 dark:border-cyan-700 shadow-lg">
-                <svg className="w-10 h-10 text-slate-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+              <div className="relative w-full h-full bg-gradient-to-br from-cyan-50 to-blue-50 rounded-2xl flex items-center justify-center border-2 border-cyan-300 shadow-lg">
+                <svg className="w-10 h-10 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
               </div>
             </div>
-            <p className="text-slate-900 dark:text-gray-100 font-bold text-lg">No marks data available yet.</p>
-            <p className="text-slate-600 dark:text-gray-400 text-sm mt-2">Your grades will appear here once published.</p>
+            <p className="text-slate-900 font-bold text-lg">No marks data available yet.</p>
+            <p className="text-slate-600 text-sm mt-2">Your grades will appear here once published.</p>
           </div>
         </div>
       )}

@@ -30,7 +30,7 @@ const StudentAttendance = ({ studentId = 's1' }) => {
   }
 
   return (
-    <div className="group relative bg-white/90 dark:bg-gray-800/90 backdrop-blur-2xl rounded-2xl shadow-xl border-2 border-slate-200/60 dark:border-gray-700/50 p-8 hover:shadow-2xl transition-all duration-300 overflow-hidden">
+    <div className="group relative bg-white/90 backdrop-blur-2xl rounded-2xl shadow-xl border-2 border-slate-200/60 p-8 hover:shadow-2xl transition-all duration-300 overflow-hidden">
       {/* Premium Decorative Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-blue-500/5 to-emerald-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
 
@@ -46,10 +46,10 @@ const StudentAttendance = ({ studentId = 's1' }) => {
             </div>
           </div>
           <div>
-            <h3 className="text-2xl font-bold text-slate-900 dark:text-gray-100">
+            <h3 className="text-2xl font-bold text-slate-900">
               Student Attendance
             </h3>
-            <p className="text-slate-600 dark:text-gray-400 text-sm mt-1 flex items-center gap-2">
+            <p className="text-slate-600 text-sm mt-1 flex items-center gap-2">
               <div className="w-1.5 h-1.5 bg-cyan-500 rounded-full animate-pulse"></div>
               Your attendance record and statistics are summarized below
             </p>
@@ -60,7 +60,7 @@ const StudentAttendance = ({ studentId = 's1' }) => {
       {/* Premium Attendance Cards Grid */}
       <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-8">
         {/* Total Classes */}
-        <div className="group/card relative bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-cyan-900/20 dark:to-blue-900/20 p-5 rounded-xl border-2 border-cyan-200 dark:border-cyan-700 hover:shadow-xl transition-all duration-300 hover:scale-105 overflow-hidden">
+        <div className="group/card relative bg-gradient-to-br from-cyan-50 to-blue-50 p-5 rounded-xl border-2 border-cyan-200 hover:shadow-xl transition-all duration-300 hover:scale-105 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-blue-500/10 opacity-0 group-hover/card:opacity-100 transition-opacity"></div>
           <div className="relative flex items-center justify-between mb-4">
             <div className="w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-lg flex items-center justify-center shadow-lg group-hover/card:rotate-12 transition-transform">
@@ -69,12 +69,12 @@ const StudentAttendance = ({ studentId = 's1' }) => {
               </svg>
             </div>
           </div>
-          <p className="relative text-xs font-semibold text-slate-700 dark:text-gray-300 uppercase tracking-wide mb-2">Total Classes</p>
-          <p className="relative text-4xl font-bold text-cyan-600 dark:text-cyan-400">{attendanceData.totalClasses}</p>
+          <p className="relative text-xs font-semibold text-slate-700 uppercase tracking-wide mb-2">Total Classes</p>
+          <p className="relative text-4xl font-bold text-cyan-600">{attendanceData.totalClasses}</p>
         </div>
 
         {/* Attended Classes */}
-        <div className="group/card relative bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20 p-5 rounded-xl border-2 border-emerald-200 dark:border-emerald-700 hover:shadow-xl transition-all duration-300 hover:scale-105 overflow-hidden">
+        <div className="group/card relative bg-gradient-to-br from-emerald-50 to-teal-50 p-5 rounded-xl border-2 border-emerald-200 hover:shadow-xl transition-all duration-300 hover:scale-105 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-teal-500/10 opacity-0 group-hover/card:opacity-100 transition-opacity"></div>
           <div className="relative flex items-center justify-between mb-4">
             <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-lg flex items-center justify-center shadow-lg group-hover/card:rotate-12 transition-transform">
@@ -83,12 +83,12 @@ const StudentAttendance = ({ studentId = 's1' }) => {
               </svg>
             </div>
           </div>
-          <p className="relative text-xs font-semibold text-slate-700 dark:text-gray-300 uppercase tracking-wide mb-2">Attended Classes</p>
-          <p className="relative text-4xl font-bold text-emerald-600 dark:text-emerald-400">{attendanceData.attendedClasses}</p>
+          <p className="relative text-xs font-semibold text-slate-700 uppercase tracking-wide mb-2">Attended Classes</p>
+          <p className="relative text-4xl font-bold text-emerald-600">{attendanceData.attendedClasses}</p>
         </div>
 
         {/* Absent Classes */}
-        <div className="group/card relative bg-gradient-to-br from-rose-50 to-red-50 dark:from-rose-900/20 dark:to-red-900/20 p-5 rounded-xl border-2 border-rose-200 dark:border-rose-700 hover:shadow-xl transition-all duration-300 hover:scale-105 overflow-hidden">
+        <div className="group/card relative bg-gradient-to-br from-rose-50 to-red-50 p-5 rounded-xl border-2 border-rose-200 hover:shadow-xl transition-all duration-300 hover:scale-105 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-rose-500/10 to-red-500/10 opacity-0 group-hover/card:opacity-100 transition-opacity"></div>
           <div className="relative flex items-center justify-between mb-4">
             <div className="w-12 h-12 bg-gradient-to-br from-rose-500 to-red-500 rounded-lg flex items-center justify-center shadow-lg group-hover/card:rotate-12 transition-transform">
@@ -97,12 +97,12 @@ const StudentAttendance = ({ studentId = 's1' }) => {
               </svg>
             </div>
           </div>
-          <p className="relative text-xs font-semibold text-slate-700 dark:text-gray-300 uppercase tracking-wide mb-2">Absent Classes</p>
-          <p className="relative text-4xl font-bold text-rose-600 dark:text-rose-400">{attendanceData.absentClasses}</p>
+          <p className="relative text-xs font-semibold text-slate-700 uppercase tracking-wide mb-2">Absent Classes</p>
+          <p className="relative text-4xl font-bold text-rose-600">{attendanceData.absentClasses}</p>
         </div>
 
         {/* Attendance Percentage */}
-        <div className="group/card relative bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 p-5 rounded-xl border-2 border-blue-200 dark:border-blue-700 hover:shadow-xl transition-all duration-300 hover:scale-105 lg:col-span-2 overflow-hidden">
+        <div className="group/card relative bg-gradient-to-br from-blue-50 to-purple-50 p-5 rounded-xl border-2 border-blue-200 hover:shadow-xl transition-all duration-300 hover:scale-105 lg:col-span-2 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-0 group-hover/card:opacity-100 transition-opacity"></div>
           <div className="relative flex items-center justify-between mb-4">
             <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg flex items-center justify-center shadow-lg group-hover/card:rotate-12 transition-transform">
@@ -110,15 +110,15 @@ const StudentAttendance = ({ studentId = 's1' }) => {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
               </svg>
             </div>
-            <span className="relative text-sm font-semibold text-blue-600 dark:text-blue-400 bg-blue-100 dark:bg-blue-900/30 px-4 py-2 rounded-full border-2 border-blue-300 dark:border-blue-700 shadow-sm">
+            <span className="relative text-sm font-semibold text-blue-600 bg-blue-100 px-4 py-2 rounded-full border-2 border-blue-300 shadow-sm">
               Current
             </span>
           </div>
-          <p className="relative text-xs font-semibold text-slate-700 dark:text-gray-300 uppercase tracking-wide mb-3">Attendance Percentage</p>
+          <p className="relative text-xs font-semibold text-slate-700 uppercase tracking-wide mb-3">Attendance Percentage</p>
           <div className="relative flex items-end gap-4">
-            <p className="text-5xl font-bold text-blue-600 dark:text-blue-400">{attendanceData.attendancePercentage}%</p>
+            <p className="text-5xl font-bold text-blue-600">{attendanceData.attendancePercentage}%</p>
             <div className="flex-1 mb-3">
-              <div className="w-full bg-slate-100 dark:bg-gray-700 rounded-full h-4 overflow-hidden shadow-inner">
+              <div className="w-full bg-slate-100 rounded-full h-4 overflow-hidden shadow-inner">
                 <div 
                   className="h-full bg-gradient-to-r from-blue-500 via-purple-500 to-emerald-500 rounded-full transition-all duration-1000 shadow-lg"
                   style={{ width: `${attendanceData.attendancePercentage}%` }}
@@ -129,7 +129,7 @@ const StudentAttendance = ({ studentId = 's1' }) => {
         </div>
 
         {/* Last Month's Performance */}
-        <div className="group/card relative bg-gradient-to-br from-slate-50 to-gray-50 dark:from-slate-900/20 dark:to-gray-900/20 p-5 rounded-xl border-2 border-slate-200 dark:border-slate-700 hover:shadow-xl transition-all duration-300 hover:scale-105 overflow-hidden">
+        <div className="group/card relative bg-gradient-to-br from-slate-50 to-gray-50 p-5 rounded-xl border-2 border-slate-200 hover:shadow-xl transition-all duration-300 hover:scale-105 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-slate-500/10 to-gray-500/10 opacity-0 group-hover/card:opacity-100 transition-opacity"></div>
           <div className="relative flex items-center justify-between mb-4">
             <div className="w-12 h-12 bg-gradient-to-br from-slate-600 to-gray-600 rounded-lg flex items-center justify-center shadow-lg group-hover/card:rotate-12 transition-transform">
@@ -151,13 +151,13 @@ const StudentAttendance = ({ studentId = 's1' }) => {
               </div>
             )}
           </div>
-          <p className="relative text-xs font-semibold text-slate-700 dark:text-gray-300 uppercase tracking-wide mb-2">Last Month</p>
-          <p className="relative text-4xl font-bold text-slate-900 dark:text-gray-100">{attendanceData.lastMonthPercentage}%</p>
+          <p className="relative text-xs font-semibold text-slate-700 uppercase tracking-wide mb-2">Last Month</p>
+          <p className="relative text-4xl font-bold text-slate-900">{attendanceData.lastMonthPercentage}%</p>
         </div>
       </div>
       
       {/* Premium Insights Section */}
-      <div className="relative p-6 border-2 border-slate-200 dark:border-gray-600 rounded-2xl bg-gradient-to-br from-slate-50/50 via-white/50 to-slate-50/50 dark:from-gray-800/50 dark:via-gray-700/50 dark:to-gray-800/50 backdrop-blur-sm shadow-lg">
+      <div className="relative p-6 border-2 border-slate-200 rounded-2xl bg-gradient-to-br from-slate-50/50 via-white/50 to-slate-50/50 backdrop-blur-sm shadow-lg">
         <div className="flex items-start gap-4">
           <div className="relative">
             <div className="absolute inset-0 bg-gradient-to-br from-cyan-500 via-blue-500 to-emerald-500 rounded-xl blur opacity-50 animate-pulse"></div>
@@ -168,12 +168,12 @@ const StudentAttendance = ({ studentId = 's1' }) => {
             </div>
           </div>
           <div className="flex-1">
-            <h4 className="text-lg font-bold text-slate-900 dark:text-gray-100 mb-2">Attendance Summary</h4>
-            <p className="text-sm text-slate-600 dark:text-gray-400 leading-relaxed mb-4">
+            <h4 className="text-lg font-bold text-slate-900 mb-2">Attendance Summary</h4>
+            <p className="text-sm text-slate-600 leading-relaxed mb-4">
               This is a summary of your attendance records. You're maintaining a strong attendance rate of {attendanceData.attendancePercentage}%.
             </p>
             {attendanceData.attendancePercentage >= 90 ? (
-              <div className="flex items-center gap-3 text-emerald-600 dark:text-emerald-400 bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20 px-4 py-3 rounded-xl inline-flex border-2 border-emerald-300 dark:border-emerald-700 shadow-lg hover:scale-105 transition-transform">
+              <div className="flex items-center gap-3 text-emerald-600 bg-gradient-to-r from-emerald-50 to-teal-50 px-4 py-3 rounded-xl inline-flex border-2 border-emerald-300 shadow-lg hover:scale-105 transition-transform">
                 <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-lg flex items-center justify-center shadow-lg">
                   <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -182,7 +182,7 @@ const StudentAttendance = ({ studentId = 's1' }) => {
                 <span className="text-sm font-semibold">Excellent Attendance!</span>
               </div>
             ) : attendanceData.attendancePercentage >= 75 ? (
-              <div className="flex items-center gap-3 text-orange-600 dark:text-orange-400 bg-gradient-to-r from-orange-50 to-amber-50 dark:from-orange-900/20 dark:to-amber-900/20 px-4 py-3 rounded-xl inline-flex border-2 border-orange-300 dark:border-orange-700 shadow-lg hover:scale-105 transition-transform">
+              <div className="flex items-center gap-3 text-orange-600 bg-gradient-to-r from-orange-50 to-amber-50 px-4 py-3 rounded-xl inline-flex border-2 border-orange-300 shadow-lg hover:scale-105 transition-transform">
                 <div className="w-8 h-8 bg-gradient-to-br from-orange-500 to-amber-500 rounded-lg flex items-center justify-center shadow-lg">
                   <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -191,7 +191,7 @@ const StudentAttendance = ({ studentId = 's1' }) => {
                 <span className="text-sm font-semibold">Good Attendance</span>
               </div>
             ) : (
-              <div className="flex items-center gap-3 text-rose-600 dark:text-rose-400 bg-gradient-to-r from-rose-50 to-red-50 dark:from-rose-900/20 dark:to-red-900/20 px-4 py-3 rounded-xl inline-flex border-2 border-rose-300 dark:border-rose-700 shadow-lg hover:scale-105 transition-transform">
+              <div className="flex items-center gap-3 text-rose-600 bg-gradient-to-r from-rose-50 to-red-50 px-4 py-3 rounded-xl inline-flex border-2 border-rose-300 shadow-lg hover:scale-105 transition-transform">
                 <div className="w-8 h-8 bg-gradient-to-br from-rose-500 to-red-500 rounded-lg flex items-center justify-center shadow-lg">
                   <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />

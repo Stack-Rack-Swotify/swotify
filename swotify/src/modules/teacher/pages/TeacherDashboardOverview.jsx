@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import mockClasses from '../../../data/mockClasses';
 import mockEvents from '../../../data/mockEvents';
 import mockPTMHistory from '../../../data/mockPTMHistory';
+import mockAIRecommendations from '../../../data/mockAIRecommendations';
 
 const TeacherDashboardOverview = ({ teacherName }) => {
   // --- Students Overview ---
@@ -23,6 +24,10 @@ const TeacherDashboardOverview = ({ teacherName }) => {
   const recentPTMs = mockPTMHistory.slice(0, 3);
   const totalPTMs = mockPTMHistory.length;
 
+  // --- Approvals Overview ---
+  const pendingApprovals = mockAIRecommendations.filter(rec => rec.status === 'Pending');
+  const recentPendingApprovals = pendingApprovals.slice(0, 3);
+
   return (
     <div className="bg-white p-6">
       <div className="max-w-7xl mx-auto">
@@ -35,7 +40,7 @@ const TeacherDashboardOverview = ({ teacherName }) => {
         </div>
 
         {/* Quick Stats Section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
           <div className="bg-white rounded-2xl shadow-lg border border-slate-200/60 p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
             <div className="flex items-center justify-between mb-4">
               <div className="w-14 h-14 bg-gradient-to-br from-blue-100 to-blue-200 rounded-xl flex items-center justify-center shadow-md">
@@ -83,6 +88,19 @@ const TeacherDashboardOverview = ({ teacherName }) => {
             <p className="text-sm text-slate-600 font-semibold mb-2">Recent PTMs</p>
             <p className="text-3xl font-semibold text-purple-600">{recentPTMs.length}</p>
           </div>
+
+          {/* New Approvals Stat */}
+          <div className="bg-white rounded-2xl shadow-lg border border-slate-200/60 p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-14 h-14 bg-gradient-to-br from-cyan-100 to-cyan-200 rounded-xl flex items-center justify-center shadow-md">
+                <svg className="w-7 h-7 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+            </div>
+            <p className="text-sm text-slate-600 font-semibold mb-2">Pending Approvals</p>
+            <p className="text-3xl font-semibold text-cyan-600">{pendingApprovals.length}</p>
+          </div>
         </div>
 
         {/* Combined Information Section */}
@@ -126,6 +144,50 @@ const TeacherDashboardOverview = ({ teacherName }) => {
               className="flex items-center justify-center gap-2 w-full px-5 py-3 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white hover:shadow-xl rounded-xl transition-all duration-300 font-semibold text-sm hover:scale-105"
             >
               View All Students
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
+          </div>
+
+          {/* Pending Approvals Widget */}
+          <div className="bg-white rounded-2xl shadow-lg border border-slate-200/60 p-6 hover:shadow-xl transition-all duration-300">
+            <h2 className="text-xl font-semibold text-slate-900 mb-6 flex items-center">
+              <span className="w-1.5 h-7 bg-gradient-to-b from-cyan-600 to-blue-600 rounded-full mr-3"></span>
+              Pending Approvals
+            </h2>
+            <ul className="space-y-3 mb-5">
+              {recentPendingApprovals.length > 0 ? (
+                recentPendingApprovals.map(rec => (
+                  <li key={rec.id} className="p-4 rounded-xl bg-gradient-to-r from-slate-50 to-cyan-50/30 border border-slate-200 hover:border-cyan-300 hover:shadow-md transition-all duration-200">
+                    <div className="flex items-start gap-3">
+                      <div className="w-12 h-12 bg-gradient-to-br from-cyan-100 to-cyan-200 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm">
+                        <svg className="w-6 h-6 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                           <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="font-semibold text-slate-900 truncate">{rec.studentName}</p>
+                        <p className="text-sm text-slate-600 font-medium truncate">{rec.recommendation}</p>
+                        <span className="text-xs font-bold text-cyan-600 bg-cyan-50 px-2 py-0.5 rounded border border-cyan-100 mt-1 inline-block">{rec.category}</span>
+                      </div>
+                    </div>
+                  </li>
+                ))
+              ) : (
+                <div className="text-center py-12">
+                   <svg className="w-16 h-16 text-slate-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                   </svg>
+                  <p className="text-slate-600 text-sm font-medium">No pending approvals.</p>
+                </div>
+              )}
+            </ul>
+            <Link 
+              to="/teacher-dashboard/approval" 
+              className="flex items-center justify-center gap-2 w-full px-5 py-3 bg-gradient-to-r from-cyan-600 to-blue-600 text-white hover:shadow-xl rounded-xl transition-all duration-300 font-semibold text-sm hover:scale-105"
+            >
+              Review All Approvals
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
               </svg>

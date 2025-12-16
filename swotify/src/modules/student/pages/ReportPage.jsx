@@ -44,13 +44,13 @@ const ReportPage = ({ studentId = 's1' }) => { // Accept studentId prop
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
           <div>
-            <h1 className="text-3xl font-semibold text-slate-900 dark:text-gray-100 mb-2">Student Report</h1>
-            <p className="text-slate-600 dark:text-gray-400 text-sm">Comprehensive academic performance summary</p>
+            <h1 className="text-3xl font-semibold text-slate-900 mb-2">Student Report</h1>
+            <p className="text-slate-600 text-sm">Comprehensive academic performance summary</p>
           </div>
           <button
             onClick={handleDownloadReport}
@@ -64,16 +64,16 @@ const ReportPage = ({ studentId = 's1' }) => { // Accept studentId prop
         </div>
 
         {/* Report Content */}
-        <div ref={reportRef} className="space-y-6 p-8 bg-white dark:bg-gray-800 rounded-2xl shadow-lg border-2 border-slate-200 dark:border-gray-700">
+        <div ref={reportRef} className="space-y-6 p-8 bg-white rounded-2xl shadow-lg border-2 border-slate-200">
           {/* Report Header (will appear in PDF) */}
-          <div className="mb-8 pb-6 border-b-2 border-slate-200 dark:border-gray-700">
+          <div className="mb-8 pb-6 border-b-2 border-slate-200">
             <div className="flex items-center justify-between mb-4">
               <div>
-                <h2 className="text-2xl font-semibold text-slate-900 dark:text-gray-100 mb-1">Academic Performance Report</h2>
-                <p className="text-sm text-slate-600 dark:text-gray-400">Generated on {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                <h2 className="text-2xl font-semibold text-slate-900 mb-1">Academic Performance Report</h2>
+                <p className="text-sm text-slate-600">Generated on {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
               </div>
-              <div className="w-16 h-16 bg-gradient-to-br from-cyan-500/20 to-blue-500/20 dark:from-cyan-600/20 dark:to-blue-600/20 rounded-xl flex items-center justify-center border-2 border-cyan-300 dark:border-cyan-700 shadow-lg">
-                <svg className="w-10 h-10 text-cyan-600 dark:text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="w-16 h-16 bg-gradient-to-br from-cyan-500/20 to-blue-500/20 rounded-xl flex items-center justify-center border-2 border-cyan-300 shadow-lg">
+                <svg className="w-10 h-10 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
               </div>
@@ -87,8 +87,8 @@ const ReportPage = ({ studentId = 's1' }) => { // Accept studentId prop
           <YearWisePerformanceTrends studentId={studentId} />
 
           {/* Report Footer (will appear in PDF) */}
-          <div className="mt-8 pt-6 border-t-2 border-slate-200 dark:border-gray-700">
-            <div className="flex items-center justify-between text-xs text-slate-600 dark:text-gray-400">
+          <div className="mt-8 pt-6 border-t-2 border-slate-200">
+            <div className="flex items-center justify-between text-xs text-slate-600">
               <p>© 2025 Student Management System. All rights reserved.</p>
               <p>Report ID: #{Math.random().toString(36).substr(2, 9).toUpperCase()}</p>
             </div>
@@ -96,32 +96,32 @@ const ReportPage = ({ studentId = 's1' }) => { // Accept studentId prop
         </div>
 
         {/* Instructions */}
-        <div className="mt-6 p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-lg border-2 border-slate-200 dark:border-gray-700">
+        <div className="mt-6 p-6 bg-white rounded-2xl shadow-lg border-2 border-slate-200">
           <div className="flex items-start gap-4">
-            <div className="w-10 h-10 bg-cyan-500/20 dark:bg-cyan-600/20 rounded-xl flex items-center justify-center flex-shrink-0 border-2 border-cyan-300 dark:border-cyan-700">
-              <svg className="w-5 h-5 text-cyan-600 dark:text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="w-10 h-10 bg-cyan-500/20 rounded-xl flex items-center justify-center flex-shrink-0 border-2 border-cyan-300">
+              <svg className="w-5 h-5 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
             <div className="flex-1">
-              <h4 className="text-base font-semibold text-slate-900 dark:text-gray-100 mb-2">Report Information</h4>
-              <p className="text-sm text-slate-600 dark:text-gray-400 leading-relaxed mb-3">
+              <h4 className="text-base font-semibold text-slate-900 mb-2">Report Information</h4>
+              <p className="text-sm text-slate-600 leading-relaxed mb-3">
                 This comprehensive report includes your attendance records, academic marks, and performance analysis across all subjects. Click the "Download Report" button above to save a PDF copy for your records.
               </p>
               <div className="flex flex-wrap gap-2">
-                <span className="inline-flex items-center gap-1 px-3 py-1.5 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 rounded-full text-xs font-semibold border-2 border-emerald-300 dark:border-emerald-700">
+                <span className="inline-flex items-center gap-1 px-3 py-1.5 bg-emerald-50 text-emerald-600 rounded-full text-xs font-semibold border-2 border-emerald-300">
                   <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                   </svg>
                   PDF Format
                 </span>
-                <span className="inline-flex items-center gap-1 px-3 py-1.5 bg-cyan-50 dark:bg-cyan-900/20 text-cyan-600 dark:text-cyan-400 rounded-full text-xs font-semibold border-2 border-cyan-300 dark:border-cyan-700">
+                <span className="inline-flex items-center gap-1 px-3 py-1.5 bg-cyan-50 text-cyan-600 rounded-full text-xs font-semibold border-2 border-cyan-300">
                   <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                   </svg>
                   High Quality
                 </span>
-                <span className="inline-flex items-center gap-1 px-3 py-1.5 bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400 rounded-full text-xs font-semibold border-2 border-orange-300 dark:border-orange-700">
+                <span className="inline-flex items-center gap-1 px-3 py-1.5 bg-orange-50 text-orange-600 rounded-full text-xs font-semibold border-2 border-orange-300">
                   <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>

@@ -39,6 +39,13 @@ const TeacherSidebar = ({ isSidebarOpen, toggleSidebar }) => {
       color: 'rose'
     },
     { 
+      to: '/teacher-dashboard/approval', 
+      label: 'Approvals', 
+      icon: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z', // Check circle icon
+      color: 'cyan',
+      badge: 'New'
+    },
+    { 
       to: '/teacher-dashboard/ai-chatbot', 
       label: 'AI Chatbot', 
       icon: 'M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z',
