@@ -1,600 +1,524 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, Routes, Route, useNavigate } from 'react-router-dom';
-import AdminSidebar from '../components/AdminSidebar';
 import StaffPage from './StaffPage';
 import StaffProfilePage from './StaffProfilePage';
 import AdminSettingsPage from './AdminSettingsPage';
 import AdminStudentsPage from './AdminStudentsPage';
-import AnalyticsGraph from '../../student/components/AnalyticsGraph';
 import PerformanceReportPage from './PerformanceReportPage';
 import SchoolManagementPage from './SchoolManagementPage';
 import AppSettingsPage from './AppSettingsPage';
-import mockEvents from '../../../data/mockEvents';
 import AdminEventsPage from './AdminEventsPage';
 import AdminEventDetailPage from './AdminEventDetailPage';
 import AdminStudentProfilePage from './AdminStudentProfilePage';
 import AdminClassDetailPage from './AdminClassDetailPage';
 import AdminAIChatbotPage from './AdminAIChatbotPage';
 
-
-// Initialize theme from localStorage (client-side only)
-const useTheme = () => {
-  useEffect(() => {
-    const saved = localStorage.getItem('theme');
-    if (saved === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, []);
-};
-
-
 const AdminDashboard = () => {
-  useTheme();
   const navigate = useNavigate();
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
-  const [unreadCount, setUnreadCount] = useState(5);
-  const [notifications, setNotifications] = useState([
-    { id: 1, title: 'New student registration', message: 'John Doe has been registered.', time: '5 minutes ago', unread: true, type: 'success' },
-    { id: 2, title: 'Staff member updated profile', message: 'Jane Smith updated her profile.', time: '15 minutes ago', unread: true, type: 'info' },
-    { id: 3, title: 'New class created', message: 'A new class "Grade 10 Maths" has been created.', time: '1 hour ago', unread: false, type: 'success' },
-    { id: 4, title: 'Performance report generated', message: 'The weekly performance report is ready.', time: '2 hours ago', unread: true, type: 'warning' },
-    { id: 5, title: 'System update', message: 'The system will be updated tonight at 10 PM.', time: '1 day ago', unread: false, type: 'info' },
-  ]);
 
+  const adminName = "Admin User";
+  const adminEmail = "admin@swotify.com";
+  const userAvatar = 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=80&auto=format&fit=crop';
 
-  const userAvatar =
-    'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=2960&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) setIsMobileMenuOpen(false);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
+  const handleLogout = () => navigate('/signup');
 
-  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
-  const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
-    setIsNotificationOpen(false);
-  };
-  const toggleNotification = () => {
-    setIsNotificationOpen(!isNotificationOpen);
-    setIsDropdownOpen(false);
-  };
-  const handleLogout = () => {
-    navigate('/signup');
-  };
-  const toggleDarkMode = () => {
-    document.documentElement.classList.toggle('dark');
-    const isDark = document.documentElement.classList.contains('dark');
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
-  };
+  const navItems = [
+    { to: '', label: 'Dashboard', icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6' },
+    { to: 'staff', label: 'Staff', icon: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z' },
+    { to: 'students', label: 'Students', icon: 'M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z' },
+    { to: 'school-management', label: 'Classes', icon: 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4' },
+    { to: 'events', label: 'Events', icon: 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z' },
+    { to: 'performance-report', label: 'Reports', icon: 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z' },
+    { to: 'ai-chatbot', label: 'AI Assistant', icon: 'M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z' },
+    { to: 'settings', label: 'Settings', icon: 'M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z M15 12a3 3 0 11-6 0 3 3 0 016 0z' },
+  ];
 
-  const markAsRead = (id) => {
-    setNotifications(prev => 
-      prev.map(notif => notif.id === id ? { ...notif, unread: false } : notif)
-    );
-    setUnreadCount(prev => Math.max(0, prev - 1));
-  };
+  const notifications = [
+    { id: 1, title: 'New Registration', message: 'John Doe has been registered', time: '5m ago', unread: true },
+    { id: 2, title: 'Staff Update', message: 'Jane Smith updated profile', time: '15m ago', unread: true },
+    { id: 3, title: 'Report Ready', message: 'Weekly report generated', time: '1h ago', unread: false },
+  ];
 
-  const markAllAsRead = () => {
-    setNotifications(prev => prev.map(notif => ({ ...notif, unread: false })));
-    setUnreadCount(0);
-  };
+  const unreadCount = notifications.filter(n => n.unread).length;
 
-  const getNotificationIcon = (type) => {
-    switch (type) {
-      case 'success':
-        return (
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center flex-shrink-0 shadow-lg">
-            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          </div>
-        );
-      case 'warning':
-        return (
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center flex-shrink-0 shadow-lg">
-            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-            </svg>
-          </div>
-        );
-      default:
-        return (
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center flex-shrink-0 shadow-lg">
-            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          </div>
-        );
-    }
-  };
-
-
+  // Simple Admin Overview Component
   const AdminOverview = () => (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 relative overflow-hidden">
-      {/* Premium Decorative Background Elements */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-        <div className="absolute -top-40 -right-40 w-96 h-96 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-tr from-emerald-500/10 via-teal-500/10 to-cyan-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-br from-purple-500/5 to-pink-500/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex items-center gap-4">
+        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 via-purple-500 to-orange-400 flex items-center justify-center shadow-md">
+          <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+          </svg>
+        </div>
+        <div>
+          <h1 className="text-2xl font-bold text-slate-800">Admin Dashboard</h1>
+          <p className="text-slate-500 text-sm">Welcome back! Manage your school system.</p>
+        </div>
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto p-6">
-        {/* Premium Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-extrabold text-slate-900 dark:text-gray-100 mb-3">Admin Dashboard</h1>
-          <p className="text-slate-600 dark:text-gray-400 text-base font-medium">Welcome back! Manage your school system from here.</p>
+      {/* Stats Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="bg-white rounded-xl border border-slate-200 p-5">
+          <div className="flex items-center justify-between mb-3">
+            <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center">
+              <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+              </svg>
+            </div>
+            <span className="text-xs font-medium text-green-600 bg-green-50 px-2 py-1 rounded-full">+12%</span>
+          </div>
+          <p className="text-2xl font-bold text-slate-800">1,234</p>
+          <p className="text-sm text-slate-500">Total Students</p>
         </div>
 
-        {/* Premium Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <div className="group relative bg-white/90 dark:bg-gray-800/90 backdrop-blur-2xl rounded-2xl border-2 border-slate-200/60 dark:border-gray-700/50 shadow-xl p-6 hover:shadow-2xl transition-all duration-300 hover:scale-105 overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-            <div className="relative">
-              <div className="flex items-center justify-between mb-4">
-                <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-                  <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                  </svg>
-                </div>
-                <span className="text-xs font-extrabold text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20 px-3 py-1.5 rounded-full border-2 border-emerald-200 dark:border-emerald-700">+12%</span>
-              </div>
-              <h3 className="text-4xl font-extrabold text-slate-900 dark:text-gray-100 mb-2">1,234</h3>
-              <p className="text-sm text-slate-600 dark:text-gray-400 font-bold">Total Students</p>
+        <div className="bg-white rounded-xl border border-slate-200 p-5">
+          <div className="flex items-center justify-between mb-3">
+            <div className="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center">
+              <svg className="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
             </div>
+            <span className="text-xs font-medium text-blue-600 bg-blue-50 px-2 py-1 rounded-full">+5%</span>
           </div>
-
-          <div className="group relative bg-white/90 dark:bg-gray-800/90 backdrop-blur-2xl rounded-2xl border-2 border-slate-200/60 dark:border-gray-700/50 shadow-xl p-6 hover:shadow-2xl transition-all duration-300 hover:scale-105 overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-pink-500/5 to-fuchsia-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-            <div className="relative">
-              <div className="flex items-center justify-between mb-4">
-                <div className="w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-                  <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                  </svg>
-                </div>
-                <span className="text-xs font-extrabold text-blue-600 bg-blue-50 dark:bg-blue-900/20 px-3 py-1.5 rounded-full border-2 border-blue-200 dark:border-blue-700">+5%</span>
-              </div>
-              <h3 className="text-4xl font-extrabold text-slate-900 dark:text-gray-100 mb-2">89</h3>
-              <p className="text-sm text-slate-600 dark:text-gray-400 font-bold">Staff Members</p>
-            </div>
-          </div>
-
-          <div className="group relative bg-white/90 dark:bg-gray-800/90 backdrop-blur-2xl rounded-2xl border-2 border-slate-200/60 dark:border-gray-700/50 shadow-xl p-6 hover:shadow-2xl transition-all duration-300 hover:scale-105 overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-teal-500/5 to-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-            <div className="relative">
-              <div className="flex items-center justify-between mb-4">
-                <div className="w-14 h-14 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-                  <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                  </svg>
-                </div>
-                <span className="text-xs font-extrabold text-purple-600 bg-purple-50 dark:bg-purple-900/20 px-3 py-1.5 rounded-full border-2 border-purple-200 dark:border-purple-700">32</span>
-              </div>
-              <h3 className="text-4xl font-extrabold text-slate-900 dark:text-gray-100 mb-2">45</h3>
-              <p className="text-sm text-slate-600 dark:text-gray-400 font-bold">Active Classes</p>
-            </div>
-          </div>
-
-          <div className="group relative bg-white/90 dark:bg-gray-800/90 backdrop-blur-2xl rounded-2xl border-2 border-slate-200/60 dark:border-gray-700/50 shadow-xl p-6 hover:shadow-2xl transition-all duration-300 hover:scale-105 overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 via-orange-500/5 to-yellow-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-            <div className="relative">
-              <div className="flex items-center justify-between mb-4">
-                <div className="w-14 h-14 bg-gradient-to-br from-amber-500 to-orange-500 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-                  <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                </div>
-                <span className="text-xs font-extrabold text-blue-600 bg-blue-50 dark:bg-blue-900/20 px-3 py-1.5 rounded-full border-2 border-blue-200 dark:border-blue-700">This Week</span>
-              </div>
-              <h3 className="text-4xl font-extrabold text-slate-900 dark:text-gray-100 mb-2">8</h3>
-              <p className="text-sm text-slate-600 dark:text-gray-400 font-bold">Upcoming Events</p>
-            </div>
-          </div>
+          <p className="text-2xl font-bold text-slate-800">89</p>
+          <p className="text-sm text-slate-500">Staff Members</p>
         </div>
 
-        {/* Premium School Performance Overview (Full Width) */}
-        <div 
-          onClick={() => navigate('performance-report')}
-          className="group relative bg-white/90 dark:bg-gray-800/90 backdrop-blur-2xl rounded-2xl border-2 border-slate-200/60 dark:border-gray-700/50 shadow-xl p-6 mb-8 hover:shadow-2xl transition-all duration-300 cursor-pointer overflow-hidden"
-        >
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-          <div className="relative">
-            <h2 className="text-xl font-extrabold text-slate-900 dark:text-gray-100 mb-6 flex items-center gap-3">
-              <div className="w-1.5 h-8 bg-gradient-to-b from-blue-500 via-purple-500 to-pink-500 rounded-full shadow-lg"></div>
-              School Performance Overview
-            </h2>
-            
-            <div className="flex justify-between items-start mb-6">
-              <div>
-                 <p className="text-sm text-slate-600 dark:text-gray-400 mb-2 font-bold">Average Score</p>
-                 <div className="flex items-center gap-4">
-                   <p className="text-5xl font-extrabold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">85%</p>
-                   <span className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-extrabold bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 border-2 border-emerald-200 dark:border-emerald-700">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                      </svg>
-                      Up 5%
-                   </span>
-                 </div>
-              </div>
+        <div className="bg-white rounded-xl border border-slate-200 p-5">
+          <div className="flex items-center justify-between mb-3">
+            <div className="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center">
+              <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+              </svg>
             </div>
-            
-            <div onClick={(e) => e.stopPropagation()}>
-              <AnalyticsGraph 
-                title="Overall Performance Trend" 
-                graphData={[75, 78, 80, 82, 85]} 
-              />
-            </div>
+            <span className="text-xs font-medium text-purple-600 bg-purple-50 px-2 py-1 rounded-full">32</span>
           </div>
+          <p className="text-2xl font-bold text-slate-800">45</p>
+          <p className="text-sm text-slate-500">Active Classes</p>
         </div>
 
-        {/* Main Content Grid (Quick Actions & Recent Activity vs Events) */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Left Column (Span 2) */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* Premium Quick Actions */}
-            <div className="relative bg-white/90 dark:bg-gray-800/90 backdrop-blur-2xl rounded-2xl border-2 border-slate-200/60 dark:border-gray-700/50 shadow-xl p-6 hover:shadow-2xl transition-all duration-300">
-              <h2 className="text-xl font-extrabold text-slate-900 dark:text-gray-100 mb-6 flex items-center gap-3">
-                <div className="w-1.5 h-8 bg-gradient-to-b from-blue-500 via-purple-500 to-pink-500 rounded-full shadow-lg"></div>
-                Quick Actions
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <NavLink 
-                  to="staff" 
-                  className="group flex items-center gap-4 p-5 bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 rounded-xl border-2 border-blue-200/50 dark:border-blue-700/50 hover:shadow-2xl hover:scale-105 transition-all duration-300"
-                >
-                  <div className="relative">
-                    <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl blur opacity-50"></div>
-                    <div className="relative w-14 h-14 bg-gradient-to-br from-blue-600 to-cyan-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-                      <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                      </svg>
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="font-extrabold text-slate-900 dark:text-gray-100 group-hover:text-blue-600 transition-colors mb-1">Manage Staff</h3>
-                    <p className="text-xs text-slate-600 dark:text-gray-400 font-bold">Add, edit or remove staff</p>
-                  </div>
-                </NavLink>
-
-                <NavLink 
-                  to="students" 
-                  className="group flex items-center gap-4 p-5 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-xl border-2 border-purple-200/50 dark:border-purple-700/50 hover:shadow-2xl hover:scale-105 transition-all duration-300"
-                >
-                  <div className="relative">
-                    <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl blur opacity-50"></div>
-                    <div className="relative w-14 h-14 bg-gradient-to-br from-purple-600 to-pink-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-                      <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                      </svg>
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="font-extrabold text-slate-900 dark:text-gray-100 group-hover:text-purple-600 transition-colors mb-1">Manage Students</h3>
-                    <p className="text-xs text-slate-600 dark:text-gray-400 font-bold">View and manage students</p>
-                  </div>
-                </NavLink>
-
-                <NavLink 
-                  to="performance-report" 
-                  className="group flex items-center gap-4 p-5 bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20 rounded-xl border-2 border-emerald-200/50 dark:border-emerald-700/50 hover:shadow-2xl hover:scale-105 transition-all duration-300"
-                >
-                  <div className="relative">
-                    <div className="absolute inset-0 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-xl blur opacity-50"></div>
-                    <div className="relative w-14 h-14 bg-gradient-to-br from-emerald-600 to-teal-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-                      <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                      </svg>
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="font-extrabold text-slate-900 dark:text-gray-100 group-hover:text-emerald-600 transition-colors mb-1">View Reports</h3>
-                    <p className="text-xs text-slate-600 dark:text-gray-400 font-bold">Performance analytics</p>
-                  </div>
-                </NavLink>
-
-                <NavLink 
-                  to="settings" 
-                  className="group flex items-center gap-4 p-5 bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 rounded-xl border-2 border-amber-200/50 dark:border-amber-700/50 hover:shadow-2xl hover:scale-105 transition-all duration-300"
-                >
-                  <div className="relative">
-                    <div className="absolute inset-0 bg-gradient-to-br from-amber-500 to-orange-500 rounded-xl blur opacity-50"></div>
-                    <div className="relative w-14 h-14 bg-gradient-to-br from-amber-600 to-orange-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-                      <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                      </svg>
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="font-extrabold text-slate-900 dark:text-gray-100 group-hover:text-amber-600 transition-colors mb-1">System Settings</h3>
-                    <p className="text-xs text-slate-600 dark:text-gray-400 font-bold">Configure system</p>
-                  </div>
-                </NavLink>
-              </div>
+        <div className="bg-white rounded-xl border border-slate-200 p-5">
+          <div className="flex items-center justify-between mb-3">
+            <div className="w-10 h-10 rounded-lg bg-orange-100 flex items-center justify-center">
+              <svg className="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
             </div>
-
-            {/* Premium Recent Activity */}
-            <div className="relative bg-white/90 dark:bg-gray-800/90 backdrop-blur-2xl rounded-2xl border-2 border-slate-200/60 dark:border-gray-700/50 shadow-xl p-6 hover:shadow-2xl transition-all duration-300">
-              <h2 className="text-xl font-extrabold text-slate-900 dark:text-gray-100 mb-6 flex items-center gap-3">
-                <div className="w-1.5 h-8 bg-gradient-to-b from-purple-500 via-pink-500 to-rose-500 rounded-full shadow-lg"></div>
-                Recent Activity
-              </h2>
-              <div className="space-y-3">
-                {[
-                  { action: 'New student registration', user: 'John Doe', time: '5 minutes ago', gradient: 'from-blue-500 to-cyan-500' },
-                  { action: 'Staff member updated profile', user: 'Jane Smith', time: '15 minutes ago', gradient: 'from-purple-500 to-pink-500' },
-                  { action: 'New class created', user: 'Admin', time: '1 hour ago', gradient: 'from-emerald-500 to-teal-500' },
-                  { action: 'Performance report generated', user: 'System', time: '2 hours ago', gradient: 'from-amber-500 to-orange-500' },
-                ].map((activity, index) => (
-                  <div key={index} className="group flex items-center gap-4 p-4 bg-gradient-to-r from-slate-50 to-blue-50 dark:from-slate-800/50 dark:to-blue-900/20 rounded-xl border-2 border-slate-200 dark:border-gray-700 hover:shadow-lg hover:scale-[1.02] transition-all duration-200">
-                    <div className={`w-12 h-12 bg-gradient-to-br ${activity.gradient} rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform`}>
-                      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                      </svg>
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-extrabold text-slate-900 dark:text-gray-100 truncate">{activity.action}</p>
-                      <p className="text-xs text-slate-600 dark:text-gray-400 font-bold">{activity.user} • {activity.time}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <span className="text-xs font-medium text-blue-600 bg-blue-50 px-2 py-1 rounded-full">This Week</span>
           </div>
+          <p className="text-2xl font-bold text-slate-800">8</p>
+          <p className="text-sm text-slate-500">Upcoming Events</p>
+        </div>
+      </div>
 
-          {/* Premium Events Column */}
-          <div className="lg:col-span-1 relative bg-white/90 dark:bg-gray-800/90 backdrop-blur-2xl rounded-2xl border-2 border-slate-200/60 dark:border-gray-700/50 shadow-xl p-6 hover:shadow-2xl transition-all duration-300 h-fit">
-            <h2 className="text-xl font-extrabold text-slate-900 dark:text-gray-100 mb-6 flex items-center justify-between">
+      {/* Quick Actions */}
+      <div className="bg-white rounded-xl border border-slate-200 p-6">
+        <h2 className="text-lg font-bold text-slate-800 mb-4">Quick Actions</h2>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+          <NavLink to="staff" className="p-4 bg-blue-50 border border-blue-200 rounded-xl text-center hover:shadow-md transition-all hover:scale-105">
+            <div className="w-10 h-10 mx-auto mb-2 bg-blue-500 rounded-lg flex items-center justify-center">
+              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857" />
+              </svg>
+            </div>
+            <p className="text-sm font-semibold text-blue-700">Staff</p>
+          </NavLink>
+          <NavLink to="students" className="p-4 bg-purple-50 border border-purple-200 rounded-xl text-center hover:shadow-md transition-all hover:scale-105">
+            <div className="w-10 h-10 mx-auto mb-2 bg-purple-500 rounded-lg flex items-center justify-center">
+              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197" />
+              </svg>
+            </div>
+            <p className="text-sm font-semibold text-purple-700">Students</p>
+          </NavLink>
+          <NavLink to="school-management" className="p-4 bg-green-50 border border-green-200 rounded-xl text-center hover:shadow-md transition-all hover:scale-105">
+            <div className="w-10 h-10 mx-auto mb-2 bg-green-500 rounded-lg flex items-center justify-center">
+              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5" />
+              </svg>
+            </div>
+            <p className="text-sm font-semibold text-green-700">Classes</p>
+          </NavLink>
+          <NavLink to="events" className="p-4 bg-orange-50 border border-orange-200 rounded-xl text-center hover:shadow-md transition-all hover:scale-105">
+            <div className="w-10 h-10 mx-auto mb-2 bg-orange-500 rounded-lg flex items-center justify-center">
+              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <p className="text-sm font-semibold text-orange-700">Events</p>
+          </NavLink>
+          <NavLink to="performance-report" className="p-4 bg-pink-50 border border-pink-200 rounded-xl text-center hover:shadow-md transition-all hover:scale-105">
+            <div className="w-10 h-10 mx-auto mb-2 bg-pink-500 rounded-lg flex items-center justify-center">
+              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10" />
+              </svg>
+            </div>
+            <p className="text-sm font-semibold text-pink-700">Reports</p>
+          </NavLink>
+          <NavLink to="ai-chatbot" className="p-4 bg-cyan-50 border border-cyan-200 rounded-xl text-center hover:shadow-md transition-all hover:scale-105">
+            <div className="w-10 h-10 mx-auto mb-2 bg-cyan-500 rounded-lg flex items-center justify-center">
+              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+              </svg>
+            </div>
+            <p className="text-sm font-semibold text-cyan-700">AI Chat</p>
+          </NavLink>
+        </div>
+      </div>
+
+      {/* Two Column Layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Attendance Overview */}
+        <div className="bg-white rounded-xl border border-slate-200 p-6">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-bold text-slate-800">Attendance Overview</h2>
+            <NavLink to="performance-report" className="text-sm text-blue-600 hover:text-blue-700 font-medium">View All →</NavLink>
+          </div>
+          <div className="space-y-4">
+            <div className="flex items-center justify-between p-4 bg-green-50 rounded-lg">
               <div className="flex items-center gap-3">
-                <div className="w-1.5 h-8 bg-gradient-to-b from-amber-500 to-orange-500 rounded-full shadow-lg"></div>
-                Upcoming Events
+                <div className="w-10 h-10 bg-green-500 rounded-lg flex items-center justify-center">
+                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-slate-800">Present Today</p>
+                  <p className="text-xs text-slate-500">1,156 students</p>
+                </div>
               </div>
-              <NavLink to="events" className="text-xs text-blue-600 dark:text-blue-400 hover:text-purple-600 dark:hover:text-purple-400 font-extrabold transition-colors hover:underline">
-                View All
-              </NavLink>
-            </h2>
-            <div className="space-y-4">
-              {mockEvents.slice(0, 5).map((event) => (
-                <div key={event.id} className="group relative bg-white dark:bg-gray-800 rounded-xl border-2 border-slate-200 dark:border-gray-700 overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105">
-                  <div className="relative h-28 overflow-hidden">
-                    <img 
-                      src={event.thumbnail} 
-                      alt={event.title} 
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  </div>
-                  <div className="p-4">
-                    <h3 className="font-extrabold text-slate-900 dark:text-gray-100 mb-2 line-clamp-1 group-hover:text-amber-600 transition-colors">{event.title}</h3>
-                    <div className="flex items-center gap-2 text-xs text-slate-600 dark:text-gray-400 mb-2 font-bold">
-                      <div className="w-5 h-5 rounded-lg bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center">
-                        <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
-                      </div>
-                      {event.date}
-                    </div>
-                    <div className="flex items-center gap-2 text-xs text-slate-600 dark:text-gray-400 font-bold">
-                      <div className="w-5 h-5 rounded-lg bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center">
-                        <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                        </svg>
-                      </div>
-                      {event.location}
-                    </div>
-                  </div>
+              <span className="text-2xl font-bold text-green-600">94%</span>
+            </div>
+            <div className="flex items-center justify-between p-4 bg-red-50 rounded-lg">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-red-500 rounded-lg flex items-center justify-center">
+                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
                 </div>
-              ))}
-              {mockEvents.length === 0 && (
-                <div className="text-center py-8">
-                  <div className="w-16 h-16 bg-gradient-to-br from-slate-100 to-blue-100 dark:from-gray-700 dark:to-gray-600 rounded-xl flex items-center justify-center mx-auto mb-3">
-                    <svg className="w-8 h-8 text-slate-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                  </div>
-                  <p className="text-sm text-slate-600 dark:text-gray-400 font-bold">No upcoming events.</p>
+                <div>
+                  <p className="text-sm font-semibold text-slate-800">Absent Today</p>
+                  <p className="text-xs text-slate-500">78 students</p>
                 </div>
-              )}
+              </div>
+              <span className="text-2xl font-bold text-red-600">6%</span>
+            </div>
+            <div className="flex items-center justify-between p-4 bg-orange-50 rounded-lg">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center">
+                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                  </svg>
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-slate-800">Staff Attendance</p>
+                  <p className="text-xs text-slate-500">85 of 89 present</p>
+                </div>
+              </div>
+              <span className="text-2xl font-bold text-orange-600">95%</span>
             </div>
           </div>
+        </div>
+
+        {/* Upcoming Events */}
+        <div className="bg-white rounded-xl border border-slate-200 p-6">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-bold text-slate-800">Upcoming Events</h2>
+            <NavLink to="events" className="text-sm text-blue-600 hover:text-blue-700 font-medium">View All →</NavLink>
+          </div>
+          <div className="space-y-3">
+            {[
+              { title: 'Annual Sports Day', date: 'Dec 20', time: '9:00 AM', color: 'blue' },
+              { title: 'Science Exhibition', date: 'Dec 22', time: '10:00 AM', color: 'green' },
+              { title: 'Parent-Teacher Meet', date: 'Dec 25', time: '2:00 PM', color: 'purple' },
+              { title: 'Winter Vacation Begins', date: 'Dec 28', time: 'All Day', color: 'orange' },
+            ].map((event, index) => (
+              <div key={index} className="flex items-center gap-4 p-3 bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors">
+                <div className={`w-12 h-12 bg-${event.color}-100 rounded-lg flex flex-col items-center justify-center`}>
+                  <span className="text-xs font-bold text-slate-600">{event.date.split(' ')[0]}</span>
+                  <span className="text-sm font-bold text-slate-800">{event.date.split(' ')[1]}</span>
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm font-semibold text-slate-800">{event.title}</p>
+                  <p className="text-xs text-slate-500">{event.time}</p>
+                </div>
+                <svg className="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Top Performers & AI Assistant */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Top Performing Students */}
+        <div className="lg:col-span-2 bg-white rounded-xl border border-slate-200 p-6">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-bold text-slate-800">Top Performing Students</h2>
+            <NavLink to="students" className="text-sm text-blue-600 hover:text-blue-700 font-medium">View All →</NavLink>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+            {[
+              { name: 'Alice Johnson', grade: 'A+', class: '10-A', rank: 1 },
+              { name: 'Bob Smith', grade: 'A+', class: '10-B', rank: 2 },
+              { name: 'Carol White', grade: 'A', class: '9-A', rank: 3 },
+              { name: 'David Brown', grade: 'A', class: '10-A', rank: 4 },
+              { name: 'Emma Davis', grade: 'A', class: '9-B', rank: 5 },
+            ].map((student, index) => (
+              <div key={index} className="text-center p-4 bg-slate-50 rounded-xl hover:shadow-md transition-shadow">
+                <div className="relative inline-block mb-2">
+                  <div className="w-14 h-14 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                    {student.name.charAt(0)}
+                  </div>
+                  <span className={`absolute -bottom-1 -right-1 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white ${student.rank === 1 ? 'bg-yellow-500' : student.rank === 2 ? 'bg-slate-400' : student.rank === 3 ? 'bg-orange-400' : 'bg-blue-500'
+                    }`}>
+                    {student.rank}
+                  </span>
+                </div>
+                <p className="text-sm font-semibold text-slate-800 truncate">{student.name}</p>
+                <p className="text-xs text-slate-500">{student.class} • {student.grade}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* AI Assistant Quick Access */}
+        <div className="bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-xl p-6 text-white">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+              </svg>
+            </div>
+            <div>
+              <h2 className="text-lg font-bold">AI Assistant</h2>
+              <p className="text-sm text-white/80">Get instant help</p>
+            </div>
+          </div>
+          <p className="text-sm mb-4 text-white/90">
+            Ask me about student performance, attendance analytics, or generate reports instantly.
+          </p>
+          <NavLink
+            to="ai-chatbot"
+            className="block w-full py-3 bg-white text-purple-600 text-center font-semibold rounded-lg hover:bg-white/90 transition-colors"
+          >
+            Start Chatting →
+          </NavLink>
+        </div>
+      </div>
+
+      {/* Recent Activity */}
+      <div className="bg-white rounded-xl border border-slate-200 p-6">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-lg font-bold text-slate-800">Recent Activity</h2>
+          <span className="text-sm text-slate-500">Last 24 hours</span>
+        </div>
+        <div className="space-y-3">
+          {[
+            { action: 'New student registration', user: 'John Doe', time: '5 minutes ago', icon: 'M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z', color: 'blue' },
+            { action: 'Staff member updated profile', user: 'Jane Smith', time: '15 minutes ago', icon: 'M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z', color: 'purple' },
+            { action: 'New event created', user: 'Admin', time: '1 hour ago', icon: 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z', color: 'orange' },
+            { action: 'Performance report generated', user: 'System', time: '2 hours ago', icon: 'M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z', color: 'green' },
+            { action: 'Class schedule updated', user: 'Principal', time: '3 hours ago', icon: 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z', color: 'pink' },
+          ].map((activity, index) => (
+            <div key={index} className="flex items-center gap-4 p-3 bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors">
+              <div className={`w-10 h-10 bg-${activity.color}-100 rounded-lg flex items-center justify-center`}>
+                <svg className={`w-5 h-5 text-${activity.color}-600`} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d={activity.icon} />
+                </svg>
+              </div>
+              <div className="flex-1">
+                <p className="text-sm font-medium text-slate-800">{activity.action}</p>
+                <p className="text-xs text-slate-500">{activity.user} • {activity.time}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>
   );
 
-
   return (
-    <div className="flex min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 relative overflow-hidden">
-      {/* Premium Decorative Background Elements */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-        <div className="absolute -top-40 -right-40 w-96 h-96 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-tr from-emerald-500/10 via-teal-500/10 to-cyan-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-br from-purple-500/5 to-pink-500/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
-      </div>
+    <div className="min-h-screen bg-slate-100">
+      {/* Top Navbar */}
+      <nav className="fixed top-0 left-0 right-0 h-16 bg-white border-b border-slate-200 z-50">
+        <div className="h-full px-4 flex items-center justify-between">
+          {/* Left: Hamburger + Logo */}
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="lg:hidden p-2 text-slate-600 hover:bg-slate-100 rounded-lg"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                {isMobileMenuOpen ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                )}
+              </svg>
+            </button>
+            <div className="flex items-center gap-2">
+              <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-blue-500 via-purple-500 to-orange-400 flex items-center justify-center">
+                <img src="/logo.png" alt="Swotify" className="h-5 w-5 object-contain" />
+              </div>
+              <div>
+                <span className="text-lg font-bold text-slate-800">Swotify</span>
+                <span className="text-xs text-slate-500 ml-2 hidden sm:inline">Admin Portal</span>
+              </div>
+            </div>
+          </div>
 
-      <AdminSidebar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
-      
-      <div className={`flex-1 flex flex-col transition-all duration-300 ${isSidebarOpen ? 'lg:ml-72' : 'lg:ml-16'} relative z-10`}>
-        {/* Premium Enhanced Header */}
-        <header className="sticky top-0 z-40 w-full px-6 py-4 bg-white/90 dark:bg-gray-800/90 backdrop-blur-2xl flex justify-between items-center border-b-2 border-slate-200/60 dark:border-gray-700/50 shadow-lg">
-          <button
-            onClick={toggleSidebar}
-            className="group p-3 rounded-xl hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 dark:hover:from-blue-900/20 dark:hover:to-purple-900/20 focus:outline-none focus:ring-4 focus:ring-blue-500/20 transition-all duration-300 hover:scale-110 border-2 border-transparent hover:border-blue-200/50"
-          >
-            <svg className="w-6 h-6 text-slate-600 dark:text-gray-300 group-hover:text-blue-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </button>
-
-          <div className="flex items-center gap-3">
-            {/* Premium Notifications */}
+          {/* Right: Notifications + Profile */}
+          <div className="flex items-center gap-2">
+            {/* Notifications */}
             <div className="relative">
               <button
-                onClick={toggleNotification}
-                className="group relative p-3 rounded-xl hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 dark:hover:from-blue-900/20 dark:hover:to-purple-900/20 focus:outline-none focus:ring-4 focus:ring-blue-500/20 transition-all duration-300 hover:scale-110 border-2 border-transparent hover:border-blue-200/50"
+                onClick={() => { setIsNotificationOpen(!isNotificationOpen); setIsProfileOpen(false); }}
+                className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg relative"
               >
-                <svg className="w-6 h-6 text-slate-600 dark:text-gray-300 group-hover:text-blue-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                 </svg>
                 {unreadCount > 0 && (
-                  <>
-                    <span className="absolute -top-1 -right-1 w-6 h-6 bg-gradient-to-br from-red-500 to-rose-500 rounded-full flex items-center justify-center text-white text-xs font-bold shadow-lg border-2 border-white animate-pulse">
-                      {unreadCount}
-                    </span>
-                    <span className="absolute -top-1 -right-1 w-6 h-6 bg-red-500/30 rounded-full animate-ping"></span>
-                  </>
+                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center">
+                    {unreadCount}
+                  </span>
                 )}
               </button>
 
               {isNotificationOpen && (
-                <div className="absolute right-0 mt-3 w-[28rem] bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border-2 border-slate-200 dark:border-gray-700 z-50 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-300">
-                  {/* Premium Header */}
-                  <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 px-6 py-5">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                          <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                          </svg>
-                        </div>
-                        <div>
-                          <h3 className="text-white font-extrabold text-lg">Notifications</h3>
-                          <p className="text-white/80 text-xs font-medium">Stay updated with latest activities</p>
-                        </div>
-                      </div>
-                      {unreadCount > 0 && (
-                        <button
-                          onClick={markAllAsRead}
-                          className="px-3 py-1.5 bg-white/20 backdrop-blur-sm rounded-lg text-xs font-bold text-white hover:bg-white/30 transition-all border border-white/30"
-                        >
-                          Mark all read
-                        </button>
-                      )}
-                    </div>
+                <div className="absolute right-0 mt-2 w-72 bg-white rounded-lg border border-slate-200 shadow-xl overflow-hidden">
+                  <div className="px-4 py-3 bg-slate-50 border-b border-slate-200 font-semibold text-slate-800">
+                    Notifications
                   </div>
-                  
-                  <div className="max-h-[32rem] overflow-y-auto custom-scrollbar">
+                  <div className="max-h-64 overflow-y-auto">
                     {notifications.map((notif) => (
-                      <div 
-                        key={notif.id} 
-                        onClick={() => markAsRead(notif.id)}
-                        className={`px-6 py-5 border-b-2 border-slate-100 dark:border-gray-700 last:border-b-0 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 dark:hover:from-blue-900/20 dark:hover:to-purple-900/20 transition-all cursor-pointer group ${
-                          notif.unread ? 'bg-gradient-to-r from-blue-50/50 to-purple-50/50 dark:from-blue-900/10 dark:to-purple-900/10' : ''
-                        }`}
-                      >
-                        <div className="flex items-start gap-4">
-                          {getNotificationIcon(notif.type)}
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-start justify-between gap-2 mb-2">
-                              <p className="text-sm font-bold text-slate-900 dark:text-gray-100 group-hover:text-blue-600 transition-colors">
-                                {notif.title}
-                              </p>
-                              {notif.unread && (
-                                <div className="w-3 h-3 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex-shrink-0 mt-1 shadow-lg animate-pulse"></div>
-                              )}
-                            </div>
-                            <p className="text-sm text-slate-600 dark:text-gray-400 mb-3 font-medium">{notif.message}</p>
-                            <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-gray-500 font-bold">
-                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                              </svg>
-                              {notif.time}
-                            </div>
-                          </div>
-                        </div>
+                      <div key={notif.id} className={`px-4 py-3 border-b border-slate-100 hover:bg-slate-50 cursor-pointer ${notif.unread ? 'bg-blue-50' : ''}`}>
+                        <p className="text-sm font-medium text-slate-800">{notif.title}</p>
+                        <p className="text-xs text-slate-500">{notif.message}</p>
+                        <p className="text-xs text-slate-400 mt-1">{notif.time}</p>
                       </div>
                     ))}
                   </div>
-                  
-                  <div className="px-6 py-4 bg-gradient-to-r from-slate-50 to-blue-50 dark:from-gray-700/50 dark:to-gray-800/50 text-center border-t-2 border-slate-200 dark:border-gray-700">
-                    <button className="text-sm font-bold text-blue-600 hover:text-purple-600 transition-colors hover:underline">
-                      View All Notifications →
+                </div>
+              )}
+            </div>
+
+            {/* Profile */}
+            <div className="relative">
+              <button
+                onClick={() => { setIsProfileOpen(!isProfileOpen); setIsNotificationOpen(false); }}
+                className="flex items-center gap-2 p-1.5 hover:bg-slate-100 rounded-lg"
+              >
+                <img src={userAvatar} alt={adminName} className="w-8 h-8 rounded-full object-cover border border-slate-200" />
+                <span className="hidden sm:block text-sm font-medium text-slate-700">Admin</span>
+                <svg className="hidden sm:block w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+
+              {isProfileOpen && (
+                <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg border border-slate-200 shadow-xl overflow-hidden">
+                  <div className="px-4 py-3 bg-slate-50 border-b border-slate-200">
+                    <p className="font-semibold text-slate-800">{adminName}</p>
+                    <p className="text-xs text-slate-500">{adminEmail}</p>
+                  </div>
+                  <NavLink to="settings" onClick={() => setIsProfileOpen(false)} className="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 hover:bg-slate-50">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+                    Manage Profile
+                  </NavLink>
+                  <NavLink to="app-settings" onClick={() => setIsProfileOpen(false)} className="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 hover:bg-slate-50">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                    App Settings
+                  </NavLink>
+                  <div className="border-t border-slate-200">
+                    <button onClick={handleLogout} className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
+                      Logout
                     </button>
                   </div>
                 </div>
               )}
             </div>
-
-            {/* Premium Dark Mode Toggle */}
-            <button
-              onClick={toggleDarkMode}
-              className="group p-3 rounded-xl bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:shadow-2xl hover:scale-110 focus:outline-none focus:ring-4 focus:ring-purple-500/20 transition-all duration-300 border-2 border-white/20"
-            >
-              <svg className="w-5 h-5 text-white group-hover:rotate-180 transition-transform duration-500" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4.22 2.03a1 1 0 011.42 0l.71.71a1 1 0 11-1.42 1.42l-.71-.71a1 1 0 010-1.42zM18 9a1 1 0 110 2h-1a1 1 0 110-2h1zM4 9a1 1 0 110 2H3a1 1 0 110-2h1zm1.34-4.95a1 1 0 010 1.42l-.71.71A1 1 0 113.5 5.16l.71-.71a1 1 0 011.42 0zM10 14a4 4 0 100-8 4 4 0 000 8z" />
-              </svg>
-            </button>
-
-            <div className="h-10 w-px bg-gradient-to-b from-transparent via-slate-300 to-transparent dark:via-gray-700"></div>
-
-            {/* Premium User Dropdown */}
-            <div className="relative">
-              <button 
-                onClick={toggleDropdown} 
-                className="group flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 dark:hover:from-blue-900/20 dark:hover:to-purple-900/20 focus:outline-none focus:ring-4 focus:ring-blue-500/20 transition-all duration-300 border-2 border-transparent hover:border-blue-200/50"
-              >
-                <div className="relative">
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-xl blur opacity-50 group-hover:opacity-100 transition-opacity"></div>
-                  <div className="relative w-11 h-11 rounded-xl bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 p-0.5 ring-4 ring-transparent group-hover:ring-blue-500/20 transition-all shadow-lg">
-                    <img className="w-full h-full rounded-xl object-cover" src={userAvatar} alt="Admin Avatar" />
-                  </div>
-                  <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-gradient-to-br from-emerald-400 to-teal-400 rounded-full border-2 border-white dark:border-gray-800 animate-pulse"></div>
-                </div>
-                <svg className={`w-5 h-5 text-slate-500 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-
-              {isDropdownOpen && (
-                <div className="absolute right-0 mt-3 w-64 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border-2 border-slate-200 dark:border-gray-700 py-2 z-50 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-300">
-                  <NavLink 
-                    to="settings" 
-                    onClick={() => setIsDropdownOpen(false)} 
-                    className="flex items-center gap-3 px-5 py-3 text-sm font-bold text-slate-700 dark:text-gray-300 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 dark:hover:from-blue-900/20 dark:hover:to-purple-900/20 hover:text-blue-600 transition-all group"
-                  >
-                    <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center group-hover:scale-110 transition-transform">
-                      <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                      </svg>
-                    </div>
-                    <span>Manage Profile</span>
-                  </NavLink>
-                  <NavLink 
-                    to="app-settings" 
-                    onClick={() => setIsDropdownOpen(false)} 
-                    className="flex items-center gap-3 px-5 py-3 text-sm font-bold text-slate-700 dark:text-gray-300 hover:bg-gradient-to-r hover:from-purple-50 hover:to-pink-50 dark:hover:from-purple-900/20 dark:hover:to-pink-900/20 hover:text-purple-600 transition-all group"
-                  >
-                    <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center group-hover:scale-110 transition-transform">
-                      <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                      </svg>
-                    </div>
-                    <span>App Settings</span>
-                  </NavLink>
-                  <hr className="my-2 border-slate-200 dark:border-gray-700" />
-                  <button
-                    onClick={handleLogout}
-                    className="w-full flex items-center gap-3 px-5 py-3 text-sm font-bold text-red-600 dark:text-red-400 hover:bg-gradient-to-r hover:from-red-50 hover:to-rose-50 dark:hover:from-red-900/20 dark:hover:to-rose-900/20 transition-all group"
-                  >
-                    <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-red-500 to-rose-500 flex items-center justify-center group-hover:scale-110 transition-transform">
-                      <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                      </svg>
-                    </div>
-                    <span>Logout</span>
-                  </button>
-                </div>
-              )}
-            </div>
           </div>
-        </header>
+        </div>
+      </nav>
 
-        {/* Main content */}
-        <main className="flex-1 p-6 overflow-auto">
+      {/* Mobile Overlay */}
+      {isMobileMenuOpen && (
+        <div className="fixed inset-0 bg-black/50 z-30 lg:hidden" onClick={() => setIsMobileMenuOpen(false)} />
+      )}
+
+      {/* Sidebar */}
+      <aside className={`
+        fixed top-0 left-0 bottom-0 w-64 bg-white border-r border-slate-200 z-40
+        transform transition-transform duration-200
+        ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}
+        lg:translate-x-0 lg:top-16
+      `}>
+        {/* Mobile Header */}
+        <div className="h-16 flex items-center justify-between px-4 border-b border-slate-200 lg:hidden">
+          <span className="text-lg font-bold text-slate-800">Menu</span>
+          <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <div className="h-[calc(100%-4rem)] lg:h-full flex flex-col overflow-hidden">
+
+          {/* Navigation */}
+          <nav className="flex-1 p-4 overflow-y-auto">
+            <p className="px-3 mb-2 text-xs font-semibold text-slate-400 uppercase">Menu</p>
+            <ul className="space-y-1">
+              {navItems.map((item) => (
+                <li key={item.to}>
+                  <NavLink
+                    to={item.to}
+                    end={item.to === ''}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className={({ isActive }) => `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium ${isActive ? 'bg-blue-500 text-white' : 'text-slate-600 hover:bg-slate-100'}`}
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                      <path strokeLinecap="round" strokeLinejoin="round" d={item.icon} />
+                    </svg>
+                    {item.label}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          {/* Logout */}
+          <div className="p-4 border-t border-slate-200">
+            <button onClick={handleLogout} className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-red-600 hover:bg-red-50">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+              </svg>
+              Logout
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      {/* Main Content */}
+      <main className="pt-16 lg:pl-64">
+        <div className="p-4 sm:p-6">
           <Routes>
             <Route path="/" element={<AdminOverview />} />
             <Route path="staff" element={<StaffPage />} />
@@ -610,28 +534,10 @@ const AdminDashboard = () => {
             <Route path="student-profile/:studentId" element={<AdminStudentProfilePage />} />
             <Route path="class-detail/:classId" element={<AdminClassDetailPage />} />
           </Routes>
-        </main>
-      </div>
-
-      <style>{`
-        .custom-scrollbar {
-          scrollbar-width: thin;
-          scrollbar-color: #8b5cf6 transparent;
-        }
-        .custom-scrollbar::-webkit-scrollbar {
-          width: 6px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-          background: transparent;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: linear-gradient(180deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);
-          border-radius: 10px;
-        }
-      `}</style>
+        </div>
+      </main>
     </div>
   );
 };
-
 
 export default AdminDashboard;

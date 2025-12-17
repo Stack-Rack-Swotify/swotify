@@ -6,7 +6,7 @@ import StudentDashboard from './modules/student/pages/StudentDashboard.jsx'; // 
 import TeacherDashboard from './modules/teacher/pages/TeacherDashboard.jsx'; // Import the TeacherDashboard component
 import StudentProfile from './modules/student/pages/StudentProfile.jsx'; // Import the StudentProfile component
 import AdminDashboard from './modules/admin/pages/AdminDashboard.jsx'; // Import the AdminDashboard component
-import SuperAdminDashboard from './modules/superAdmin/pages/SuperAdminDashboard.tsx'; // Import the SuperAdminDashboard component
+import SuperAdminDashboard from './modules/superAdmin/pages/SuperAdminDashboard.jsx'; // Import the SuperAdminDashboard component
 
 function App() {
   return (

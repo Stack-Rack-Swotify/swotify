@@ -1,450 +1,245 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import mockStaff from '../../../data/mockStaff';
+import mockClasses from '../../../data/mockClasses';
 
-const StaffPage = () => {
+const StaffProfilePage = () => {
+  const { staffId } = useParams();
   const navigate = useNavigate();
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedRole, setSelectedRole] = useState('All');
-  const [selectedAcademicYear, setSelectedAcademicYear] = useState('All'); 
-  const [viewMode, setViewMode] = useState('grid');
-  
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [currentStaff, setCurrentStaff] = useState(null);
-  const [activeMenuId, setActiveMenuId] = useState(null); 
-  
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    role: 'Staff',
-    subject: '',
-    phone: '',
-    status: 'Active',
-    academicYear: '2024-2025', 
-  });
 
-  const getInitialStaffList = () => {
-    return mockStaff.map(s => ({
-      ...s,
-      status: s.status || 'Active',
-      academicYear: s.academicYear || '2024-2025',
-      details: {
-        ...s.details,
-        phone: s.details?.phone || 'N/A'
-      }
-    }));
-  };
-  const [staffList, setStaffList] = useState(getInitialStaffList);
+  // Find the staff member
+  const staff = mockStaff.find(s => s.id === staffId);
 
-  const roles = ['All', ...new Set(staffList.map(staff => staff.role))].sort();
-  const academicYears = ['All', ...new Set(staffList.map(staff => staff.academicYear))].sort();
-  const availableRoles = ['Teacher', 'Principal', 'Admin', 'Librarian', 'Counselor', 'Accountant', 'Nurse', 'IT Administrator', 'Staff'];
+  if (!staff) {
+    return (
+      <div className="space-y-6">
+        <div className="bg-white rounded-xl border border-slate-200 p-12 text-center">
+          <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg className="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+          </div>
+          <h3 className="text-lg font-semibold text-slate-800 mb-2">Staff Member Not Found</h3>
+          <p className="text-slate-500 text-sm mb-4">The requested staff member does not exist</p>
+          <button onClick={() => navigate('/admin-dashboard/staff')} className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm font-medium">
+            Back to Staff Directory
+          </button>
+        </div>
+      </div>
+    );
+  }
 
-  const filteredStaff = staffList.filter(staff => {
-    const matchesSearch = searchTerm === '' || staff.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          staff.email.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesRole = selectedRole === 'All' || staff.role === selectedRole;
-    const matchesAcademicYear = selectedAcademicYear === 'All' || staff.academicYear === selectedAcademicYear;
-    return matchesSearch && matchesRole && matchesAcademicYear;
-  });
+  // Get classes this staff member teaches (if teacher)
+  const assignedClasses = staff.role === 'Teacher'
+    ? mockClasses.filter(cls => cls.teacherIds?.includes(staffId) || cls.teachers?.some(t => t.id === staffId))
+    : [];
 
-  const getRoleConfig = (role) => {
-    const configs = {
-      'Teacher': { 
-        gradient: 'from-blue-500 to-cyan-500', 
-        bg: 'bg-blue-500', 
-        light: 'bg-blue-50 dark:bg-blue-900/20', 
-        border: 'border-blue-300 dark:border-blue-700', 
-        text: 'text-blue-600 dark:text-blue-400',
-        icon: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253'
-      },
-      'Principal': { 
-        gradient: 'from-orange-500 to-red-500', 
-        bg: 'bg-orange-500', 
-        light: 'bg-orange-50 dark:bg-orange-900/20', 
-        border: 'border-orange-300 dark:border-orange-700', 
-        text: 'text-orange-600 dark:text-orange-400',
-        icon: 'M12 14l9-5-9-5-9 5 9 5z M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z'
-      },
-      'Admin': { 
-        gradient: 'from-emerald-500 to-teal-500', 
-        bg: 'bg-emerald-500', 
-        light: 'bg-emerald-50 dark:bg-emerald-900/20', 
-        border: 'border-emerald-300 dark:border-emerald-700', 
-        text: 'text-emerald-600 dark:text-emerald-400',
-        icon: 'M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z M15 12a3 3 0 11-6 0 3 3 0 016 0z'
-      },
-      'Librarian': { 
-        gradient: 'from-purple-500 to-pink-500', 
-        bg: 'bg-purple-500', 
-        light: 'bg-purple-50 dark:bg-purple-900/20', 
-        border: 'border-purple-300 dark:border-purple-700', 
-        text: 'text-purple-600 dark:text-purple-400',
-        icon: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253'
-      },
-      'Counselor': { 
-        gradient: 'from-teal-500 to-emerald-500', 
-        bg: 'bg-teal-500', 
-        light: 'bg-teal-50 dark:bg-teal-900/20', 
-        border: 'border-teal-300 dark:border-teal-700', 
-        text: 'text-teal-600 dark:text-teal-400',
-        icon: 'M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z'
-      },
-      'Accountant': { 
-        gradient: 'from-indigo-500 to-purple-500', 
-        bg: 'bg-indigo-500', 
-        light: 'bg-indigo-50 dark:bg-indigo-900/20', 
-        border: 'border-indigo-300 dark:border-indigo-700', 
-        text: 'text-indigo-600 dark:text-indigo-400',
-        icon: 'M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'
-      },
-      'Nurse': { 
-        gradient: 'from-pink-500 to-rose-500', 
-        bg: 'bg-pink-500', 
-        light: 'bg-pink-50 dark:bg-pink-900/20', 
-        border: 'border-pink-300 dark:border-pink-700', 
-        text: 'text-pink-600 dark:text-pink-400',
-        icon: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z'
-      },
-      'IT Administrator': { 
-        gradient: 'from-slate-600 to-slate-700', 
-        bg: 'bg-slate-600', 
-        light: 'bg-slate-50 dark:bg-slate-900/20', 
-        border: 'border-slate-300 dark:border-slate-700', 
-        text: 'text-slate-600 dark:text-slate-400',
-        icon: 'M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'
-      },
-      'Staff': { 
-        gradient: 'from-gray-500 to-gray-600', 
-        bg: 'bg-gray-500', 
-        light: 'bg-gray-50 dark:bg-gray-900/20', 
-        border: 'border-gray-300 dark:border-gray-700', 
-        text: 'text-gray-600 dark:text-gray-400',
-        icon: 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z'
-      },
-    };
-    return configs[role] || configs['Staff'];
-  };
-
-  const handleAdd = () => {
-    setCurrentStaff(null);
-    setFormData({
-      name: '',
-      email: '',
-      role: 'Staff',
-      subject: '',
-      phone: '',
-      status: 'Active',
-      academicYear: '2024-2025', 
-    });
-    setIsModalOpen(true);
-  };
-
-  const handleEdit = (staff) => {
-    setCurrentStaff(staff);
-    setFormData({
-      name: staff.name,
-      email: staff.email,
-      role: staff.role,
-      subject: staff.subject || '',
-      phone: staff.details?.phone || '',
-      status: staff.status || 'Active',
-      academicYear: staff.academicYear || '2024-2025', 
-    });
-    setIsModalOpen(true);
-    setActiveMenuId(null);
-  };
-
-  const confirmDelete = (staff) => {
-    setCurrentStaff(staff);
-    setIsDeleteModalOpen(true);
-    setActiveMenuId(null);
-  };
-
-  const handleDelete = () => {
-    if (currentStaff) {
-      setStaffList(prev => prev.filter(s => s.id !== currentStaff.id));
-      setIsDeleteModalOpen(false);
-      setCurrentStaff(null);
-    }
-  };
-
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    if (currentStaff) {
-      setStaffList(prev => prev.map(s => s.id === currentStaff.id ? {
-        ...s,
-        name: formData.name,
-        email: formData.email,
-        role: formData.role,
-        subject: formData.role === 'Teacher' ? formData.subject : undefined,
-        status: formData.status,
-        academicYear: formData.academicYear,
-        details: { ...s.details, phone: formData.phone }
-      } : s));
-    } else {
-      const newStaff = {
-        id: `new_${Date.now()}`,
-        name: formData.name,
-        email: formData.email,
-        role: formData.role,
-        subject: formData.role === 'Teacher' ? formData.subject : undefined,
-        status: formData.status,
-        academicYear: formData.academicYear,
-        photo: `https://placehold.co/150/000000/FFFFFF?text=${formData.name.charAt(0)}`,
-        details: {
-          phone: formData.phone,
-          address: 'N/A'
-        }
-      };
-      setStaffList(prev => [newStaff, ...prev]);
-    }
-    setIsModalOpen(false);
-  };
+  // Mock schedule data
+  const schedule = [
+    { day: 'Monday', time: '8:00 AM - 9:30 AM', subject: staff.subject || 'General', class: 'Grade 10 - A' },
+    { day: 'Monday', time: '10:00 AM - 11:30 AM', subject: staff.subject || 'General', class: 'Grade 11 - B' },
+    { day: 'Tuesday', time: '9:00 AM - 10:30 AM', subject: staff.subject || 'General', class: 'Grade 9 - A' },
+    { day: 'Wednesday', time: '8:00 AM - 9:30 AM', subject: staff.subject || 'General', class: 'Grade 10 - B' },
+    { day: 'Thursday', time: '11:00 AM - 12:30 PM', subject: staff.subject || 'General', class: 'Grade 12 - A' },
+    { day: 'Friday', time: '10:00 AM - 11:30 AM', subject: staff.subject || 'General', class: 'Grade 10 - A' },
+  ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 relative overflow-hidden">
-      {/* Premium Decorative Background Elements */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-        <div className="absolute -top-40 -right-40 w-96 h-96 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-tr from-emerald-500/10 via-teal-500/10 to-cyan-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-br from-purple-500/5 to-pink-500/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
-      </div>
+    <div className="space-y-6">
+      {/* Back Button */}
+      <button onClick={() => navigate('/admin-dashboard/staff')} className="flex items-center gap-2 text-slate-600 hover:text-slate-800 transition-colors">
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+        <span className="text-sm font-medium">Back to Staff Directory</span>
+      </button>
 
-      <div className="relative z-10 p-6">
-        {/* Premium Enhanced Header */}
-        <div className="mb-8">
-          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-6">
-            <div className="flex items-center gap-4">
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-2xl blur opacity-50 animate-pulse"></div>
-                <div className="relative w-18 h-18 rounded-2xl bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 flex items-center justify-center shadow-2xl">
-                  <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                  </svg>
+      {/* Profile Header */}
+      <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+        <div className="h-32 bg-gradient-to-r from-blue-500 via-purple-500 to-orange-400"></div>
+        <div className="px-6 pb-6">
+          <div className="flex flex-col md:flex-row md:items-end gap-6 -mt-16">
+            <img
+              src={staff.photo}
+              alt={staff.name}
+              className="w-32 h-32 rounded-xl border-4 border-white shadow-lg object-cover bg-white"
+            />
+            <div className="flex-1">
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <div>
+                  <h1 className="text-2xl font-bold text-slate-800">{staff.name}</h1>
+                  <p className="text-slate-500">{staff.role}{staff.subject ? ` • ${staff.subject}` : ''}</p>
                 </div>
-              </div>
-              <div>
-                <h1 className="text-4xl font-extrabold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
-                  Staff Directory
-                </h1>
-                <p className="text-slate-600 dark:text-gray-400 text-sm mt-1 font-bold">Manage and view all school staff members</p>
+                <div className="flex items-center gap-3">
+                  <span className={`px-4 py-2 rounded-full text-sm font-medium ${staff.status === 'Active' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+                    {staff.status || 'Active'}
+                  </span>
+                  <button className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm font-medium flex items-center gap-2">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                    </svg>
+                    Edit Profile
+                  </button>
+                </div>
               </div>
             </div>
-            <button
-              onClick={handleAdd}
-              className="group px-8 py-4 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white font-extrabold rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-110 flex items-center gap-3 border-2 border-white/20"
-            >
-              <svg className="w-6 h-6 group-hover:rotate-90 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
-              </svg>
-              Add New Staff
-            </button>
           </div>
+        </div>
+      </div>
 
-          {/* Premium Stats Bar */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
-            {[
-              { label: 'Total Staff', value: staffList.length, icon: 'M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z', gradient: 'from-blue-500 to-cyan-500' },
-              { label: 'Active', value: staffList.filter(s => s.status === 'Active').length, icon: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z', gradient: 'from-emerald-500 to-teal-500' },
-              { label: 'Teachers', value: staffList.filter(s => s.role === 'Teacher').length, icon: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253', gradient: 'from-orange-500 to-red-500' },
-              { label: 'Departments', value: roles.length - 1, icon: 'M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z', gradient: 'from-purple-500 to-pink-500' }
-            ].map((stat, idx) => (
-              <div key={idx} className="group bg-white/90 dark:bg-gray-800/90 backdrop-blur-2xl rounded-2xl shadow-xl border-2 border-slate-200/60 dark:border-gray-700/50 p-6 hover:shadow-2xl hover:scale-105 transition-all">
-                <div className="flex items-center gap-4">
-                  <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${stat.gradient} flex items-center justify-center shadow-lg`}>
-                    <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
-                      <path strokeLinecap="round" strokeLinejoin="round" d={stat.icon} />
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="text-3xl font-extrabold text-slate-900 dark:text-gray-100">{stat.value}</p>
-                    <p className="text-xs text-slate-600 dark:text-gray-400 font-bold">{stat.label}</p>
-                  </div>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Contact Information */}
+        <div className="lg:col-span-1 space-y-6">
+          <div className="bg-white rounded-xl border border-slate-200 p-6">
+            <h2 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+              <svg className="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+              Contact Information
+            </h2>
+            <div className="space-y-4">
+              <div className="flex items-center gap-3 p-3 bg-slate-50 rounded-lg">
+                <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <div>
+                  <p className="text-xs text-slate-500">Email</p>
+                  <p className="text-sm font-medium text-slate-800">{staff.email}</p>
                 </div>
               </div>
-            ))}
+              <div className="flex items-center gap-3 p-3 bg-slate-50 rounded-lg">
+                <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                  <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                  </svg>
+                </div>
+                <div>
+                  <p className="text-xs text-slate-500">Phone</p>
+                  <p className="text-sm font-medium text-slate-800">{staff.details?.phone || 'N/A'}</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 p-3 bg-slate-50 rounded-lg">
+                <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                  <svg className="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                </div>
+                <div>
+                  <p className="text-xs text-slate-500">Address</p>
+                  <p className="text-sm font-medium text-slate-800">{staff.details?.address || 'Not provided'}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Quick Stats */}
+          <div className="bg-white rounded-xl border border-slate-200 p-6">
+            <h2 className="text-lg font-bold text-slate-800 mb-4">Quick Stats</h2>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="text-center p-4 bg-blue-50 rounded-lg">
+                <p className="text-2xl font-bold text-blue-600">{staff.role === 'Teacher' ? assignedClasses.length || 4 : 'N/A'}</p>
+                <p className="text-xs text-slate-500">Classes</p>
+              </div>
+              <div className="text-center p-4 bg-green-50 rounded-lg">
+                <p className="text-2xl font-bold text-green-600">{staff.role === 'Teacher' ? '120' : 'N/A'}</p>
+                <p className="text-xs text-slate-500">Students</p>
+              </div>
+              <div className="text-center p-4 bg-purple-50 rounded-lg">
+                <p className="text-2xl font-bold text-purple-600">5</p>
+                <p className="text-xs text-slate-500">Years Exp</p>
+              </div>
+              <div className="text-center p-4 bg-orange-50 rounded-lg">
+                <p className="text-2xl font-bold text-orange-600">98%</p>
+                <p className="text-xs text-slate-500">Attendance</p>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Premium Enhanced Filters Section */}
-        <div className="group bg-white/90 dark:bg-gray-800/90 backdrop-blur-2xl rounded-2xl shadow-xl border-2 border-slate-200/60 dark:border-gray-700/50 p-7 mb-6 hover:shadow-2xl transition-all overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-          <div className="relative flex items-center justify-between mb-7">
-            <div className="flex items-center gap-3">
-              <div className="w-2 h-10 bg-gradient-to-b from-blue-500 via-purple-500 to-pink-500 rounded-full"></div>
-              <h2 className="text-xl font-extrabold text-slate-900 dark:text-gray-100">Search & Filter</h2>
-            </div>
-            
-            {/* View Toggle */}
-            <div className="flex items-center gap-2 bg-slate-100 dark:bg-gray-700 rounded-xl p-1 shadow-inner">
-              {['grid', 'list'].map((mode) => (
-                <button
-                  key={mode}
-                  onClick={() => setViewMode(mode)}
-                  className={`p-3 rounded-lg transition-all ${viewMode === mode ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-xl scale-105' : 'text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-gray-100'}`}
-                  title={`${mode.charAt(0).toUpperCase() + mode.slice(1)} View`}
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
-                    <path strokeLinecap="round" strokeLinejoin="round" d={mode === 'grid' ? 'M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z' : 'M4 6h16M4 10h16M4 14h16M4 18h16'} />
-                  </svg>
-                </button>
-              ))}
+        {/* Main Content */}
+        <div className="lg:col-span-2 space-y-6">
+          {/* About */}
+          <div className="bg-white rounded-xl border border-slate-200 p-6">
+            <h2 className="text-lg font-bold text-slate-800 mb-4">About</h2>
+            <p className="text-slate-600 text-sm leading-relaxed">
+              {staff.name} is a dedicated {staff.role?.toLowerCase()} at our school
+              {staff.subject ? `, specializing in ${staff.subject}` : ''}.
+              With years of experience in education, they have consistently demonstrated
+              excellence in their role and commitment to student success.
+            </p>
+            <div className="mt-4 flex flex-wrap gap-2">
+              <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium">{staff.role}</span>
+              {staff.subject && <span className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-medium">{staff.subject}</span>}
+              <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium">Full Time</span>
             </div>
           </div>
-          
-          <div className="relative grid grid-cols-1 md:grid-cols-3 gap-5">
-            {/* Search Bar */}
-            <div className="md:col-span-1">
-              <label className="block text-xs font-extrabold text-slate-700 dark:text-gray-300 uppercase tracking-wider mb-3 flex items-center gap-2">
-                <svg className="w-4 h-4 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-                Search
-              </label>
-              <div className="relative">
-                <input
-                  type="text"
-                  placeholder="Search by name or email..."
-                  className="w-full pl-12 pr-4 py-4 text-sm border-2 border-slate-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-4 focus:ring-emerald-500/20 focus:border-emerald-500 dark:focus:border-emerald-600 transition-all text-slate-900 dark:text-gray-100 bg-white dark:bg-gray-700 hover:border-emerald-300 dark:hover:border-emerald-700 font-bold shadow-sm"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-                <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-                {searchTerm && (
-                  <button
-                    onClick={() => setSearchTerm('')}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-gray-500 hover:text-slate-600 dark:hover:text-gray-300"
-                  >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
-                )}
-              </div>
-            </div>
 
-            {/* Role Filter */}
-            <div>
-              <label className="block text-xs font-extrabold text-slate-700 dark:text-gray-300 uppercase tracking-wider mb-3 flex items-center gap-2">
-                <svg className="w-4 h-4 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-                Role
-              </label>
-              <div className="relative">
-                <select
-                  value={selectedRole}
-                  onChange={(e) => setSelectedRole(e.target.value)}
-                  className="w-full px-4 py-4 text-sm border-2 border-slate-200 dark:border-gray-600 focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 dark:focus:border-blue-600 bg-white dark:bg-gray-700 text-slate-900 dark:text-gray-100 rounded-xl transition-all hover:border-blue-300 dark:hover:border-blue-700 appearance-none cursor-pointer font-bold shadow-sm"
-                >
-                  {roles.map(role => (
-                    <option key={role} value={role}>
-                      {role === 'All' ? '🔍 All Roles' : role}
-                    </option>
-                  ))}
-                </select>
-                <svg className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 dark:text-gray-500 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                </svg>
-              </div>
-            </div>
-
-            {/* Academic Year Filter */}
-            <div>
-              <label className="block text-xs font-extrabold text-slate-700 dark:text-gray-300 uppercase tracking-wider mb-3 flex items-center gap-2">
-                <svg className="w-4 h-4 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+          {/* Schedule (for Teachers) */}
+          {staff.role === 'Teacher' && (
+            <div className="bg-white rounded-xl border border-slate-200 p-6">
+              <h2 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                <svg className="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
-                Academic Year
-              </label>
-              <div className="relative">
-                <select
-                  value={selectedAcademicYear}
-                  onChange={(e) => setSelectedAcademicYear(e.target.value)}
-                  className="w-full px-4 py-4 text-sm border-2 border-slate-200 dark:border-gray-600 focus:outline-none focus:ring-4 focus:ring-purple-500/20 focus:border-purple-500 dark:focus:border-purple-600 bg-white dark:bg-gray-700 text-slate-900 dark:text-gray-100 rounded-xl transition-all hover:border-purple-300 dark:hover:border-purple-700 appearance-none cursor-pointer font-bold shadow-sm"
-                >
-                  <option value="All">📅 All Years</option>
-                  {academicYears.filter(y => y !== 'All').map(year => (
-                    <option key={year} value={year}>{year}</option>
-                  ))}
-                </select>
-                <svg className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 dark:text-gray-500 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                </svg>
-              </div>
-            </div>
-          </div>
-
-          {/* Active Filters */}
-          {(selectedRole !== 'All' || selectedAcademicYear !== 'All' || searchTerm) && (
-            <div className="relative mt-6 pt-6 border-t-2 border-slate-200 dark:border-gray-700">
-              <div className="flex items-center gap-3 flex-wrap">
-                <span className="text-xs font-extrabold text-slate-600 dark:text-gray-400">Active Filters:</span>
-                {selectedRole !== 'All' && (
-                  <span className="px-4 py-2 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 rounded-full text-xs font-extrabold flex items-center gap-2 shadow-sm border-2 border-blue-300 dark:border-blue-700">
-                    Role: {selectedRole}
-                    <button onClick={() => setSelectedRole('All')} className="ml-1 hover:text-blue-900 dark:hover:text-blue-300">
-                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                      </svg>
-                    </button>
-                  </span>
-                )}
-                {selectedAcademicYear !== 'All' && (
-                  <span className="px-4 py-2 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400 rounded-full text-xs font-extrabold flex items-center gap-2 shadow-sm border-2 border-purple-300 dark:border-purple-700">
-                    Year: {selectedAcademicYear}
-                    <button onClick={() => setSelectedAcademicYear('All')} className="ml-1 hover:text-purple-900 dark:hover:text-purple-300">
-                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                      </svg>
-                    </button>
-                  </span>
-                )}
-                {searchTerm && (
-                  <span className="px-4 py-2 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 rounded-full text-xs font-extrabold flex items-center gap-2 shadow-sm border-2 border-emerald-300 dark:border-emerald-700">
-                    Search: "{searchTerm}"
-                    <button onClick={() => setSearchTerm('')} className="ml-1 hover:text-emerald-900 dark:hover:text-emerald-300">
-                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                      </svg>
-                    </button>
-                  </span>
-                )}
-                <button
-                  onClick={() => {
-                    setSearchTerm('');
-                    setSelectedRole('All');
-                    setSelectedAcademicYear('All');
-                  }}
-                  className="px-4 py-2 text-xs font-extrabold text-rose-600 dark:text-rose-400 hover:text-rose-700 dark:hover:text-rose-300 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded-full transition-all shadow-sm"
-                >
-                  Clear All
-                </button>
+                Weekly Schedule
+              </h2>
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-slate-200">
+                  <thead>
+                    <tr>
+                      <th className="px-4 py-3 text-left text-xs font-semibold text-slate-600 uppercase">Day</th>
+                      <th className="px-4 py-3 text-left text-xs font-semibold text-slate-600 uppercase">Time</th>
+                      <th className="px-4 py-3 text-left text-xs font-semibold text-slate-600 uppercase">Subject</th>
+                      <th className="px-4 py-3 text-left text-xs font-semibold text-slate-600 uppercase">Class</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100">
+                    {schedule.map((item, idx) => (
+                      <tr key={idx} className="hover:bg-slate-50">
+                        <td className="px-4 py-3 text-sm font-medium text-slate-800">{item.day}</td>
+                        <td className="px-4 py-3 text-sm text-slate-600">{item.time}</td>
+                        <td className="px-4 py-3 text-sm text-slate-600">{item.subject}</td>
+                        <td className="px-4 py-3 text-sm">
+                          <span className="px-2 py-1 bg-blue-50 text-blue-600 rounded text-xs font-medium">{item.class}</span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             </div>
           )}
-        </div>
 
-        {/* Results Header */}
-        <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-2xl rounded-2xl shadow-xl border-2 border-slate-200/60 dark:border-gray-700/50 p-5 mb-6 flex items-center justify-between">
-          <h3 className="text-sm font-extrabold text-slate-900 dark:text-gray-100 flex items-center gap-2">
-            <div className="w-2.5 h-2.5 bg-blue-500 rounded-full animate-pulse"></div>
-            Showing Results
-          </h3>
-          <span className="px-6 py-3 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 text-slate-900 dark:text-gray-100 rounded-xl text-sm font-extrabold border-2 border-blue-300 dark:border-blue-700 shadow-lg">
-            {filteredStaff.length} {filteredStaff.length === 1 ? 'Staff Member' : 'Staff Members'}
-          </span>
+          {/* Recent Activity */}
+          <div className="bg-white rounded-xl border border-slate-200 p-6">
+            <h2 className="text-lg font-bold text-slate-800 mb-4">Recent Activity</h2>
+            <div className="space-y-4">
+              {[
+                { action: 'Submitted attendance report', time: '2 hours ago', icon: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z', color: 'green' },
+                { action: 'Updated grade for Grade 10 - A', time: 'Yesterday', icon: 'M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z', color: 'blue' },
+                { action: 'Attended staff meeting', time: '2 days ago', icon: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z', color: 'purple' },
+              ].map((item, idx) => (
+                <div key={idx} className="flex items-start gap-3">
+                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${item.color === 'green' ? 'bg-green-100' : item.color === 'blue' ? 'bg-blue-100' : 'bg-purple-100'}`}>
+                    <svg className={`w-4 h-4 ${item.color === 'green' ? 'text-green-600' : item.color === 'blue' ? 'text-blue-600' : 'text-purple-600'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                      <path strokeLinecap="round" strokeLinejoin="round" d={item.icon} />
+                    </svg>
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm font-medium text-slate-800">{item.action}</p>
+                    <p className="text-xs text-slate-500">{item.time}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-
-        {/* Continued in next response due to length... */}
       </div>
     </div>
   );
 };
 
-export default StaffPage;
-
+export default StaffProfilePage;
