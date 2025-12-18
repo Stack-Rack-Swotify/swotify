@@ -9,7 +9,7 @@ const EventsPage = () => {
       id: 1,
       type: 'event',
       title: 'Annual Sports Day',
-      date: 'December 10, 2025',
+      date: 'December 25, 2025',
       time: '9:00 AM - 3:00 PM',
       location: 'School Ground',
       description: 'Join us for a day of athletic events, team competitions, and fun activities for all students. Don\'t forget your sports gear and water bottle!',
@@ -41,6 +41,30 @@ const EventsPage = () => {
       status: 'upcoming',
       category: 'Cultural'
     },
+    {
+      id: 6,
+      type: 'event',
+      title: 'Annual Day Celebration',
+      date: 'November 15, 2024',
+      time: '5:00 PM - 9:00 PM',
+      location: 'School Auditorium',
+      description: 'A grand celebration of the school year with performances, awards, and special guests.',
+      image: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=800',
+      status: 'completed',
+      category: 'Cultural'
+    },
+    {
+      id: 7,
+      type: 'event',
+      title: 'Inter-School Quiz Competition',
+      date: 'October 20, 2024',
+      time: '10:00 AM - 1:00 PM',
+      location: 'Conference Hall',
+      description: 'Students competed against 10 schools in this exciting quiz competition. Our team secured 2nd place!',
+      image: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80&w=800',
+      status: 'completed',
+      category: 'Academic'
+    },
   ];
 
   const ptmMeetings = [
@@ -48,7 +72,7 @@ const EventsPage = () => {
       id: 4,
       type: 'ptm',
       title: 'PTM for Grade 10',
-      date: 'November 30, 2025',
+      date: 'December 20, 2025',
       time: '4:00 PM - 7:00 PM',
       location: 'Online (Zoom)',
       description: 'Discussion about academic progress, upcoming exams, and student development for Grade 10 students.',
@@ -60,7 +84,7 @@ const EventsPage = () => {
       id: 5,
       type: 'ptm',
       title: 'PTM for Grade 11 & 12',
-      date: 'December 5, 2025',
+      date: 'December 22, 2025',
       time: '4:00 PM - 7:00 PM',
       location: 'School Library',
       description: 'Individual meetings with teachers to discuss performance, college applications, and career guidance.',
@@ -68,9 +92,23 @@ const EventsPage = () => {
       status: 'upcoming',
       category: 'Meeting'
     },
+    {
+      id: 8,
+      type: 'ptm',
+      title: 'Mid-Term PTM',
+      date: 'September 10, 2024',
+      time: '3:00 PM - 6:00 PM',
+      location: 'School Hall',
+      description: 'Mid-term progress discussion with parents for all grades.',
+      image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=800',
+      status: 'completed',
+      category: 'Meeting'
+    },
   ];
 
   const allItems = activeTab === 'events' ? schoolEvents : ptmMeetings;
+  const upcomingItems = allItems.filter(item => item.status === 'upcoming');
+  const completedItems = allItems.filter(item => item.status === 'completed');
 
   const getCategoryColor = (category) => {
     switch (category) {
@@ -81,6 +119,88 @@ const EventsPage = () => {
       default: return 'bg-slate-100 text-slate-600 border-slate-200';
     }
   };
+
+  const renderEventCard = (item) => (
+    <Link
+      to={`./${item.id}`}
+      key={item.id}
+      className="group section-card overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+    >
+      {/* Event Image */}
+      <div className="relative h-44 overflow-hidden">
+        <img
+          src={item.image}
+          alt={item.title}
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 via-transparent to-transparent"></div>
+
+        {/* Category Badge */}
+        <div className="absolute top-3 left-3">
+          <span className={`px-3 py-1 text-xs font-semibold rounded-full border ${getCategoryColor(item.category)}`}>
+            {item.category}
+          </span>
+        </div>
+
+        {/* Status Badge */}
+        <div className="absolute top-3 right-3">
+          <span className={`px-3 py-1 text-xs font-semibold rounded-full shadow ${item.status === 'upcoming'
+              ? 'bg-green-500 text-white'
+              : 'bg-slate-500 text-white'
+            }`}>
+            {item.status === 'upcoming' ? 'Upcoming' : 'Completed'}
+          </span>
+        </div>
+      </div>
+
+      {/* Event Content */}
+      <div className="p-5">
+        <h5 className="text-lg font-bold text-slate-800 mb-3 group-hover:text-blue-600 transition-colors line-clamp-2">
+          {item.title}
+        </h5>
+
+        {/* Event Details */}
+        <div className="space-y-2 mb-4">
+          <div className="flex items-center gap-3 text-sm text-slate-600">
+            <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+              <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <span className="font-medium">{item.date}</span>
+          </div>
+
+          <div className="flex items-center gap-3 text-sm text-slate-600">
+            <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+              <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <span className="font-medium">{item.time}</span>
+          </div>
+
+          <div className="flex items-center gap-3 text-sm text-slate-600">
+            <div className="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center">
+              <svg className="w-4 h-4 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+            </div>
+            <span className="font-medium">{item.location}</span>
+          </div>
+        </div>
+
+        <p className="text-sm text-slate-500 line-clamp-2 mb-4">{item.description}</p>
+
+        {/* View Details Link */}
+        <div className="flex items-center gap-2 text-blue-600 font-semibold text-sm group-hover:gap-3 transition-all">
+          <span>View Details</span>
+          <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+          </svg>
+        </div>
+      </div>
+    </Link>
+  );
 
   return (
     <div className="space-y-6">
@@ -129,100 +249,51 @@ const EventsPage = () => {
         </button>
       </div>
 
-      {/* Events Grid */}
-      {allItems.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {allItems.map((item) => (
-            <Link
-              to={`./${item.id}`}
-              key={item.id}
-              className="group section-card overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
-            >
-              {/* Event Image */}
-              <div className="relative h-44 overflow-hidden">
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 via-transparent to-transparent"></div>
-
-                {/* Category Badge */}
-                <div className="absolute top-3 left-3">
-                  <span className={`px-3 py-1 text-xs font-semibold rounded-full border ${getCategoryColor(item.category)}`}>
-                    {item.category}
-                  </span>
-                </div>
-
-                {/* Status Badge */}
-                <div className="absolute top-3 right-3">
-                  <span className="px-3 py-1 text-xs font-semibold rounded-full bg-green-500 text-white shadow">
-                    Upcoming
-                  </span>
-                </div>
-              </div>
-
-              {/* Event Content */}
-              <div className="p-5">
-                <h5 className="text-lg font-bold text-slate-800 mb-3 group-hover:text-blue-600 transition-colors line-clamp-2">
-                  {item.title}
-                </h5>
-
-                {/* Event Details */}
-                <div className="space-y-2 mb-4">
-                  <div className="flex items-center gap-3 text-sm text-slate-600">
-                    <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-                      <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                      </svg>
-                    </div>
-                    <span className="font-medium">{item.date}</span>
-                  </div>
-
-                  <div className="flex items-center gap-3 text-sm text-slate-600">
-                    <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
-                      <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                    </div>
-                    <span className="font-medium">{item.time}</span>
-                  </div>
-
-                  <div className="flex items-center gap-3 text-sm text-slate-600">
-                    <div className="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center">
-                      <svg className="w-4 h-4 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                      </svg>
-                    </div>
-                    <span className="font-medium">{item.location}</span>
-                  </div>
-                </div>
-
-                <p className="text-sm text-slate-500 line-clamp-2 mb-4">{item.description}</p>
-
-                {/* View Details Link */}
-                <div className="flex items-center gap-2 text-blue-600 font-semibold text-sm group-hover:gap-3 transition-all">
-                  <span>View Details</span>
-                  <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                  </svg>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
-      ) : (
-        <div className="section-card p-12">
-          <div className="flex flex-col items-center justify-center">
-            <div className="w-16 h-16 mb-4 rounded-xl bg-slate-100 flex items-center justify-center">
-              <svg className="w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-            </div>
-            <p className="text-slate-500 font-medium">No {activeTab === 'events' ? 'school events' : 'PTM meetings'} scheduled at the moment.</p>
+      {/* Upcoming Events Section */}
+      <div className="space-y-4">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-lg bg-green-100 flex items-center justify-center">
+            <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
           </div>
+          <h2 className="text-lg font-bold text-slate-800">Upcoming {activeTab === 'events' ? 'Events' : 'Meetings'}</h2>
+          <span className="px-2.5 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-full">{upcomingItems.length}</span>
         </div>
-      )}
+
+        {upcomingItems.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {upcomingItems.map(renderEventCard)}
+          </div>
+        ) : (
+          <div className="section-card p-8 text-center">
+            <p className="text-slate-500 font-medium">No upcoming {activeTab === 'events' ? 'events' : 'meetings'} scheduled.</p>
+          </div>
+        )}
+      </div>
+
+      {/* Completed Events Section */}
+      <div className="space-y-4">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center">
+            <svg className="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h2 className="text-lg font-bold text-slate-800">Completed {activeTab === 'events' ? 'Events' : 'Meetings'}</h2>
+          <span className="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs font-bold rounded-full">{completedItems.length}</span>
+        </div>
+
+        {completedItems.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {completedItems.map(renderEventCard)}
+          </div>
+        ) : (
+          <div className="section-card p-8 text-center">
+            <p className="text-slate-500 font-medium">No completed {activeTab === 'events' ? 'events' : 'meetings'} yet.</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

@@ -4,285 +4,303 @@ import { useNavigate, Link } from "react-router-dom";
 import mockUsers from '../../../data/users.json';
 
 const Signup = () => {
+  const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [selectedRole, setSelectedRole] = useState('');
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [selectedRole, setSelectedRole] = useState('Student');
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
-
-  const roles = [
-    { value: 'Student', label: 'Student', icon: '🎓' },
-    { value: 'Teacher', label: 'Teacher', icon: '👨‍🏫' },
-    { value: 'Admin', label: 'Admin', icon: '⚙️' },
-    { value: 'Developer', label: 'Developer', icon: '💻' }
-  ];
-
-  const handleRoleSelect = (role) => {
-    setSelectedRole(role);
-    setIsDropdownOpen(false);
-    setError('');
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setError('');
+    setIsLoading(true);
 
-    if (!selectedRole) {
-      setError('Please select your role.');
-      return;
-    }
+    setTimeout(() => {
+      if (password !== confirmPassword) {
+        setError('Passwords do not match.');
+        setIsLoading(false);
+        return;
+      }
 
-    if (password !== confirmPassword) {
-      setError('Passwords do not match.');
-      return;
-    }
+      if (password.length < 6) {
+        setError('Password must be at least 6 characters.');
+        setIsLoading(false);
+        return;
+      }
 
-    if (password.length < 6) {
-      setError('Password must be at least 6 characters.');
-      return;
-    }
+      const existingUsers = JSON.parse(localStorage.getItem('swotify_users') || '[]');
+      const allUsers = [...mockUsers, ...existingUsers];
 
-    // Check if email already exists
-    const existingUsers = JSON.parse(localStorage.getItem('swotify_users') || '[]');
-    const allUsers = [...mockUsers, ...existingUsers];
+      if (allUsers.some(user => user.email === email)) {
+        setError('Email already registered.');
+        setIsLoading(false);
+        return;
+      }
 
-    if (allUsers.some(user => user.email === email)) {
-      setError('Email already registered. Please sign in instead.');
-      return;
-    }
+      const newUser = {
+        id: `user_${Date.now()}`,
+        name: fullName,
+        email,
+        password,
+        role: selectedRole === 'Super Admin' ? 'Developer' : selectedRole,
+      };
 
-    const newId = `user_${Date.now()}`;
+      localStorage.setItem('swotify_users', JSON.stringify([...existingUsers, newUser]));
+      localStorage.setItem('swotify_current_user', JSON.stringify(newUser));
 
-    const newUser = {
-      id: newId,
-      email,
-      password,
-      role: selectedRole,
-    };
+      if (selectedRole === 'Student') navigate('/student-dashboard');
+      else if (selectedRole === 'Teacher') navigate('/teacher-dashboard');
+      else if (selectedRole === 'Admin') navigate('/admin-dashboard');
+      else if (selectedRole === 'Super Admin') navigate('/super-admin-dashboard');
+      else navigate('/student-dashboard');
 
-    // Save to localStorage
-    localStorage.setItem('swotify_users', JSON.stringify([...existingUsers, newUser]));
-
-    // Store logged in user
-    localStorage.setItem('swotify_current_user', JSON.stringify(newUser));
-
-    // Auto-login: Navigate directly to the appropriate dashboard
-    if (selectedRole === 'Student') navigate('/student-dashboard');
-    else if (selectedRole === 'Teacher') navigate('/teacher-dashboard');
-    else if (selectedRole === 'Admin') navigate('/admin-dashboard');
-    else if (selectedRole === 'Developer') navigate('/super-admin-dashboard');
-    else navigate('/student-dashboard');
+      setIsLoading(false);
+    }, 1000);
   };
 
+  const getRoleIcon = () => {
+    switch (selectedRole) {
+      case 'Student': return (
+        <svg className="w-10 h-10 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 14l9-5-9-5-9 5 9 5z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+        </svg>
+      );
+      case 'Teacher': return (
+        <svg className="w-10 h-10 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z" />
+        </svg>
+      );
+      case 'Admin': return (
+        <svg className="w-10 h-10 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+      );
+      case 'Super Admin': return (
+        <svg className="w-10 h-10 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+        </svg>
+      );
+      default: return null;
+    }
+  };
+
+  const getRoleColor = () => {
+    switch (selectedRole) {
+      case 'Student': return 'bg-blue-500 hover:bg-blue-600';
+      case 'Teacher': return 'bg-orange-500 hover:bg-orange-600';
+      case 'Admin': return 'bg-purple-500 hover:bg-purple-600';
+      case 'Super Admin': return 'bg-slate-800 hover:bg-slate-900';
+      default: return 'bg-blue-500 hover:bg-blue-600';
+    }
+  };
+
+  const stats = [
+    { label: 'Courses', value: '4.2k+', color: 'blue' },
+    { label: 'Students', value: '128k', color: 'purple' },
+    { label: 'Global Rank', value: '#12', color: 'orange' },
+  ];
+
   return (
-    <div className="flex min-h-screen bg-slate-100">
-      {/* Left Side - Branding */}
-      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-blue-600 via-purple-600 to-orange-500 items-center justify-center p-12">
-        <div className="text-center space-y-8 max-w-md">
-          {/* Logo */}
-          <div className="w-40 h-40 mx-auto mb-8">
-            <img
-              src="/logo.png"
-              alt="Swotify Logo"
-              className="w-full h-full object-contain drop-shadow-2xl"
-            />
-          </div>
-
-          <h1 className="text-4xl font-bold text-white">Join Swotify</h1>
-          <p className="text-lg text-white/80">
-            AI-powered school management with smart insights for principals, teachers, students, and parents
-          </p>
-
-          {/* Features */}
-          <div className="space-y-4 pt-4">
-            <div className="flex items-center gap-4 bg-white/10 backdrop-blur rounded-xl p-4">
-              <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
-                </svg>
-              </div>
-              <span className="text-white font-medium">Quick and easy registration</span>
-            </div>
-
-            <div className="flex items-center gap-4 bg-white/10 backdrop-blur rounded-xl p-4">
-              <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                </svg>
-              </div>
-              <span className="text-white font-medium">Secure data with encryption</span>
-            </div>
-
-            <div className="flex items-center gap-4 bg-white/10 backdrop-blur rounded-xl p-4">
-              <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-              </div>
-              <span className="text-white font-medium">Instant access to all features</span>
-            </div>
-          </div>
-        </div>
+    <div className="h-screen flex flex-col relative overflow-hidden bg-slate-50">
+      {/* Background Gradients */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
+        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-blue-400/10 rounded-full blur-[120px]"></div>
+        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-purple-400/10 rounded-full blur-[120px]"></div>
       </div>
 
-      {/* Right Side - Signup Form */}
-      <div className="flex w-full lg:w-1/2 items-center justify-center p-6">
-        <div className="w-full max-w-md">
-          {/* Mobile Logo */}
-          <div className="lg:hidden text-center mb-8">
-            <div className="w-24 h-24 mx-auto mb-4">
-              <img src="/logo.png" alt="Swotify Logo" className="w-full h-full object-contain" />
-            </div>
+      {/* Fixed Top Navigation */}
+      <nav className="w-full bg-white/80 backdrop-blur-md border-b border-slate-200 py-3 px-6 z-50 shrink-0">
+        <div className="max-w-7xl mx-auto flex justify-between items-center">
+          <div className="flex items-center gap-3">
+            <img src="/logo.png" alt="Swotify" className="w-10 h-10 object-contain" />
+            <h1 className="text-xl font-black text-slate-800 leading-none tracking-tighter">Swotify</h1>
           </div>
-
-          {/* Signup Card */}
-          <div className="bg-white rounded-2xl border border-slate-200 shadow-xl p-8">
-            {/* Header */}
-            <div className="mb-6 text-center">
-              <h2 className="text-2xl font-bold text-slate-800 mb-2">Create Account</h2>
-              <p className="text-slate-500 text-sm">Join Swotify today - no separate login needed!</p>
+          <div className="hidden md:flex items-center gap-6">
+            <div className="flex items-center gap-2">
+              <span className="flex h-2 w-2 rounded-full bg-green-500 animate-pulse"></span>
+              <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Network Status: Online</span>
             </div>
+            <Link to="/help" className="text-xs font-bold text-blue-600 hover:text-blue-700 transition-colors">Help Center</Link>
+          </div>
+        </div>
+      </nav>
 
-            {/* Error Message */}
-            {error && (
-              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl mb-4 text-sm flex items-center gap-2">
-                <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                {error}
+      {/* Main Content */}
+      <main className="flex-1 flex items-center justify-center p-4 md:p-6 lg:p-8 relative z-10 overflow-hidden">
+        <div className="max-w-7xl w-full flex flex-col lg:flex-row items-center gap-6 lg:gap-12">
+
+          {/* Left Column: Branding */}
+          <div className="flex-1 flex flex-col justify-center space-y-4 lg:space-y-6 text-center lg:text-left">
+            <div className="space-y-3">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-[10px] font-black uppercase tracking-widest border border-blue-100 mx-auto lg:mx-0 w-fit">
+                Intelligent Education
               </div>
-            )}
-
-            {/* Form */}
-            <form className="space-y-4" onSubmit={handleSubmit}>
-              {/* Email */}
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">
-                  School email <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="email"
-                  required
-                  placeholder="name@school.edu"
-                  className="w-full px-4 py-3 text-sm border border-slate-300 rounded-xl text-slate-800 placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all bg-white"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-
-              {/* Password */}
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">
-                  Password <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="password"
-                  required
-                  placeholder="Enter password (min 6 characters)"
-                  className="w-full px-4 py-3 text-sm border border-slate-300 rounded-xl text-slate-800 placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all bg-white"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
-
-              {/* Confirm Password */}
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">
-                  Confirm Password <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="password"
-                  required
-                  placeholder="Confirm password"
-                  className="w-full px-4 py-3 text-sm border border-slate-300 rounded-xl text-slate-800 placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all bg-white"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                />
-              </div>
-
-              {/* Role Dropdown */}
-              <div className="relative">
-                <label className="block text-sm font-medium text-slate-700 mb-2">
-                  Select Role <span className="text-red-500">*</span>
-                </label>
-                <button
-                  type="button"
-                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                  className={`w-full px-4 py-3 text-sm border rounded-xl text-left flex items-center justify-between transition-all bg-white ${isDropdownOpen ? 'border-blue-500 ring-2 ring-blue-500/20' : 'border-slate-300'
-                    }`}
-                >
-                  <span className={selectedRole ? 'text-slate-800' : 'text-slate-400'}>
-                    {selectedRole ? (
-                      <span className="flex items-center gap-2">
-                        <span>{roles.find(r => r.value === selectedRole)?.icon}</span>
-                        {selectedRole}
-                      </span>
-                    ) : 'Choose your role'}
-                  </span>
-                  <svg className={`w-5 h-5 text-slate-400 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-
-                {isDropdownOpen && (
-                  <div className="absolute z-20 w-full mt-2 bg-white rounded-xl border border-slate-200 shadow-lg overflow-hidden">
-                    {roles.map((role) => (
-                      <button
-                        key={role.value}
-                        type="button"
-                        onClick={() => handleRoleSelect(role.value)}
-                        className={`w-full px-4 py-3 text-sm text-left flex items-center justify-between hover:bg-slate-50 transition-all ${selectedRole === role.value ? 'bg-blue-50' : ''
-                          }`}
-                      >
-                        <span className="flex items-center gap-3 text-slate-700 font-medium">
-                          <span className="text-lg">{role.icon}</span>
-                          {role.label}
-                        </span>
-                        {selectedRole === role.value && (
-                          <svg className="w-5 h-5 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                          </svg>
-                        )}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              {/* Submit Button */}
-              <button
-                type="submit"
-                className="w-full py-3.5 px-4 bg-gradient-to-r from-blue-500 via-purple-500 to-orange-400 text-white font-bold rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200"
-              >
-                Create Account & Sign In
-              </button>
-            </form>
-
-            {/* Login Link */}
-            <div className="mt-6 text-center">
-              <p className="text-slate-500 text-sm">
-                Already have an account?{' '}
-                <Link to="/login" className="font-semibold text-blue-600 hover:text-blue-700 transition-colors">
-                  Sign in
-                </Link>
+              <h2 className="text-4xl md:text-6xl xl:text-7xl font-black text-slate-800 leading-[1.1] tracking-tight">
+                Join the <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-orange-500 bg-clip-text text-transparent">Hub.</span>
+              </h2>
+              <p className="text-slate-500 text-sm md:text-lg font-medium leading-relaxed max-w-lg mx-auto lg:mx-0">
+                Create your account and experience the future of smart school management.
               </p>
             </div>
 
-            {/* Security Badge */}
-            <div className="mt-6 pt-4 border-t border-slate-100">
-              <div className="flex items-center justify-center gap-2 text-sm text-slate-400">
-                <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                </svg>
-                <span>Secure 256-bit encryption</span>
+            {/* Stats */}
+            <div className="hidden lg:block pt-4 border-t border-slate-200/60 max-w-lg">
+              <div className="grid grid-cols-3 gap-3">
+                {stats.map((stat, index) => (
+                  <div key={index} className="bg-white/60 backdrop-blur-sm border border-slate-200/50 rounded-xl p-4 shadow-sm">
+                    <div className={`w-10 h-10 rounded-lg flex items-center justify-center mb-3
+                      ${stat.color === 'blue' ? 'bg-blue-50 text-blue-500' : ''}
+                      ${stat.color === 'purple' ? 'bg-purple-50 text-purple-500' : ''}
+                      ${stat.color === 'orange' ? 'bg-orange-50 text-orange-500' : ''}
+                    `}>
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                      </svg>
+                    </div>
+                    <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">{stat.label}</p>
+                    <p className="text-lg font-black text-slate-800 tracking-tighter">{stat.value}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column: Signup Form */}
+          <div className="flex-1 flex flex-col items-center lg:items-end justify-center w-full max-w-md lg:max-w-none">
+            <div className="w-full max-w-md relative z-20">
+              <div className="bg-white border border-slate-200 rounded-[1.5rem] shadow-2xl p-4 md:p-5 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-24 h-24 bg-slate-50 rounded-bl-full -z-10 opacity-50"></div>
+
+                <div className="flex flex-col items-center mb-3">
+                  <div className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center mb-1 ring-4 ring-slate-50/50">
+                    {React.cloneElement(getRoleIcon(), { className: getRoleIcon()?.props?.className?.replace('w-10 h-10', 'w-6 h-6') })}
+                  </div>
+                  <h2 className="text-base font-black text-slate-800 tracking-tight text-center">Join the Hub</h2>
+                  <p className="text-slate-400 font-bold text-[9px] uppercase tracking-widest">Create Account</p>
+                </div>
+
+                <form onSubmit={handleSubmit} className="space-y-2">
+                  {/* Role Select */}
+                  <div className="space-y-1">
+                    <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-1">Portal View</label>
+                    <div className="relative">
+                      <select
+                        value={selectedRole}
+                        onChange={(e) => setSelectedRole(e.target.value)}
+                        className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500/10 focus:border-blue-500 outline-none transition-all font-bold text-slate-700 appearance-none cursor-pointer text-sm"
+                      >
+                        <option value="Student">🎓 Student View</option>
+                        <option value="Teacher">📝 Educator Portal</option>
+                        <option value="Admin">⚙️ Admin Access</option>
+                        <option value="Super Admin">👑 Super Admin</option>
+                      </select>
+                      <div className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none">
+                        <svg className={`w-4 h-4 ${selectedRole === 'Student' ? 'text-blue-500' : selectedRole === 'Teacher' ? 'text-orange-500' : selectedRole === 'Admin' ? 'text-purple-500' : 'text-slate-700'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Full Name */}
+                  <div className="space-y-1">
+                    <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-1">Academic Name</label>
+                    <input
+                      type="text"
+                      required
+                      className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:border-blue-500 outline-none transition-all font-medium text-sm"
+                      placeholder="e.g. Alex Johnson"
+                      value={fullName}
+                      onChange={(e) => setFullName(e.target.value)}
+                    />
+                  </div>
+
+                  {/* Email */}
+                  <div className="space-y-1">
+                    <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-1">Campus Email</label>
+                    <input
+                      type="email"
+                      required
+                      className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:border-blue-500 outline-none transition-all font-medium text-sm"
+                      placeholder="id@swotify.edu"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                  </div>
+
+                  {/* Password */}
+                  <div className="space-y-1">
+                    <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-1">Access Key</label>
+                    <input
+                      type="password"
+                      required
+                      className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:border-blue-500 outline-none transition-all font-medium text-sm"
+                      placeholder="••••••••"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                  </div>
+
+                  {/* Confirm Password */}
+                  <div className="space-y-1">
+                    <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-1">Confirm Key</label>
+                    <input
+                      type="password"
+                      required
+                      className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:border-blue-500 outline-none transition-all font-medium text-sm"
+                      placeholder="••••••••"
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                    />
+                  </div>
+
+                  {/* Error */}
+                  {error && <p className="text-red-500 text-[10px] font-bold text-center">{error}</p>}
+
+                  {/* Submit */}
+                  <button
+                    type="submit"
+                    disabled={isLoading}
+                    className={`group w-full py-2.5 rounded-lg font-black text-white transition-all shadow-lg flex items-center justify-center gap-2 text-sm disabled:opacity-50 ${getRoleColor()}`}
+                  >
+                    {isLoading ? "..." : "Create Account"}
+                  </button>
+                </form>
+
+                <div className="mt-4 text-center">
+                  <Link to="/login" className="text-blue-500 hover:text-blue-600 transition-colors text-xs font-bold">
+                    Already have an ID?
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="w-full py-3 px-8 bg-white/80 backdrop-blur-md border-t border-slate-200 shrink-0 z-50">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-2">
+          <div className="flex items-center gap-4">
+            <p className="text-slate-800 font-black text-sm tracking-tighter uppercase">Swotify</p>
+            <span className="h-4 w-[1px] bg-slate-200 hidden md:block"></span>
+            <p className="text-slate-400 text-[9px] font-bold uppercase tracking-widest hidden md:block">© 2024 Intelligence Solutions</p>
+          </div>
+          <div className="flex gap-6 items-center">
+            <Link to="/terms" className="text-[9px] font-black text-slate-400 hover:text-blue-500 uppercase tracking-widest transition-colors">Terms</Link>
+            <Link to="/privacy" className="text-[9px] font-black text-slate-400 hover:text-blue-500 uppercase tracking-widest transition-colors">Privacy Policy</Link>
+            <span className="text-[9px] font-black text-green-500 uppercase tracking-widest flex items-center gap-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+              Online
+            </span>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };

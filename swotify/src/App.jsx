@@ -1,12 +1,15 @@
 import './App.css';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import Login from './modules/auth/pages/login.jsx';
-import Signup from './modules/auth/pages/signup.jsx'; // Import the new Signup component
-import StudentDashboard from './modules/student/pages/StudentDashboard.jsx'; // Import the StudentDashboard component
-import TeacherDashboard from './modules/teacher/pages/TeacherDashboard.jsx'; // Import the TeacherDashboard component
-import StudentProfile from './modules/student/pages/StudentProfile.jsx'; // Import the StudentProfile component
-import AdminDashboard from './modules/admin/pages/AdminDashboard.jsx'; // Import the AdminDashboard component
-import SuperAdminDashboard from './modules/superAdmin/pages/SuperAdminDashboard.jsx'; // Import the SuperAdminDashboard component
+import Signup from './modules/auth/pages/signup.jsx';
+import TermsPage from './modules/auth/pages/TermsPage.jsx';
+import PrivacyPage from './modules/auth/pages/PrivacyPage.jsx';
+import HelpCenterPage from './modules/auth/pages/HelpCenterPage.jsx';
+import StudentDashboard from './modules/student/pages/StudentDashboard.jsx';
+import TeacherDashboard from './modules/teacher/pages/TeacherDashboard.jsx';
+import StudentProfile from './modules/student/pages/StudentProfile.jsx';
+import AdminDashboard from './modules/admin/pages/AdminDashboard.jsx';
+import SuperAdminDashboard from './modules/superAdmin/pages/SuperAdminDashboard.jsx';
 
 function App() {
   return (
@@ -14,14 +17,15 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        {/* Route for Student Dashboard with nested routes */}
-        <Route path="/student-dashboard/*" element={<StudentDashboard />} /> {/* Use * for nested routes */}
+        <Route path="/terms" element={<TermsPage />} />
+        <Route path="/privacy" element={<PrivacyPage />} />
+        <Route path="/help" element={<HelpCenterPage />} />
+        <Route path="/student-dashboard/*" element={<StudentDashboard />} />
         <Route path="/teacher-dashboard/*" element={<TeacherDashboard />} />
-        <Route path="/admin-dashboard/*" element={<AdminDashboard />} /> {/* Route for Admin Dashboard */}
-        <Route path="/super-admin-dashboard/*" element={<SuperAdminDashboard />} /> {/* Route for Super Admin Dashboard */}
+        <Route path="/admin-dashboard/*" element={<AdminDashboard />} />
+        <Route path="/super-admin-dashboard/*" element={<SuperAdminDashboard />} />
         <Route path="/student/profile" element={<StudentProfile />} />
-        {/* You can add a default route or redirect here if needed */}
-        <Route path="/" element={<Signup />} /> {/* Default to signup */}
+        <Route path="/" element={<Signup />} />
       </Routes>
     </HashRouter>
   );

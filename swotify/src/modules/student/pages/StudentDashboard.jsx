@@ -91,9 +91,7 @@ const StudentDashboard = () => {
             </button>
 
             <div className="flex items-center gap-2">
-              <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-blue-500 via-purple-500 to-orange-400 flex items-center justify-center">
-                <img src="/logo.png" alt="Swotify" className="h-5 w-5 object-contain" />
-              </div>
+              <img src="/logo.png" alt="Swotify" className="h-9 w-9 object-contain" />
               <span className="text-lg font-bold text-slate-800">Swotify</span>
             </div>
           </div>
