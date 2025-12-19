@@ -8,12 +8,13 @@ import TeacherStudentProfilePage from './TeacherStudentProfilePage';
 import TeacherAIChatbotPage from './TeacherAIChatbotPage';
 import PTMHistoryPage from './PTMHistoryPage';
 import TeacherDashboardOverview from './TeacherDashboardOverview';
-import ReportPage from '../../student/pages/ReportPage';
+import TeacherReportPage from './TeacherReportPage';
 import TeacherSettingsPage from './TeacherSettingsPage';
 import PerformanceReportPage from '../../admin/pages/PerformanceReportPage';
 import TeacherEventDetailPage from './TeacherEventDetailPage';
 import TeacherAttendancePage from './TeacherAttendancePage';
 import TeacherApprovalPage from './TeacherApprovalPage';
+import TeacherStudentReportPage from './TeacherStudentReportPage';
 
 import mockStaff from '../../../data/mockStaff';
 
@@ -108,7 +109,7 @@ const TeacherDashboard = () => {
                   </div>
                   <div className="max-h-64 overflow-y-auto">
                     {notifications.map((notif) => (
-                      <div key={notif.id} className={`px-4 py-3 border-b border-slate-100 hover:bg-slate-50 cursor-pointer ${notif.unread ? 'bg-blue-50' : ''}`}>
+                      <div key={notif.id} className={`px-4 py-3 border-b border-slate-100 hover:bg-slate-50 cursor-pointer ${notif.unread ? 'bg-orange-50' : ''}`}>
                         <p className="text-sm font-medium text-slate-800">{notif.title}</p>
                         <p className="text-xs text-slate-500">{notif.message}</p>
                         <p className="text-xs text-slate-400 mt-1">{notif.time}</p>
@@ -203,7 +204,7 @@ const TeacherDashboard = () => {
                     to={item.to}
                     end={item.to === ''}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className={({ isActive }) => `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium ${isActive ? 'bg-blue-500 text-white' : 'text-slate-600 hover:bg-slate-100'}`}
+                    className={({ isActive }) => `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium ${isActive ? 'bg-[#ea580c] text-white' : 'text-slate-600 hover:bg-slate-100'}`}
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                       <path strokeLinecap="round" strokeLinejoin="round" d={item.icon} />
@@ -237,10 +238,11 @@ const TeacherDashboard = () => {
             <Route path="/events" element={<TeacherEventsPage />} />
             <Route path="/events/:eventId" element={<TeacherEventDetailPage />} />
             <Route path="/student-profile/:studentId" element={<TeacherStudentProfilePage />} />
+            <Route path="/student-report/:studentId" element={<TeacherStudentReportPage />} />
             <Route path="/ai-chatbot" element={<TeacherAIChatbotPage />} />
             <Route path="/ptm-history/:ptmId?" element={<PTMHistoryPage />} />
             <Route path="/approval" element={<TeacherApprovalPage />} />
-            <Route path="/report" element={<ReportPage />} />
+            <Route path="/report" element={<TeacherReportPage />} />
             <Route path="/settings" element={<TeacherSettingsPage />} />
             <Route path="/performance-report" element={<PerformanceReportPage />} />
             <Route path="/attendance" element={<TeacherAttendancePage />} />

@@ -12,7 +12,7 @@ const TermsPage = () => {
                         <img src="/logo.png" alt="Swotify" className="w-10 h-10 object-contain" />
                         <h1 className="text-xl font-black text-slate-800 tracking-tighter">Swotify</h1>
                     </Link>
-                    <Link to="/login" className="text-sm font-bold text-blue-600 hover:text-blue-700">
+                    <Link to="/login" className="text-sm font-bold text-[#ea580c] hover:text-[#c2410c]">
                         ← Back to Login
                     </Link>
                 </div>

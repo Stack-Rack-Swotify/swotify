@@ -82,7 +82,7 @@ const ClassPage = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 via-purple-500 to-orange-400 flex items-center justify-center shadow-md">
+          <div className="w-12 h-12 rounded-xl bg-[#ea580c] flex items-center justify-center shadow-md">
             <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
             </svg>
@@ -97,7 +97,7 @@ const ClassPage = () => {
           <select
             value={selectedYear}
             onChange={(e) => setSelectedYear(e.target.value)}
-            className="px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
           >
             {allAvailableYears.map(year => (
               <option key={year} value={year}>
@@ -109,7 +109,7 @@ const ClassPage = () => {
           {selectedYear === currentAcademicYear && (
             <button
               onClick={() => setShowAttendance(!showAttendance)}
-              className="px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg transition-colors flex items-center gap-2"
+              className="px-6 py-3 bg-[#ea580c] hover:bg-[#c2410c] text-white font-semibold rounded-lg transition-colors flex items-center gap-2"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
@@ -140,7 +140,7 @@ const ClassPage = () => {
                 <select
                   value={selectedClassId}
                   onChange={(e) => setSelectedClassId(e.target.value)}
-                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
                 >
                   {currentSource.map(classItem => (
                     <option key={classItem.id} value={classItem.id}>
@@ -154,8 +154,8 @@ const ClassPage = () => {
 
           {/* Class Header Card */}
           <div className={`rounded-xl p-6 text-white ${selectedYear === currentAcademicYear
-              ? 'bg-gradient-to-r from-blue-500 via-purple-500 to-orange-400'
-              : 'bg-gradient-to-r from-slate-600 to-slate-500'
+            ? 'bg-gradient-to-r from-[#ea580c] via-[#f97316] to-[#fb923c]'
+            : 'bg-gradient-to-r from-slate-600 to-slate-500'
             }`}>
             <div className="flex items-center justify-between">
               <div>
@@ -241,7 +241,7 @@ const ClassPage = () => {
                   type="date"
                   value={attendanceDate}
                   onChange={(e) => setAttendanceDate(e.target.value)}
-                  className="px-4 py-3 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="px-4 py-3 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
                 />
               </div>
 
@@ -261,8 +261,8 @@ const ClassPage = () => {
                             key={status}
                             onClick={() => handleAttendanceChange(student.id, status)}
                             className={`px-3 py-1.5 text-xs font-medium rounded-lg capitalize transition-colors ${attendance[student.id] === status
-                                ? status === 'present' ? 'bg-green-500 text-white' : status === 'absent' ? 'bg-red-500 text-white' : 'bg-orange-500 text-white'
-                                : 'bg-slate-200 text-slate-600 hover:bg-slate-300'
+                              ? status === 'present' ? 'bg-green-500 text-white' : status === 'absent' ? 'bg-red-500 text-white' : 'bg-orange-500 text-white'
+                              : 'bg-slate-200 text-slate-600 hover:bg-slate-300'
                               }`}
                           >
                             {status}
@@ -279,7 +279,7 @@ const ClassPage = () => {
                 <button onClick={() => setShowAttendance(false)} className="flex-1 px-6 py-3 bg-slate-100 text-slate-700 font-medium rounded-lg hover:bg-slate-200 transition-colors">
                   Cancel
                 </button>
-                <button onClick={saveAttendance} className="flex-1 px-6 py-3 bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600 transition-colors">
+                <button onClick={saveAttendance} className="flex-1 px-6 py-3 bg-[#ea580c] text-white font-medium rounded-lg hover:bg-[#c2410c] transition-colors">
                   Save Attendance
                 </button>
               </div>
@@ -325,8 +325,8 @@ const ClassPage = () => {
                       <div
                         key={student.id}
                         className={`flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-all ${selectedStudent?.id === student.id
-                            ? 'bg-blue-50 border border-blue-200'
-                            : 'hover:bg-slate-50 border border-transparent'
+                          ? 'bg-blue-50 border border-blue-200'
+                          : 'hover:bg-slate-50 border border-transparent'
                           }`}
                         onClick={() => setSelectedStudent(student)}
                       >
@@ -335,8 +335,8 @@ const ClassPage = () => {
                           <p className="text-sm font-medium text-slate-800 truncate">{student.name}</p>
                           {student.status && (
                             <span className={`inline-block mt-0.5 px-2 py-0.5 text-[10px] rounded font-medium ${student.status === 'Passed Out'
-                                ? 'bg-red-100 text-red-600'
-                                : 'bg-green-100 text-green-600'
+                              ? 'bg-red-100 text-red-600'
+                              : 'bg-green-100 text-green-600'
                               }`}>
                               {student.status}
                             </span>
@@ -365,8 +365,8 @@ const ClassPage = () => {
                           </span>
                           {selectedStudent.status && (
                             <span className={`px-3 py-1 rounded-lg text-sm font-medium ${selectedStudent.status === 'Passed Out'
-                                ? 'bg-red-100 text-red-600'
-                                : 'bg-green-100 text-green-600'
+                              ? 'bg-red-100 text-red-600'
+                              : 'bg-green-100 text-green-600'
                               }`}>
                               {selectedStudent.status}
                             </span>

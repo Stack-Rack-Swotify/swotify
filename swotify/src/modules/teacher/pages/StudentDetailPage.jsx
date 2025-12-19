@@ -80,8 +80,8 @@ const StudentDetailPage = () => {
             {/* Profile Photo */}
             <div className="flex-shrink-0 flex flex-col items-center lg:items-start">
               <div className="relative mb-6">
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-full blur-2xl opacity-30"></div>
-                <div className="relative w-48 h-48 rounded-full bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 p-2 shadow-2xl">
+                <div className="absolute inset-0 bg-[#ea580c] rounded-full blur-2xl opacity-30"></div>
+                <div className="relative w-48 h-48 rounded-full bg-[#ea580c] p-2 shadow-2xl">
                   <img
                     src={student.photo}
                     alt={student.name}
@@ -107,7 +107,7 @@ const StudentDetailPage = () => {
               <p className="text-slate-600 mb-8 font-medium">Student ID: {student.id}</p>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl border-2 border-blue-200 hover:shadow-lg transition-all hover:-translate-y-1">
+                <div className="bg-gradient-to-br from-orange-50 to-blue-100 p-6 rounded-xl border-2 border-blue-200 hover:shadow-lg transition-all hover:-translate-y-1">
                   <div className="flex items-center gap-2 mb-3">
                     <div className="w-10 h-10 bg-blue-200 rounded-lg flex items-center justify-center shadow-sm">
                       <svg className="w-5 h-5 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
@@ -169,9 +169,9 @@ const StudentDetailPage = () => {
                 Contact Information
               </h3>
               <div className="space-y-4">
-                <div className="flex items-start gap-4 p-5 bg-gradient-to-br from-slate-50 to-blue-50/30 rounded-xl border-2 border-slate-200">
-                  <div className="w-13 h-13 bg-blue-100 rounded-xl flex items-center justify-center flex-shrink-0 shadow-md">
-                    <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                <div className="flex items-start gap-4 p-5 bg-gradient-to-br from-slate-50 to-orange-50/30 rounded-xl border-2 border-slate-200">
+                  <div className="w-13 h-13 bg-orange-100 rounded-xl flex items-center justify-center flex-shrink-0 shadow-md">
+                    <svg className="w-6 h-6 text-[#ea580c]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
                   </div>
@@ -255,11 +255,10 @@ const StudentDetailPage = () => {
                     {student.exams.map((exam, index) => {
                       const percentage = Math.round((exam.score / exam.maxScore) * 100);
                       return (
-                        <tr 
-                          key={exam.id} 
-                          className={`border-b border-slate-100 last:border-b-0 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50/30 transition-all duration-200 ${
-                            index % 2 === 0 ? 'bg-white' : 'bg-slate-50/50'
-                          }`}
+                        <tr
+                          key={exam.id}
+                          className={`border-b border-slate-100 last:border-b-0 hover:bg-gradient-to-r hover:from-orange-50 hover:to-purple-50/30 transition-all duration-200 ${index % 2 === 0 ? 'bg-white' : 'bg-slate-50/50'
+                            }`}
                         >
                           <td className="py-4 px-5 whitespace-nowrap">
                             <span className="text-sm font-semibold text-slate-900">{exam.subject}</span>
@@ -273,22 +272,20 @@ const StudentDetailPage = () => {
                           <td className="py-4 px-5 whitespace-nowrap">
                             <div className="flex items-center gap-3">
                               <div className="flex-1 bg-slate-200 rounded-full h-3 max-w-[120px] shadow-inner">
-                                <div 
-                                  className={`h-3 rounded-full shadow-sm ${
-                                    percentage >= 90 ? 'bg-gradient-to-r from-emerald-600 to-emerald-500' :
+                                <div
+                                  className={`h-3 rounded-full shadow-sm ${percentage >= 90 ? 'bg-gradient-to-r from-emerald-600 to-emerald-500' :
                                     percentage >= 75 ? 'bg-gradient-to-r from-blue-600 to-blue-500' :
-                                    percentage >= 60 ? 'bg-gradient-to-r from-amber-600 to-amber-500' :
-                                    'bg-gradient-to-r from-rose-600 to-rose-500'
-                                  }`}
+                                      percentage >= 60 ? 'bg-gradient-to-r from-amber-600 to-amber-500' :
+                                        'bg-gradient-to-r from-rose-600 to-rose-500'
+                                    }`}
                                   style={{ width: `${percentage}%` }}
                                 ></div>
                               </div>
-                              <span className={`text-xs font-semibold px-3 py-1.5 rounded-lg shadow-sm ${
-                                percentage >= 90 ? 'bg-emerald-100 text-emerald-700 border-2 border-emerald-300' :
+                              <span className={`text-xs font-semibold px-3 py-1.5 rounded-lg shadow-sm ${percentage >= 90 ? 'bg-emerald-100 text-emerald-700 border-2 border-emerald-300' :
                                 percentage >= 75 ? 'bg-blue-100 text-blue-700 border-2 border-blue-300' :
-                                percentage >= 60 ? 'bg-amber-100 text-amber-700 border-2 border-amber-300' :
-                                'bg-rose-100 text-rose-700 border-2 border-rose-300'
-                              }`}>
+                                  percentage >= 60 ? 'bg-amber-100 text-amber-700 border-2 border-amber-300' :
+                                    'bg-rose-100 text-rose-700 border-2 border-rose-300'
+                                }`}>
                                 {percentage}%
                               </span>
                             </div>
@@ -309,8 +306,8 @@ const StudentDetailPage = () => {
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {student.achievements.map((achievement, index) => (
-                  <div 
-                    key={index} 
+                  <div
+                    key={index}
                     className="flex items-start gap-3 p-5 bg-gradient-to-br from-emerald-50 to-blue-50 rounded-xl border-2 border-emerald-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
                   >
                     <div className="relative flex-shrink-0 mt-0.5">
@@ -333,7 +330,7 @@ const StudentDetailPage = () => {
                 <span className="w-1.5 h-7 bg-gradient-to-b from-amber-600 to-purple-600 rounded-full mr-3"></span>
                 Future Summary
               </h3>
-              <div className="bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 p-6 rounded-xl border-2 border-purple-200">
+              <div className="bg-gradient-to-br from-orange-50 via-orange-50 to-pink-50 p-6 rounded-xl border-2 border-orange-200">
                 <div className="flex gap-4">
                   <div className="relative flex-shrink-0 mt-1">
                     <div className="absolute inset-0 bg-purple-500 rounded-xl blur-md opacity-30"></div>

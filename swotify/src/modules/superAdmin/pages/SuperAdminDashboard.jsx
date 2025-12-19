@@ -183,7 +183,7 @@ const SuperAdminDashboard = () => {
                     to={item.to}
                     end={item.to === ''}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className={({ isActive }) => `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium ${isActive ? 'bg-blue-500 text-white' : 'text-slate-600 hover:bg-slate-100'}`}
+                    className={({ isActive }) => `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium ${isActive ? 'bg-[#ea580c] text-white' : 'text-slate-600 hover:bg-slate-100'}`}
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                       <path strokeLinecap="round" strokeLinejoin="round" d={item.icon} />
@@ -205,10 +205,10 @@ const SuperAdminDashboard = () => {
             </button>
           </div>
         </div>
-      </aside>
+      </aside >
 
       {/* Main Content */}
-      <main className="pt-16 lg:pl-64">
+      < main className="pt-16 lg:pl-64" >
         <div className="p-4 sm:p-6">
           <Routes>
             <Route path="/" element={<SuperAdminMainPage />} />
@@ -220,8 +220,8 @@ const SuperAdminDashboard = () => {
             <Route path="settings" element={<SuperAdminSettingsPage />} />
           </Routes>
         </div>
-      </main>
-    </div>
+      </main >
+    </div >
   );
 };
 

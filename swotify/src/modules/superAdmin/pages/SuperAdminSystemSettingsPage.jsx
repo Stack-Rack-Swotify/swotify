@@ -60,7 +60,7 @@ const SuperAdminSystemSettingsPage = () => {
                   name="schoolName"
                   value={settings.schoolName}
                   onChange={handleSettingChange}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-blue-500 transition-all"
                 />
               </div>
               <div>
@@ -70,7 +70,7 @@ const SuperAdminSystemSettingsPage = () => {
                   name="adminEmail"
                   value={settings.adminEmail}
                   onChange={handleSettingChange}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-blue-500 transition-all"
                 />
               </div>
               <div>
@@ -80,7 +80,7 @@ const SuperAdminSystemSettingsPage = () => {
                   name="contactPhone"
                   value={settings.contactPhone}
                   onChange={handleSettingChange}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-blue-500 transition-all"
                 />
               </div>
               <div>
@@ -90,7 +90,7 @@ const SuperAdminSystemSettingsPage = () => {
                   name="academicYear"
                   value={settings.academicYear}
                   onChange={handleSettingChange}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-blue-500 transition-all"
                 />
               </div>
               <div className="md:col-span-2">
@@ -99,7 +99,7 @@ const SuperAdminSystemSettingsPage = () => {
                   name="address"
                   value={settings.address}
                   onChange={handleSettingChange}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-blue-500 transition-all"
                   rows="3"
                 />
               </div>
@@ -116,7 +116,7 @@ const SuperAdminSystemSettingsPage = () => {
                   name="timezone"
                   value={settings.timezone}
                   onChange={handleSettingChange}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-blue-500 transition-all"
                 >
                   <option value="Asia/Kolkata">Asia/Kolkata (IST)</option>
                   <option value="America/New_York">America/New_York (EST)</option>
@@ -131,7 +131,7 @@ const SuperAdminSystemSettingsPage = () => {
                   name="language"
                   value={settings.language}
                   onChange={handleSettingChange}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-blue-500 transition-all"
                 >
                   <option value="English">English</option>
                   <option value="Hindi">Hindi</option>
@@ -166,7 +166,7 @@ const SuperAdminSystemSettingsPage = () => {
                   className="w-5 h-5 rounded border-gray-300 cursor-pointer accent-blue-600"
                 />
               </label>
-              
+
               <label className="flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-200 cursor-pointer hover:border-green-300 transition-colors">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-lg bg-green-50 flex items-center justify-center">
@@ -187,7 +187,7 @@ const SuperAdminSystemSettingsPage = () => {
                   className="w-5 h-5 rounded border-gray-300 cursor-pointer accent-green-600"
                 />
               </label>
-              
+
               <label className="flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-200 cursor-pointer hover:border-orange-300 transition-colors">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-lg bg-orange-50 flex items-center justify-center">

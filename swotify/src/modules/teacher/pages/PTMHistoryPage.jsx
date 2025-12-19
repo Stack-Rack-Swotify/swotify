@@ -172,7 +172,7 @@ const PTMHistoryPage = () => {
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center gap-4">
-        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 via-purple-500 to-orange-400 flex items-center justify-center shadow-md">
+        <div className="w-12 h-12 rounded-xl bg-[#ea580c] flex items-center justify-center shadow-md">
           <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
             <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
           </svg>
@@ -194,8 +194,8 @@ const PTMHistoryPage = () => {
                   key={student.id}
                   onClick={() => setSelectedStudent(student)}
                   className={`w-full flex items-center gap-3 p-3 rounded-lg transition-all text-left ${selectedStudent?.id === student.id
-                      ? 'bg-blue-50 border border-blue-200'
-                      : 'hover:bg-slate-50 border border-transparent'
+                    ? 'bg-orange-50 border border-orange-200'
+                    : 'hover:bg-slate-50 border border-transparent'
                     }`}
                 >
                   <img
@@ -204,7 +204,7 @@ const PTMHistoryPage = () => {
                     className="w-10 h-10 rounded-full object-cover"
                   />
                   <div className="min-w-0">
-                    <p className={`text-sm font-medium truncate ${selectedStudent?.id === student.id ? 'text-blue-700' : 'text-slate-800'}`}>
+                    <p className={`text-sm font-medium truncate ${selectedStudent?.id === student.id ? 'text-[#ea580c]' : 'text-slate-800'}`}>
                       {student.name}
                     </p>
                     <p className="text-xs text-slate-500 truncate">{student.className}</p>
@@ -238,8 +238,8 @@ const PTMHistoryPage = () => {
                 <button
                   onClick={handleRecordToggle}
                   className={`flex items-center gap-2 px-5 py-2.5 rounded-lg font-medium text-white transition-colors ${isRecording
-                      ? 'bg-red-500 hover:bg-red-600'
-                      : 'bg-green-500 hover:bg-green-600'
+                    ? 'bg-red-500 hover:bg-red-600'
+                    : 'bg-green-500 hover:bg-green-600'
                     }`}
                 >
                   {isRecording ? (
@@ -265,8 +265,8 @@ const PTMHistoryPage = () => {
                     key={tab}
                     onClick={() => setActiveTab(tab)}
                     className={`px-4 py-2 text-sm font-medium capitalize rounded-md transition-colors flex items-center gap-2 ${activeTab === tab
-                        ? 'bg-white text-slate-800 shadow-sm'
-                        : 'text-slate-500 hover:text-slate-700'
+                      ? 'bg-white text-slate-800 shadow-sm'
+                      : 'text-slate-500 hover:text-slate-700'
                       }`}
                   >
                     {tab === 'ai-approval' ? (
@@ -391,12 +391,12 @@ const PTMHistoryPage = () => {
                         <div className="flex items-start justify-between gap-4 mb-4">
                           <div className="flex items-start gap-3">
                             <div className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${item.type === 'performance' ? 'bg-blue-100' :
-                                item.type === 'attendance' ? 'bg-orange-100' :
-                                  item.type === 'behavior' ? 'bg-green-100' : 'bg-purple-100'
+                              item.type === 'attendance' ? 'bg-orange-100' :
+                                item.type === 'behavior' ? 'bg-green-100' : 'bg-purple-100'
                               }`}>
                               <svg className={`w-5 h-5 ${item.type === 'performance' ? 'text-blue-600' :
-                                  item.type === 'attendance' ? 'text-orange-600' :
-                                    item.type === 'behavior' ? 'text-green-600' : 'text-purple-600'
+                                item.type === 'attendance' ? 'text-orange-600' :
+                                  item.type === 'behavior' ? 'text-green-600' : 'text-purple-600'
                                 }`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 {getTypeIcon(item.type)}
                               </svg>
@@ -414,13 +414,13 @@ const PTMHistoryPage = () => {
                             <textarea
                               value={editText}
                               onChange={(e) => setEditText(e.target.value)}
-                              className="w-full p-3 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm"
+                              className="w-full p-3 border border-slate-200 rounded-lg focus:ring-2 focus:ring-orange-500 focus:outline-none text-sm"
                               rows="4"
                             />
                             <div className="flex gap-2">
                               <button
                                 onClick={() => handleSaveEdit(item.id)}
-                                className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium rounded-lg transition-colors"
+                                className="px-4 py-2 bg-[#ea580c] hover:bg-[#c2410c] text-white text-sm font-medium rounded-lg transition-colors"
                               >
                                 Save Changes
                               </button>
@@ -460,7 +460,7 @@ const PTMHistoryPage = () => {
                                 </button>
                                 <button
                                   onClick={() => handleEdit(item.id, item.suggestion)}
-                                  className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium rounded-lg transition-colors flex items-center gap-2"
+                                  className="px-4 py-2 bg-[#334155] hover:bg-[#1e293b] text-white text-sm font-medium rounded-lg transition-colors flex items-center gap-2"
                                 >
                                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -519,11 +519,11 @@ const PTMHistoryPage = () => {
                       <div className="mt-6 pt-6 border-t border-slate-100">
                         <label className="block text-sm font-medium text-slate-700 mb-2">Add New Note</label>
                         <textarea
-                          className="w-full p-3 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm"
+                          className="w-full p-3 border border-slate-200 rounded-lg focus:ring-2 focus:ring-orange-500 focus:outline-none text-sm"
                           rows="3"
                           placeholder="Type a new suggestion for the next meeting..."
                         ></textarea>
-                        <button className="mt-3 px-5 py-2 bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium rounded-lg transition-colors">
+                        <button className="mt-3 px-5 py-2 bg-[#ea580c] hover:bg-[#c2410c] text-white text-sm font-medium rounded-lg transition-colors">
                           Add Note
                         </button>
                       </div>

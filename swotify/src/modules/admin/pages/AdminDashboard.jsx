@@ -57,7 +57,7 @@ const AdminDashboard = () => {
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center gap-4">
-        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 via-purple-500 to-orange-400 flex items-center justify-center shadow-md">
+        <div className="w-12 h-12 rounded-xl bg-[#ea580c] flex items-center justify-center shadow-md">
           <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
             <path strokeLinecap="round" strokeLinejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
           </svg>
@@ -72,8 +72,8 @@ const AdminDashboard = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="bg-white rounded-xl border border-slate-200 p-5">
           <div className="flex items-center justify-between mb-3">
-            <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center">
-              <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+            <div className="w-10 h-10 rounded-lg bg-orange-50 flex items-center justify-center">
+              <svg className="w-5 h-5 text-[#ea580c]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
               </svg>
             </div>
@@ -85,12 +85,12 @@ const AdminDashboard = () => {
 
         <div className="bg-white rounded-xl border border-slate-200 p-5">
           <div className="flex items-center justify-between mb-3">
-            <div className="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center">
-              <svg className="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+            <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center">
+              <svg className="w-5 h-5 text-[#334155]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
               </svg>
             </div>
-            <span className="text-xs font-medium text-blue-600 bg-blue-50 px-2 py-1 rounded-full">+5%</span>
+            <span className="text-xs font-medium text-[#ea580c] bg-orange-50 px-2 py-1 rounded-full">+5%</span>
           </div>
           <p className="text-2xl font-bold text-slate-800">89</p>
           <p className="text-sm text-slate-500">Staff Members</p>
@@ -103,7 +103,7 @@ const AdminDashboard = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
               </svg>
             </div>
-            <span className="text-xs font-medium text-purple-600 bg-purple-50 px-2 py-1 rounded-full">32</span>
+            <span className="text-xs font-medium text-[#334155] bg-slate-100 px-2 py-1 rounded-full">32</span>
           </div>
           <p className="text-2xl font-bold text-slate-800">45</p>
           <p className="text-sm text-slate-500">Active Classes</p>
@@ -116,7 +116,7 @@ const AdminDashboard = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
             </div>
-            <span className="text-xs font-medium text-blue-600 bg-blue-50 px-2 py-1 rounded-full">This Week</span>
+            <span className="text-xs font-medium text-[#ea580c] bg-orange-50 px-2 py-1 rounded-full">This Week</span>
           </div>
           <p className="text-2xl font-bold text-slate-800">8</p>
           <p className="text-sm text-slate-500">Upcoming Events</p>
@@ -135,7 +135,7 @@ const AdminDashboard = () => {
             </div>
             <p className="text-sm font-semibold text-blue-700">Staff</p>
           </NavLink>
-          <NavLink to="students" className="p-4 bg-purple-50 border border-purple-200 rounded-xl text-center hover:shadow-md transition-all hover:scale-105">
+          <NavLink to="students" className="p-4 bg-purple-50 border border-orange-200 rounded-xl text-center hover:shadow-md transition-all hover:scale-105">
             <div className="w-10 h-10 mx-auto mb-2 bg-purple-500 rounded-lg flex items-center justify-center">
               <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197" />
@@ -184,7 +184,7 @@ const AdminDashboard = () => {
         <div className="bg-white rounded-xl border border-slate-200 p-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-bold text-slate-800">Attendance Overview</h2>
-            <NavLink to="performance-report" className="text-sm text-blue-600 hover:text-blue-700 font-medium">View All →</NavLink>
+            <NavLink to="performance-report" className="text-sm text-[#ea580c] hover:text-[#c2410c] font-medium">View All →</NavLink>
           </div>
           <div className="space-y-4">
             <div className="flex items-center justify-between p-4 bg-green-50 rounded-lg">
@@ -236,7 +236,7 @@ const AdminDashboard = () => {
         <div className="bg-white rounded-xl border border-slate-200 p-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-bold text-slate-800">Upcoming Events</h2>
-            <NavLink to="events" className="text-sm text-blue-600 hover:text-blue-700 font-medium">View All →</NavLink>
+            <NavLink to="events" className="text-sm text-[#ea580c] hover:text-[#c2410c] font-medium">View All →</NavLink>
           </div>
           <div className="space-y-3">
             {[
@@ -269,7 +269,7 @@ const AdminDashboard = () => {
         <div className="lg:col-span-2 bg-white rounded-xl border border-slate-200 p-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-bold text-slate-800">Top Performing Students</h2>
-            <NavLink to="students" className="text-sm text-blue-600 hover:text-blue-700 font-medium">View All →</NavLink>
+            <NavLink to="students" className="text-sm text-[#ea580c] hover:text-[#c2410c] font-medium">View All →</NavLink>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
             {[
@@ -297,7 +297,7 @@ const AdminDashboard = () => {
         </div>
 
         {/* AI Assistant Quick Access */}
-        <div className="bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-xl p-6 text-white">
+        <div className="bg-[#ea580c] rounded-xl p-6 text-white">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">

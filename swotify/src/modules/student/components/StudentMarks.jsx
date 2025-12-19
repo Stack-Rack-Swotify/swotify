@@ -12,34 +12,34 @@ const StudentMarks = ({ studentId = 's1' }) => {
     }
 
     if (foundStudent && foundStudent.assignments) {
-        // Transform assignments to match the table structure
-        // Assuming assignments have 'grade' which is a score.
-        // We'll calculate a letter grade based on the score.
-        const marks = foundStudent.assignments.map((assignment, index) => {
-            const score = assignment.grade || 0;
-            let grade = 'N/A';
-            if (assignment.grade !== null) {
-                if (score >= 90) grade = 'A';
-                else if (score >= 85) grade = 'A-';
-                else if (score >= 80) grade = 'B+';
-                else if (score >= 75) grade = 'B';
-                else if (score >= 70) grade = 'B-';
-                else if (score >= 65) grade = 'C+';
-                else if (score >= 60) grade = 'C';
-                else grade = 'F';
-            }
+      // Transform assignments to match the table structure
+      // Assuming assignments have 'grade' which is a score.
+      // We'll calculate a letter grade based on the score.
+      const marks = foundStudent.assignments.map((assignment, index) => {
+        const score = assignment.grade || 0;
+        let grade = 'N/A';
+        if (assignment.grade !== null) {
+          if (score >= 90) grade = 'A';
+          else if (score >= 85) grade = 'A-';
+          else if (score >= 80) grade = 'B+';
+          else if (score >= 75) grade = 'B';
+          else if (score >= 70) grade = 'B-';
+          else if (score >= 65) grade = 'C+';
+          else if (score >= 60) grade = 'C';
+          else grade = 'F';
+        }
 
-            return {
-                id: assignment.id || index,
-                subject: assignment.name, // Using assignment name as subject for now, or could act as subject
-                score: score,
-                grade: grade,
-                semester: 'Fall 2025' // Mock semester
-            };
-        });
-        setStudentMarks(marks);
+        return {
+          id: assignment.id || index,
+          subject: assignment.name, // Using assignment name as subject for now, or could act as subject
+          score: score,
+          grade: grade,
+          semester: 'Fall 2025' // Mock semester
+        };
+      });
+      setStudentMarks(marks);
     } else {
-        setStudentMarks([]);
+      setStudentMarks([]);
     }
   }, [studentId]);
 
@@ -70,8 +70,8 @@ const StudentMarks = ({ studentId = 's1' }) => {
       <div className="relative mb-6">
         <div className="flex items-center gap-4 mb-3">
           <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-xl blur opacity-50 animate-pulse"></div>
-            <div className="relative w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 flex items-center justify-center shadow-lg">
+            <div className="absolute inset-0 bg-[#ea580c] rounded-xl blur opacity-50 animate-pulse"></div>
+            <div className="relative w-12 h-12 rounded-xl bg-[#ea580c] flex items-center justify-center shadow-lg">
               <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
@@ -88,7 +88,7 @@ const StudentMarks = ({ studentId = 's1' }) => {
           </div>
         </div>
       </div>
-      
+
       {studentMarks.length > 0 ? (
         <>
           {/* Premium Table */}
@@ -140,11 +140,10 @@ const StudentMarks = ({ studentId = 's1' }) => {
               </thead>
               <tbody>
                 {studentMarks.map((mark, index) => (
-                  <tr 
-                    key={mark.id} 
-                    className={`group/row border-b border-slate-200 last:border-b-0 hover:bg-gradient-to-r hover:from-cyan-50/50 hover:via-blue-50/50 hover:to-purple-50/50 transition-all duration-300 ${
-                      index % 2 === 0 ? 'bg-white/50' : 'bg-slate-50/50'
-                    }`}
+                  <tr
+                    key={mark.id}
+                    className={`group/row border-b border-slate-200 last:border-b-0 hover:bg-gradient-to-r hover:from-cyan-50/50 hover:via-blue-50/50 hover:to-purple-50/50 transition-all duration-300 ${index % 2 === 0 ? 'bg-white/50' : 'bg-slate-50/50'
+                      }`}
                   >
                     <td className="py-4 px-6 whitespace-nowrap">
                       <span className="text-sm font-semibold text-slate-900 group-hover/row:text-cyan-600 transition-colors">
@@ -212,7 +211,7 @@ const StudentMarks = ({ studentId = 's1' }) => {
             </div>
 
             {/* Total Assignments */}
-            <div className="group/stat relative bg-gradient-to-br from-purple-50 to-pink-50 p-5 rounded-xl border-2 border-purple-200 hover:shadow-xl transition-all duration-300 hover:scale-105 overflow-hidden">
+            <div className="group/stat relative bg-gradient-to-br from-purple-50 to-pink-50 p-5 rounded-xl border-2 border-orange-200 hover:shadow-xl transition-all duration-300 hover:scale-105 overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-pink-500/10 opacity-0 group-hover/stat:opacity-100 transition-opacity"></div>
               <div className="relative flex items-center gap-4">
                 <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center shadow-lg group-hover/stat:rotate-12 transition-transform">

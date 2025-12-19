@@ -62,7 +62,7 @@ const SuperAdminReportPage = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 via-purple-500 to-orange-400 flex items-center justify-center shadow-md">
+          <div className="w-12 h-12 rounded-xl bg-[#ea580c] flex items-center justify-center shadow-md">
             <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
@@ -95,8 +95,8 @@ const SuperAdminReportPage = () => {
             key={tab}
             onClick={() => setActiveTab(tab)}
             className={`px-5 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === tab
-                ? 'bg-blue-500 text-white'
-                : 'text-slate-600 hover:bg-slate-100'
+              ? 'bg-blue-500 text-white'
+              : 'text-slate-600 hover:bg-slate-100'
               }`}
           >
             {tab === 'complaints' ? 'Complaints' : tab === 'feedback' ? 'Feedback' : 'School Reports'}
@@ -113,7 +113,7 @@ const SuperAdminReportPage = () => {
               <p className="text-sm text-slate-500">{complaints.length} total complaints</p>
             </div>
             <select
-              className="px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value)}
             >

@@ -150,14 +150,14 @@ const HelpCenterPage = () => {
                         <img src="/logo.png" alt="Swotify" className="w-10 h-10 object-contain" />
                         <h1 className="text-xl font-black text-slate-800 tracking-tighter">Swotify</h1>
                     </Link>
-                    <Link to="/login" className="text-sm font-bold text-blue-600 hover:text-blue-700">
+                    <Link to="/login" className="text-sm font-bold text-[#ea580c] hover:text-[#c2410c]">
                         ← Back to Login
                     </Link>
                 </div>
             </nav>
 
             {/* Hero Section */}
-            <div className="bg-gradient-to-br from-blue-500 via-purple-500 to-orange-400 py-16 px-6">
+            <div className="bg-[#ea580c] py-16 px-6">
                 <div className="max-w-4xl mx-auto text-center">
                     <h1 className="text-4xl md:text-5xl font-black text-white mb-4">How can we help you?</h1>
                     <p className="text-white/80 text-lg mb-8">Search our knowledge base or browse categories below</p>
@@ -189,8 +189,8 @@ const HelpCenterPage = () => {
                                 key={cat.id}
                                 onClick={() => setActiveCategory(cat.id)}
                                 className={`px-5 py-3 rounded-xl font-semibold text-sm transition-all flex items-center gap-2 ${activeCategory === cat.id
-                                        ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/30'
-                                        : 'bg-white text-slate-700 border border-slate-200 hover:border-blue-300 hover:bg-blue-50'
+                                    ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/30'
+                                    : 'bg-white text-slate-700 border border-slate-200 hover:border-blue-300 hover:bg-blue-50'
                                     }`}
                             >
                                 <span>{cat.icon}</span>

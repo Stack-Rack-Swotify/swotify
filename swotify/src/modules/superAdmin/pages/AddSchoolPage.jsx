@@ -73,7 +73,7 @@ const AddSchoolPage = () => {
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
           </svg>
         </button>
-        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 via-purple-500 to-orange-400 flex items-center justify-center shadow-md">
+        <div className="w-12 h-12 rounded-xl bg-[#ea580c] flex items-center justify-center shadow-md">
           <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
           </svg>
@@ -126,7 +126,7 @@ const AddSchoolPage = () => {
                   value={formData.schoolName}
                   onChange={handleChange}
                   placeholder="e.g. Greenwood High School"
-                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
                 />
               </div>
 
@@ -160,7 +160,7 @@ const AddSchoolPage = () => {
                   onChange={handleChange}
                   rows="2"
                   placeholder="Complete school address with city, state, and postal code"
-                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 resize-none"
                 />
               </div>
             </div>
@@ -187,7 +187,7 @@ const AddSchoolPage = () => {
                   value={formData.principalName}
                   onChange={handleChange}
                   placeholder="e.g. Dr. John Doe"
-                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
                 />
               </div>
 
@@ -200,7 +200,7 @@ const AddSchoolPage = () => {
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="principal@school.edu"
-                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
                 />
               </div>
 
@@ -213,7 +213,7 @@ const AddSchoolPage = () => {
                   value={formData.phone}
                   onChange={handleChange}
                   placeholder="+91-1234567890"
-                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
                 />
               </div>
             </div>
@@ -240,19 +240,19 @@ const AddSchoolPage = () => {
                   value={formData.password}
                   onChange={handleChange}
                   placeholder="Min. 6 characters"
-                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
                 />
                 {passwordStrength && formData.password && (
                   <div className="flex items-center gap-2 mt-2">
                     <div className="flex-1 h-1.5 bg-slate-200 rounded-full overflow-hidden">
                       <div className={`h-full transition-all ${passwordStrength === 'weak' ? 'w-1/3 bg-red-500' :
-                          passwordStrength === 'medium' ? 'w-2/3 bg-orange-500' :
-                            'w-full bg-green-500'
+                        passwordStrength === 'medium' ? 'w-2/3 bg-orange-500' :
+                          'w-full bg-green-500'
                         }`} />
                     </div>
                     <span className={`text-xs font-medium ${passwordStrength === 'weak' ? 'text-red-600' :
-                        passwordStrength === 'medium' ? 'text-orange-600' :
-                          'text-green-600'
+                      passwordStrength === 'medium' ? 'text-orange-600' :
+                        'text-green-600'
                       }`}>{passwordStrength}</span>
                   </div>
                 )}
@@ -268,8 +268,8 @@ const AddSchoolPage = () => {
                   onChange={handleChange}
                   placeholder="Re-enter password"
                   className={`w-full px-4 py-2.5 border rounded-lg text-sm focus:outline-none focus:ring-2 ${formData.confirmPassword && formData.password === formData.confirmPassword
-                      ? 'bg-green-50 border-green-300 focus:ring-green-500'
-                      : 'bg-slate-50 border-slate-200 focus:ring-blue-500'
+                    ? 'bg-green-50 border-green-300 focus:ring-green-500'
+                    : 'bg-slate-50 border-slate-200 focus:ring-orange-500'
                     }`}
                 />
                 {formData.confirmPassword && formData.password === formData.confirmPassword && (
@@ -295,7 +295,7 @@ const AddSchoolPage = () => {
             </button>
             <button
               type="submit"
-              className="px-6 py-2.5 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm font-medium transition-colors flex items-center gap-2"
+              className="px-6 py-2.5 bg-[#ea580c] hover:bg-[#c2410c] text-white rounded-lg text-sm font-medium transition-colors flex items-center gap-2"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />

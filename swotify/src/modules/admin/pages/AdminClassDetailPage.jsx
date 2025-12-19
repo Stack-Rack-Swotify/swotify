@@ -67,12 +67,12 @@ const AdminClassDetailPage = () => {
   const calculateClassStats = () => {
     const students = classData.students;
     const totalStudents = students.length;
-    
+
     let totalScore = 0;
     let totalMaxScore = 0;
     let totalAttendance = 0;
     let validAttendanceCount = 0;
-    
+
     students.forEach(student => {
       if (student.assignments) {
         student.assignments.forEach(assignment => {
@@ -82,7 +82,7 @@ const AdminClassDetailPage = () => {
           }
         });
       }
-      
+
       const attendance = student.details?.attendance;
       if (attendance && attendance !== 'N/A') {
         const attendanceValue = parseFloat(attendance.replace('%', ''));
@@ -92,7 +92,7 @@ const AdminClassDetailPage = () => {
         }
       }
     });
-    
+
     const avgScore = totalMaxScore > 0 ? (totalScore / totalMaxScore) * 100 : 0;
     const avgAttendance = validAttendanceCount > 0 ? totalAttendance / validAttendanceCount : 0;
     const passedStudents = students.filter(s => {
@@ -109,7 +109,7 @@ const AdminClassDetailPage = () => {
       const studentAvg = studentMaxScore > 0 ? (studentScore / studentMaxScore) * 100 : 0;
       return studentAvg >= 50;
     }).length;
-    
+
     return {
       avgScore,
       avgAttendance,
@@ -135,7 +135,7 @@ const AdminClassDetailPage = () => {
 
   const getScoreColor = (score) => {
     if (score >= 90) return 'text-emerald-600';
-    if (score >= 75) return 'text-blue-600';
+    if (score >= 75) return 'text-[#ea580c]';
     if (score >= 50) return 'text-amber-600';
     return 'text-rose-600';
   };
@@ -171,10 +171,10 @@ const AdminClassDetailPage = () => {
               </svg>
               Back to Reports
             </button>
-            
+
             <div className="flex items-center gap-4">
               <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-xl blur opacity-50 animate-pulse"></div>
+                <div className="absolute inset-0 bg-[#ea580c] rounded-xl blur opacity-50 animate-pulse"></div>
                 <div className="relative w-14 h-14 rounded-xl bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 flex items-center justify-center text-white text-xl font-extrabold shadow-2xl ring-4 ring-white/50">
                   {classData.grade.charAt(classData.grade.length - 1)}{classData.section}
                 </div>
@@ -184,7 +184,7 @@ const AdminClassDetailPage = () => {
                 <p className="text-sm text-slate-600 font-bold">{classData.grade} • Section {classData.section}</p>
               </div>
             </div>
-            
+
             <div className="w-32"></div>
           </div>
         </div>
@@ -226,7 +226,7 @@ const AdminClassDetailPage = () => {
                 {stats.avgScore.toFixed(1)}%
               </p>
               <div className="h-2 bg-slate-100 rounded-full overflow-hidden shadow-inner">
-                <div 
+                <div
                   className="h-full bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 rounded-full transition-all duration-1000 shadow-lg"
                   style={{ width: `${Math.min(stats.avgScore, 100)}%` }}
                 ></div>
@@ -277,31 +277,28 @@ const AdminClassDetailPage = () => {
           <div className="flex gap-2">
             <button
               onClick={() => setSelectedTab('overview')}
-              className={`group flex-1 px-6 py-4 rounded-xl font-extrabold transition-all duration-300 ${
-                selectedTab === 'overview'
-                  ? 'bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white shadow-2xl scale-105 border-2 border-white/20'
-                  : 'text-slate-600 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 hover:scale-105'
-              }`}
+              className={`group flex-1 px-6 py-4 rounded-xl font-extrabold transition-all duration-300 ${selectedTab === 'overview'
+                ? 'bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white shadow-2xl scale-105 border-2 border-white/20'
+                : 'text-slate-600 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 hover:scale-105'
+                }`}
             >
               <span className={selectedTab === 'overview' ? 'animate-pulse' : ''}>Overview</span>
             </button>
             <button
               onClick={() => setSelectedTab('students')}
-              className={`group flex-1 px-6 py-4 rounded-xl font-extrabold transition-all duration-300 ${
-                selectedTab === 'students'
-                  ? 'bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white shadow-2xl scale-105 border-2 border-white/20'
-                  : 'text-slate-600 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 hover:scale-105'
-              }`}
+              className={`group flex-1 px-6 py-4 rounded-xl font-extrabold transition-all duration-300 ${selectedTab === 'students'
+                ? 'bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white shadow-2xl scale-105 border-2 border-white/20'
+                : 'text-slate-600 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 hover:scale-105'
+                }`}
             >
               <span className={selectedTab === 'students' ? 'animate-pulse' : ''}>Students ({stats.totalStudents})</span>
             </button>
             <button
               onClick={() => setSelectedTab('performance')}
-              className={`group flex-1 px-6 py-4 rounded-xl font-extrabold transition-all duration-300 ${
-                selectedTab === 'performance'
-                  ? 'bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white shadow-2xl scale-105 border-2 border-white/20'
-                  : 'text-slate-600 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 hover:scale-105'
-              }`}
+              className={`group flex-1 px-6 py-4 rounded-xl font-extrabold transition-all duration-300 ${selectedTab === 'performance'
+                ? 'bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white shadow-2xl scale-105 border-2 border-white/20'
+                : 'text-slate-600 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 hover:scale-105'
+                }`}
             >
               <span className={selectedTab === 'performance' ? 'animate-pulse' : ''}>Performance History</span>
             </button>

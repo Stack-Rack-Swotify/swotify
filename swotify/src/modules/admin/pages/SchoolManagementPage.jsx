@@ -109,7 +109,7 @@ const SchoolManagementPage = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 via-purple-500 to-orange-400 flex items-center justify-center shadow-md">
+          <div className="w-12 h-12 rounded-xl bg-[#ea580c] flex items-center justify-center shadow-md">
             <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
             </svg>
@@ -147,8 +147,8 @@ const SchoolManagementPage = () => {
               key={cls.id}
               onClick={() => setSelectedClass(cls.id)}
               className={`px-4 py-2 rounded-lg border-2 transition-all text-sm font-medium ${selectedClass === cls.id
-                  ? 'bg-blue-500 border-blue-500 text-white'
-                  : 'bg-white border-slate-200 hover:border-blue-300 text-slate-700'
+                ? 'bg-blue-500 border-blue-500 text-white'
+                : 'bg-white border-slate-200 hover:border-blue-300 text-slate-700'
                 }`}
             >
               {cls.grade} - {cls.section}
@@ -180,8 +180,8 @@ const SchoolManagementPage = () => {
             <button
               onClick={() => setActiveTab('teachers')}
               className={`px-6 py-3 rounded-lg font-medium transition-all ${activeTab === 'teachers'
-                  ? 'bg-orange-500 text-white'
-                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                ? 'bg-orange-500 text-white'
+                : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                 }`}
             >
               👨‍🏫 Teachers
@@ -189,8 +189,8 @@ const SchoolManagementPage = () => {
             <button
               onClick={() => setActiveTab('students')}
               className={`px-6 py-3 rounded-lg font-medium transition-all ${activeTab === 'students'
-                  ? 'bg-green-500 text-white'
-                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                ? 'bg-green-500 text-white'
+                : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                 }`}
             >
               👨‍🎓 Students

@@ -21,7 +21,7 @@ const HomePage = ({ studentId = 's1' }) => {
       <div className="p-6 flex items-center justify-center">
         <div className="section-card px-8 py-6 rounded-xl">
           <div className="flex items-center gap-3">
-            <div className="w-5 h-5 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+            <div className="w-5 h-5 border-2 border-[#ea580c] border-t-transparent rounded-full animate-spin"></div>
             <span className="text-slate-600 font-medium">Loading student data...</span>
           </div>
         </div>
@@ -51,12 +51,12 @@ const HomePage = ({ studentId = 's1' }) => {
       {/* Header */}
       <div className="mb-2">
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-blue-500 via-purple-500 to-orange-400 flex items-center justify-center shadow-lg">
+          <div className="w-12 h-12 rounded-xl bg-[#ea580c] flex items-center justify-center shadow-lg">
             <span className="text-xl">👋</span>
           </div>
           <div>
             <h3 className="text-2xl font-bold text-slate-800">
-              Welcome back, <span className="text-gradient">{studentData.name.split(' ')[0]}!</span>
+              Welcome back, <span className="text-[#ea580c]">{studentData.name.split(' ')[0]}!</span>
             </h3>
             <p className="text-slate-500 text-sm font-medium">Overview of your academic performance</p>
           </div>
@@ -67,7 +67,7 @@ const HomePage = ({ studentId = 's1' }) => {
       <div className="section-card p-6 hover:shadow-lg transition-shadow duration-300">
         {/* Card Header */}
         <div className="flex items-center gap-3 mb-5 pb-4 border-b border-slate-100">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center shadow">
+          <div className="w-10 h-10 rounded-xl bg-[#334155] flex items-center justify-center shadow">
             <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
@@ -80,21 +80,21 @@ const HomePage = ({ studentId = 's1' }) => {
           {/* Total Classes */}
           <div className="stat-card hover-lift">
             <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Total Classes</p>
-            <p className="text-3xl font-bold text-blue-600">{dummyAttendance.totalClasses}</p>
+            <p className="text-3xl font-bold text-[#334155]">{dummyAttendance.totalClasses}</p>
           </div>
 
           {/* Attended */}
           <div className="stat-card hover-lift">
-            <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-green-400 to-emerald-500"></div>
+            <div className="absolute top-0 left-0 right-0 h-[3px] bg-[#334155]"></div>
             <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Attended</p>
-            <p className="text-3xl font-bold text-green-600">{dummyAttendance.attendedClasses}</p>
+            <p className="text-3xl font-bold text-[#1e293b]">{dummyAttendance.attendedClasses}</p>
           </div>
 
           {/* Percentage */}
           <div className="stat-card hover-lift">
-            <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-orange-400 to-amber-500"></div>
+            <div className="absolute top-0 left-0 right-0 h-[3px] bg-[#ea580c]"></div>
             <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Percentage</p>
-            <p className="text-3xl font-bold text-orange-600">{dummyAttendance.attendancePercentage}%</p>
+            <p className="text-3xl font-bold text-[#ea580c]">{dummyAttendance.attendancePercentage}%</p>
           </div>
         </div>
       </div>
@@ -103,7 +103,7 @@ const HomePage = ({ studentId = 's1' }) => {
       <div className="section-card p-6 hover:shadow-lg transition-shadow duration-300">
         {/* Card Header */}
         <div className="flex items-center gap-3 mb-5 pb-4 border-b border-slate-100">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow">
+          <div className="w-10 h-10 rounded-xl bg-[#ea580c] flex items-center justify-center shadow">
             <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
             </svg>
@@ -118,7 +118,7 @@ const HomePage = ({ studentId = 's1' }) => {
           </label>
           <select
             id="subject-select-home"
-            className="w-full md:w-72 px-4 py-2.5 text-sm font-medium border border-slate-200 rounded-xl bg-white text-slate-800 focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all cursor-pointer"
+            className="w-full md:w-72 px-4 py-2.5 text-sm font-medium border border-slate-200 rounded-xl bg-white text-slate-800 focus:border-[#ea580c] focus:ring-2 focus:ring-orange-100 transition-all cursor-pointer"
             value={currentSubject}
             onChange={handleSubjectChange}
           >
@@ -136,16 +136,16 @@ const HomePage = ({ studentId = 's1' }) => {
                 <div className="flex items-center gap-6">
                   <div>
                     <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">Score</p>
-                    <p className="text-2xl font-bold text-gradient">{currentSubjectPerformance.score}%</p>
+                    <p className="text-2xl font-bold text-[#ea580c]">{currentSubjectPerformance.score}%</p>
                   </div>
                   <div className="w-px h-12 bg-slate-200"></div>
                   <div>
                     <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">Trend</p>
                     <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-semibold border ${currentSubjectPerformance.trend === 'up'
-                        ? 'bg-green-50 text-green-600 border-green-200'
-                        : currentSubjectPerformance.trend === 'down'
-                          ? 'bg-red-50 text-red-600 border-red-200'
-                          : 'bg-amber-50 text-amber-600 border-amber-200'
+                      ? 'bg-green-50 text-green-600 border-green-200'
+                      : currentSubjectPerformance.trend === 'down'
+                        ? 'bg-red-50 text-red-600 border-red-200'
+                        : 'bg-orange-50 text-[#ea580c] border-orange-200'
                       }`}>
                       {currentSubjectPerformance.trend === 'up' ? (
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
@@ -182,7 +182,7 @@ const HomePage = ({ studentId = 's1' }) => {
       <div className="section-card p-6 hover:shadow-lg transition-shadow duration-300">
         {/* Card Header */}
         <div className="flex items-center gap-3 mb-5 pb-4 border-b border-slate-100">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center shadow">
+          <div className="w-10 h-10 rounded-xl bg-[#ea580c] flex items-center justify-center shadow">
             <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
@@ -195,7 +195,7 @@ const HomePage = ({ studentId = 's1' }) => {
           {/* Generate Report */}
           <Link
             to="../report"
-            className="group p-5 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-blue-400/50"
+            className="group p-5 bg-[#334155] rounded-xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-slate-600/50"
           >
             <div className="flex flex-col items-center text-center">
               <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform shadow">
@@ -211,7 +211,7 @@ const HomePage = ({ studentId = 's1' }) => {
           {/* View Events */}
           <Link
             to="../events"
-            className="group p-5 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-green-400/50"
+            className="group p-5 bg-[#1e293b] rounded-xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-slate-700/50"
           >
             <div className="flex flex-col items-center text-center">
               <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform shadow">
@@ -227,7 +227,7 @@ const HomePage = ({ studentId = 's1' }) => {
           {/* AI Chatbot */}
           <Link
             to="../chatbot"
-            className="group p-5 bg-gradient-to-br from-orange-500 to-amber-500 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-orange-400/50"
+            className="group p-5 bg-[#ea580c] rounded-xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-orange-400/50"
           >
             <div className="flex flex-col items-center text-center">
               <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform shadow">

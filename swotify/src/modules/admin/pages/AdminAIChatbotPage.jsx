@@ -142,7 +142,7 @@ const AdminAIChatbotPage = () => {
 
   const getColorClasses = (color) => {
     const colors = {
-      blue: { bg: 'bg-blue-100', text: 'text-blue-600', border: 'border-blue-200' },
+      blue: { bg: 'bg-orange-100', text: 'text-[#ea580c]', border: 'border-blue-200' },
       orange: { bg: 'bg-orange-100', text: 'text-orange-600', border: 'border-orange-200' },
       green: { bg: 'bg-green-100', text: 'text-green-600', border: 'border-green-200' },
       purple: { bg: 'bg-purple-100', text: 'text-purple-600', border: 'border-purple-200' },
@@ -155,7 +155,7 @@ const AdminAIChatbotPage = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 via-purple-500 to-orange-400 flex items-center justify-center shadow-md">
+          <div className="w-12 h-12 rounded-xl bg-[#ea580c] flex items-center justify-center shadow-md">
             <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
             </svg>
@@ -181,7 +181,7 @@ const AdminAIChatbotPage = () => {
             <div className="p-4 border-b border-slate-100">
               <button
                 onClick={handleNewChat}
-                className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-medium text-sm transition-colors"
+                className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-[#ea580c] hover:bg-[#c2410c] text-white rounded-lg font-medium text-sm transition-colors"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
@@ -196,8 +196,8 @@ const AdminAIChatbotPage = () => {
                 <button
                   key={thread.id}
                   className={`w-full text-left px-3 py-2.5 rounded-lg text-sm transition-colors mb-1 ${thread.active
-                      ? 'bg-blue-50 text-blue-700 font-medium'
-                      : 'hover:bg-slate-50 text-slate-600'
+                    ? 'bg-blue-50 text-blue-700 font-medium'
+                    : 'hover:bg-slate-50 text-slate-600'
                     }`}
                 >
                   <p className="truncate font-medium text-slate-800">{thread.title}</p>
@@ -280,8 +280,8 @@ const AdminAIChatbotPage = () => {
                     )}
                     <div className={`max-w-xl ${msg.sender === 'user' ? 'order-first' : ''}`}>
                       <div className={`rounded-xl px-4 py-3 ${msg.sender === 'user'
-                          ? 'bg-blue-500 text-white'
-                          : 'bg-white border border-slate-200 text-slate-700'
+                        ? 'bg-blue-500 text-white'
+                        : 'bg-white border border-slate-200 text-slate-700'
                         }`}>
                         <p className="text-sm whitespace-pre-line leading-relaxed">{msg.text}</p>
                       </div>
@@ -328,8 +328,8 @@ const AdminAIChatbotPage = () => {
                       key={index}
                       onClick={() => selectSuggestion(suggestion)}
                       className={`w-full text-left px-4 py-2.5 text-sm transition-colors ${index === selectedSuggestionIndex
-                          ? 'bg-blue-50 text-blue-700'
-                          : 'hover:bg-slate-50 text-slate-600'
+                        ? 'bg-blue-50 text-blue-700'
+                        : 'hover:bg-slate-50 text-slate-600'
                         }`}
                     >
                       {suggestion}
@@ -352,8 +352,8 @@ const AdminAIChatbotPage = () => {
                   onClick={handleSendMessage}
                   disabled={!input.trim()}
                   className={`w-10 h-10 rounded-lg flex items-center justify-center transition-all ${input.trim()
-                      ? 'bg-blue-500 hover:bg-blue-600 text-white'
-                      : 'bg-slate-200 text-slate-400 cursor-not-allowed'
+                    ? 'bg-[#ea580c] hover:bg-[#c2410c] text-white'
+                    : 'bg-slate-200 text-slate-400 cursor-not-allowed'
                     }`}
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
