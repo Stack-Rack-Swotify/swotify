@@ -203,8 +203,8 @@ const TeacherEventsPage = () => {
         {/* Status Badge */}
         <div className="absolute top-3 right-3">
           <span className={`px-3 py-1 text-xs font-semibold rounded-full shadow ${event.status === 'upcoming'
-              ? 'bg-green-500 text-white'
-              : 'bg-slate-500 text-white'
+            ? 'bg-green-500 text-white'
+            : 'bg-slate-500 text-white'
             }`}>
             {event.status === 'upcoming' ? 'Upcoming' : 'Completed'}
           </span>
@@ -212,15 +212,15 @@ const TeacherEventsPage = () => {
         {/* Type Badge */}
         <div className="absolute top-3 left-3">
           <span className={`px-3 py-1 text-xs font-semibold rounded-full border ${event.type === 'PTM'
-              ? 'bg-orange-100 text-orange-600 border-orange-200'
-              : 'bg-blue-100 text-blue-600 border-blue-200'
+            ? 'bg-orange-100 text-orange-600 border-orange-200'
+            : 'bg-slate-100 text-slate-600 border-slate-200'
             }`}>
             {event.type === 'PTM' ? 'PTM' : 'Event'}
           </span>
         </div>
       </div>
       <div className="p-5">
-        <h3 className="text-lg font-semibold text-slate-800 mb-3 group-hover:text-blue-600 transition-colors line-clamp-2">
+        <h3 className="text-lg font-semibold text-slate-800 mb-3 group-hover:text-[#ea580c] transition-colors line-clamp-2">
           {event.title}
         </h3>
         <div className="space-y-2 mb-4">
@@ -248,7 +248,7 @@ const TeacherEventsPage = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 via-purple-500 to-orange-400 flex items-center justify-center shadow-md">
+          <div className="w-12 h-12 rounded-xl bg-[#ea580c] flex items-center justify-center shadow-md">
             <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
@@ -264,7 +264,7 @@ const TeacherEventsPage = () => {
         </div>
         <button
           onClick={() => setShowCreateForm(!showCreateForm)}
-          className="px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg transition-colors flex items-center gap-2"
+          className="px-6 py-3 bg-[#ea580c] hover:bg-[#c2410c] text-white font-semibold rounded-lg transition-colors flex items-center gap-2"
         >
           {showCreateForm ? (
             <>
@@ -293,8 +293,8 @@ const TeacherEventsPage = () => {
               <label className="block text-sm font-medium text-slate-700 mb-2">Event Type</label>
               <div className="flex gap-4">
                 <label className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg border-2 cursor-pointer transition-all ${eventDetails.type === 'General'
-                    ? 'border-blue-500 bg-blue-50 text-blue-700'
-                    : 'border-slate-200 hover:border-slate-300'
+                  ? 'border-[#ea580c] bg-orange-50 text-[#ea580c]'
+                  : 'border-slate-200 hover:border-slate-300'
                   }`}>
                   <input
                     type="radio"
@@ -310,8 +310,8 @@ const TeacherEventsPage = () => {
                   <span className="font-medium">General Event</span>
                 </label>
                 <label className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg border-2 cursor-pointer transition-all ${eventDetails.type === 'PTM'
-                    ? 'border-orange-500 bg-orange-50 text-orange-700'
-                    : 'border-slate-200 hover:border-slate-300'
+                  ? 'border-orange-500 bg-orange-50 text-orange-700'
+                  : 'border-slate-200 hover:border-slate-300'
                   }`}>
                   <input
                     type="radio"
@@ -339,7 +339,7 @@ const TeacherEventsPage = () => {
                 onChange={handleChange}
                 required
                 placeholder="Enter event title"
-                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
               />
             </div>
 
@@ -353,7 +353,7 @@ const TeacherEventsPage = () => {
                   value={eventDetails.date}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
                 />
               </div>
               <div>
@@ -364,7 +364,7 @@ const TeacherEventsPage = () => {
                   value={eventDetails.time}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
                 />
               </div>
             </div>
@@ -379,7 +379,7 @@ const TeacherEventsPage = () => {
                 onChange={handleChange}
                 required
                 placeholder="Enter event location"
-                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
               />
             </div>
 
@@ -393,7 +393,7 @@ const TeacherEventsPage = () => {
                 onChange={handleChange}
                 required
                 placeholder="Enter event description"
-                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 resize-none"
               ></textarea>
             </div>
 
@@ -405,7 +405,7 @@ const TeacherEventsPage = () => {
                 name="thumbnail"
                 accept="image/*"
                 onChange={handleFileChange}
-                className="w-full text-sm text-slate-600 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-600 hover:file:bg-blue-100 cursor-pointer border border-slate-200 rounded-lg p-2"
+                className="w-full text-sm text-slate-600 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-orange-50 file:text-[#ea580c] hover:file:bg-orange-100 cursor-pointer border border-slate-200 rounded-lg p-2"
               />
               {thumbnailPreview && (
                 <div className="mt-4">
@@ -430,7 +430,7 @@ const TeacherEventsPage = () => {
               </button>
               <button
                 type="submit"
-                className="flex-1 px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-lg transition-colors flex items-center justify-center gap-2"
+                className="flex-1 px-6 py-3 bg-[#ea580c] hover:bg-[#c2410c] text-white font-medium rounded-lg transition-colors flex items-center justify-center gap-2"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
@@ -448,7 +448,7 @@ const TeacherEventsPage = () => {
             <button
               onClick={() => setActiveTab('all')}
               className={`px-5 py-2.5 rounded-lg font-semibold text-sm transition-all ${activeTab === 'all'
-                ? 'bg-gradient-to-r from-blue-500 via-purple-500 to-orange-400 text-white shadow-md'
+                ? 'bg-[#ea580c] text-white shadow-md'
                 : 'text-slate-600 hover:bg-slate-100'
                 }`}
             >
@@ -478,7 +478,7 @@ const TeacherEventsPage = () => {
             <button
               onClick={() => setActiveTab('general')}
               className={`px-5 py-2.5 rounded-lg font-semibold text-sm transition-all ${activeTab === 'general'
-                ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-md'
+                ? 'bg-[#334155] text-white shadow-md'
                 : 'text-slate-600 hover:bg-slate-100'
                 }`}
             >
@@ -546,10 +546,10 @@ const TeacherEventsPage = () => {
 
       {/* Help Text */}
       {showCreateForm && (
-        <div className="bg-blue-50 rounded-xl p-5 border border-blue-100">
+        <div className="bg-orange-50 rounded-xl p-5 border border-orange-100">
           <div className="flex gap-4">
-            <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
-              <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+            <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <svg className="w-5 h-5 text-[#ea580c]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>

@@ -4,7 +4,7 @@ import { NavLink, Routes, Route, Navigate, useNavigate } from 'react-router-dom'
 
 // Sub-components
 import StudentAIChatbotPage from './StudentAIChatbotPage';
-import ReportPage from './ReportPage';
+import StudentReportPage from './StudentReportPage';
 import SettingsPage from './SettingsPage';
 import HomePage from './HomePage';
 import EventsPage from './EventsPage';
@@ -121,7 +121,7 @@ const StudentDashboard = () => {
                   </div>
                   <div className="max-h-64 overflow-y-auto">
                     {notifications.map((notif) => (
-                      <div key={notif.id} className={`px-4 py-3 border-b border-slate-100 hover:bg-slate-50 cursor-pointer ${notif.unread ? 'bg-blue-50' : ''}`}>
+                      <div key={notif.id} className={`px-4 py-3 border-b border-slate-100 hover:bg-slate-50 cursor-pointer ${notif.unread ? 'bg-orange-50' : ''}`}>
                         <p className="text-sm font-medium text-slate-800">{notif.title}</p>
                         <p className="text-xs text-slate-500">{notif.message}</p>
                         <p className="text-xs text-slate-400 mt-1">{notif.time}</p>
@@ -225,10 +225,10 @@ const StudentDashboard = () => {
                     const child = getStudentData(childId);
                     const isSelected = selectedStudentId === childId;
                     return (
-                      <button key={childId} onClick={() => switchChild(childId)} className={`w-full flex items-center gap-3 px-3 py-2.5 hover:bg-slate-50 ${isSelected ? 'bg-blue-50' : ''}`}>
-                        <img src={child.photo || "https://via.placeholder.com/32"} alt={child.name} className={`w-8 h-8 rounded-full object-cover ${isSelected ? 'ring-2 ring-blue-500' : ''}`} />
-                        <span className={`flex-1 text-left text-sm font-medium ${isSelected ? 'text-blue-600' : 'text-slate-700'}`}>{child.name}</span>
-                        {isSelected && <svg className="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" /></svg>}
+                      <button key={childId} onClick={() => switchChild(childId)} className={`w-full flex items-center gap-3 px-3 py-2.5 hover:bg-slate-50 ${isSelected ? 'bg-orange-50' : ''}`}>
+                        <img src={child.photo || "https://via.placeholder.com/32"} alt={child.name} className={`w-8 h-8 rounded-full object-cover ${isSelected ? 'ring-2 ring-orange-500' : ''}`} />
+                        <span className={`flex-1 text-left text-sm font-medium ${isSelected ? 'text-orange-600' : 'text-slate-700'}`}>{child.name}</span>
+                        {isSelected && <svg className="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" /></svg>}
                       </button>
                     );
                   })}
@@ -246,7 +246,7 @@ const StudentDashboard = () => {
                   <NavLink
                     to={item.to}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className={({ isActive }) => `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium ${isActive ? 'bg-blue-500 text-white' : 'text-slate-600 hover:bg-slate-100'}`}
+                    className={({ isActive }) => `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium ${isActive ? 'bg-[#ea580c] text-white' : 'text-slate-600 hover:bg-slate-100'}`}
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                       <path strokeLinecap="round" strokeLinejoin="round" d={item.icon} />
@@ -278,7 +278,7 @@ const StudentDashboard = () => {
             <Route path="home" element={<HomePage studentId={selectedStudentId} />} />
             <Route path="my-profile" element={<MyProfilePage studentId={selectedStudentId} />} />
             <Route path="chatbot" element={<StudentAIChatbotPage />} />
-            <Route path="report" element={<ReportPage studentId={selectedStudentId} />} />
+            <Route path="report" element={<StudentReportPage studentId={selectedStudentId} />} />
             <Route path="settings" element={<SettingsPage />} />
             <Route path="events" element={<EventsPage />} />
             <Route path="events/:eventId" element={<EventDetailPage />} />

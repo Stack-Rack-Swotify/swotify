@@ -56,13 +56,13 @@ const TeacherEventDetailPage = () => {
             {/* Thumbnail */}
             <div className="w-full md:w-1/3 rounded-xl overflow-hidden shadow-md border-2 border-slate-200 relative">
               <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 pointer-events-none"></div>
-              <img 
-                src={event.thumbnail} 
-                alt={event.title} 
-                className="w-full h-48 object-cover hover:scale-105 transition-transform duration-500" 
+              <img
+                src={event.thumbnail}
+                alt={event.title}
+                className="w-full h-48 object-cover hover:scale-105 transition-transform duration-500"
               />
             </div>
-            
+
             <div className="flex-1 w-full">
               <div className="flex items-center gap-3 mb-4">
                 <span className="w-1.5 h-10 bg-gradient-to-b from-blue-600 via-purple-600 to-pink-600 rounded-full"></span>
@@ -70,7 +70,7 @@ const TeacherEventDetailPage = () => {
                   {event.title}
                 </h3>
               </div>
-              
+
               <div className="flex flex-wrap gap-3 mt-5">
                 <div className="flex items-center gap-2 bg-emerald-100 px-4 py-2.5 rounded-xl border-2 border-emerald-300 shadow-sm">
                   <svg className="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
@@ -95,17 +95,17 @@ const TeacherEventDetailPage = () => {
 
               <div className="mt-6 space-y-3 bg-slate-50 p-4 rounded-xl border border-slate-200">
                 <div className="flex items-center gap-2 text-sm">
-                  <span className="font-semibold text-slate-900">Created By:</span> 
+                  <span className="font-semibold text-slate-900">Created By:</span>
                   <span className="text-slate-700 font-medium">{event.createdBy}</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm">
-                  <span className="font-semibold text-slate-900">Target Audience:</span> 
+                  <span className="font-semibold text-slate-900">Target Audience:</span>
                   <span className="text-slate-700 font-medium">{event.targetAudience}</span>
                 </div>
               </div>
             </div>
           </div>
-          
+
           <div className="mt-8 border-t-2 border-slate-100 pt-6">
             <h4 className="text-xl font-semibold text-slate-900 mb-4 flex items-center">
               <span className="w-1.5 h-6 bg-gradient-to-b from-blue-600 via-purple-600 to-pink-600 rounded-full mr-3"></span>
@@ -124,7 +124,7 @@ const TeacherEventDetailPage = () => {
           <div className="relative h-64 rounded-xl overflow-hidden border-2 border-slate-200 bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/30 flex items-center justify-center shadow-inner">
             <div className="text-center">
               <div className="relative inline-block mb-4">
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-full blur-xl opacity-20"></div>
+                <div className="absolute inset-0 bg-[#ea580c] rounded-full blur-xl opacity-20"></div>
                 <div className="relative w-16 h-16 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center border-2 border-purple-200 shadow-lg">
                   <svg className="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />

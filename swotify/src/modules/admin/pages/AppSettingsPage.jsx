@@ -74,7 +74,7 @@ const AppSettingsPage = () => {
         <div className="max-w-7xl mx-auto px-6 py-5">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 flex items-center justify-center shadow-2xl">
+              <div className="w-14 h-14 rounded-2xl bg-[#ea580c] flex items-center justify-center shadow-2xl">
                 <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -110,11 +110,10 @@ const AppSettingsPage = () => {
                   <button
                     key={section.id}
                     onClick={() => setActiveSection(section.id)}
-                    className={`w-full text-left px-4 py-3 rounded-xl font-semibold text-sm transition-all duration-300 flex items-center gap-3 ${
-                      activeSection === section.id
+                    className={`w-full text-left px-4 py-3 rounded-xl font-semibold text-sm transition-all duration-300 flex items-center gap-3 ${activeSection === section.id
                         ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg scale-105'
                         : 'text-slate-700 hover:bg-slate-100'
-                    }`}
+                      }`}
                   >
                     <span className="text-xl">{section.icon}</span>
                     {section.name}
@@ -143,11 +142,10 @@ const AppSettingsPage = () => {
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <button
                       onClick={() => setTheme('light')}
-                      className={`relative p-6 rounded-2xl border-2 transition-all duration-300 ${
-                        theme === 'light'
+                      className={`relative p-6 rounded-2xl border-2 transition-all duration-300 ${theme === 'light'
                           ? 'border-blue-500 bg-blue-50 shadow-xl scale-105'
                           : 'border-slate-200 hover:border-blue-300 hover:shadow-lg'
-                      }`}
+                        }`}
                     >
                       <div className="w-16 h-16 mx-auto mb-4 rounded-xl bg-white border-2 border-slate-200 flex items-center justify-center shadow-lg">
                         <svg className="w-8 h-8 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
@@ -167,11 +165,10 @@ const AppSettingsPage = () => {
 
                     <button
                       onClick={() => setTheme('dark')}
-                      className={`relative p-6 rounded-2xl border-2 transition-all duration-300 ${
-                        theme === 'dark'
+                      className={`relative p-6 rounded-2xl border-2 transition-all duration-300 ${theme === 'dark'
                           ? 'border-purple-500 bg-purple-50 shadow-xl scale-105'
                           : 'border-slate-200 hover:border-purple-300 hover:shadow-lg'
-                      }`}
+                        }`}
                     >
                       <div className="w-16 h-16 mx-auto mb-4 rounded-xl bg-slate-900 border-2 border-slate-700 flex items-center justify-center shadow-lg">
                         <svg className="w-8 h-8 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
@@ -191,11 +188,10 @@ const AppSettingsPage = () => {
 
                     <button
                       onClick={() => setTheme('auto')}
-                      className={`relative p-6 rounded-2xl border-2 transition-all duration-300 ${
-                        theme === 'auto'
+                      className={`relative p-6 rounded-2xl border-2 transition-all duration-300 ${theme === 'auto'
                           ? 'border-emerald-500 bg-emerald-50 shadow-xl scale-105'
                           : 'border-slate-200 hover:border-emerald-300 hover:shadow-lg'
-                      }`}
+                        }`}
                     >
                       <div className="w-16 h-16 mx-auto mb-4 rounded-xl bg-gradient-to-br from-orange-400 to-blue-900 border-2 border-slate-200 flex items-center justify-center shadow-lg">
                         <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -300,11 +296,10 @@ const AppSettingsPage = () => {
                         <button
                           key={lang.code}
                           onClick={() => setLanguage(lang.code)}
-                          className={`flex items-center gap-3 p-4 rounded-xl border-2 transition-all ${
-                            language === lang.code
+                          className={`flex items-center gap-3 p-4 rounded-xl border-2 transition-all ${language === lang.code
                               ? 'border-blue-500 bg-blue-50 shadow-lg scale-105'
                               : 'border-slate-200 hover:border-blue-300 hover:shadow-md'
-                          }`}
+                            }`}
                         >
                           <span className="text-3xl">{lang.flag}</span>
                           <div className="flex-1 text-left">
@@ -345,16 +340,14 @@ const AppSettingsPage = () => {
                         <button
                           key={size}
                           onClick={() => setAccessibility({ ...accessibility, fontSize: size })}
-                          className={`p-4 rounded-xl border-2 transition-all ${
-                            accessibility.fontSize === size
+                          className={`p-4 rounded-xl border-2 transition-all ${accessibility.fontSize === size
                               ? 'border-blue-500 bg-blue-50 shadow-lg'
                               : 'border-slate-200 hover:border-blue-300'
-                          }`}
+                            }`}
                         >
                           <p
-                            className={`font-bold text-slate-900 mb-1 ${
-                              size === 'small' ? 'text-sm' : size === 'medium' ? 'text-base' : 'text-lg'
-                            }`}
+                            className={`font-bold text-slate-900 mb-1 ${size === 'small' ? 'text-sm' : size === 'medium' ? 'text-base' : 'text-lg'
+                              }`}
                           >
                             Aa
                           </p>
@@ -442,11 +435,10 @@ const AppSettingsPage = () => {
                         <button
                           key={option}
                           onClick={() => setPrivacy({ ...privacy, profileVisibility: option })}
-                          className={`p-4 rounded-xl border-2 transition-all ${
-                            privacy.profileVisibility === option
+                          className={`p-4 rounded-xl border-2 transition-all ${privacy.profileVisibility === option
                               ? 'border-blue-500 bg-blue-50 shadow-lg'
                               : 'border-slate-200 hover:border-blue-300'
-                          }`}
+                            }`}
                         >
                           <p className="text-2xl mb-2">
                             {option === 'public' && '🌍'}

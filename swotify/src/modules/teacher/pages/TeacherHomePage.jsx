@@ -30,9 +30,9 @@ const TeacherHomePage = () => {
             <span className="w-1.5 h-8 bg-gradient-to-b from-blue-600 via-purple-600 to-pink-600 rounded-full mr-3"></span>
             Teacher Dashboard Overview
           </h2>
-          
+
           <p className="text-slate-700 leading-relaxed mb-8 font-medium">
-            Welcome to your comprehensive Teacher Dashboard! This is your central hub for managing classes, 
+            Welcome to your comprehensive Teacher Dashboard! This is your central hub for managing classes,
             tracking student progress, and staying organized throughout the academic year.
           </p>
 
@@ -109,11 +109,11 @@ const TeacherHomePage = () => {
         </div>
 
         {/* Navigation Guide */}
-        <div className="bg-gradient-to-br from-blue-50 via-purple-50/50 to-pink-50/50 rounded-2xl border-2 border-purple-200 p-8 shadow-lg">
+        <div className="bg-gradient-to-br from-orange-50 via-orange-50/50 to-slate-50 rounded-2xl border-2 border-orange-200 p-8 shadow-lg">
           <div className="flex items-start gap-4 mb-8">
             <div className="relative flex-shrink-0">
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-2xl blur-xl opacity-30"></div>
-              <div className="relative w-16 h-16 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 rounded-2xl flex items-center justify-center shadow-xl">
+              <div className="absolute inset-0 bg-[#ea580c] rounded-2xl blur-xl opacity-30"></div>
+              <div className="relative w-16 h-16 bg-[#ea580c] rounded-2xl flex items-center justify-center shadow-xl">
                 <svg className="w-9 h-9 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>

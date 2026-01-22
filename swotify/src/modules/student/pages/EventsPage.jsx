@@ -112,9 +112,9 @@ const EventsPage = () => {
 
   const getCategoryColor = (category) => {
     switch (category) {
-      case 'Sports': return 'bg-green-100 text-green-600 border-green-200';
-      case 'Academic': return 'bg-blue-100 text-blue-600 border-blue-200';
-      case 'Cultural': return 'bg-purple-100 text-purple-600 border-purple-200';
+      case 'Sports': return 'bg-slate-100 text-slate-600 border-slate-200';
+      case 'Academic': return 'bg-orange-100 text-[#ea580c] border-orange-200';
+      case 'Cultural': return 'bg-orange-50 text-[#ea580c] border-orange-200';
       case 'Meeting': return 'bg-orange-100 text-orange-600 border-orange-200';
       default: return 'bg-slate-100 text-slate-600 border-slate-200';
     }
@@ -145,8 +145,8 @@ const EventsPage = () => {
         {/* Status Badge */}
         <div className="absolute top-3 right-3">
           <span className={`px-3 py-1 text-xs font-semibold rounded-full shadow ${item.status === 'upcoming'
-              ? 'bg-green-500 text-white'
-              : 'bg-slate-500 text-white'
+            ? 'bg-green-500 text-white'
+            : 'bg-slate-500 text-white'
             }`}>
             {item.status === 'upcoming' ? 'Upcoming' : 'Completed'}
           </span>
@@ -155,15 +155,15 @@ const EventsPage = () => {
 
       {/* Event Content */}
       <div className="p-5">
-        <h5 className="text-lg font-bold text-slate-800 mb-3 group-hover:text-blue-600 transition-colors line-clamp-2">
+        <h5 className="text-lg font-bold text-slate-800 mb-3 group-hover:text-[#ea580c] transition-colors line-clamp-2">
           {item.title}
         </h5>
 
         {/* Event Details */}
         <div className="space-y-2 mb-4">
           <div className="flex items-center gap-3 text-sm text-slate-600">
-            <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-              <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+            <div className="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center">
+              <svg className="w-4 h-4 text-[#334155]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
             </div>
@@ -171,8 +171,8 @@ const EventsPage = () => {
           </div>
 
           <div className="flex items-center gap-3 text-sm text-slate-600">
-            <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
-              <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+            <div className="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center">
+              <svg className="w-4 h-4 text-[#1e293b]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
@@ -192,7 +192,7 @@ const EventsPage = () => {
         <p className="text-sm text-slate-500 line-clamp-2 mb-4">{item.description}</p>
 
         {/* View Details Link */}
-        <div className="flex items-center gap-2 text-blue-600 font-semibold text-sm group-hover:gap-3 transition-all">
+        <div className="flex items-center gap-2 text-[#ea580c] font-semibold text-sm group-hover:gap-3 transition-all">
           <span>View Details</span>
           <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
             <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
@@ -206,7 +206,7 @@ const EventsPage = () => {
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center gap-4">
-        <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-blue-500 via-purple-500 to-orange-400 flex items-center justify-center shadow-lg">
+        <div className="w-12 h-12 rounded-xl bg-[#ea580c] flex items-center justify-center shadow-lg">
           <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
             <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
           </svg>
@@ -222,7 +222,7 @@ const EventsPage = () => {
         <button
           onClick={() => setActiveTab('events')}
           className={`px-5 py-2.5 rounded-lg font-semibold text-sm transition-all ${activeTab === 'events'
-            ? 'bg-gradient-to-r from-blue-500 via-purple-500 to-orange-400 text-white shadow-md'
+            ? 'bg-[#ea580c] text-white shadow-md'
             : 'text-slate-600 hover:bg-slate-100'
             }`}
         >
@@ -236,7 +236,7 @@ const EventsPage = () => {
         <button
           onClick={() => setActiveTab('ptm')}
           className={`px-5 py-2.5 rounded-lg font-semibold text-sm transition-all ${activeTab === 'ptm'
-            ? 'bg-gradient-to-r from-blue-500 via-purple-500 to-orange-400 text-white shadow-md'
+            ? 'bg-[#ea580c] text-white shadow-md'
             : 'text-slate-600 hover:bg-slate-100'
             }`}
         >

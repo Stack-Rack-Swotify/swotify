@@ -53,7 +53,7 @@ const FilesPage = () => {
     const icons = {
       'PDF': { icon: '📄', bg: 'bg-red-100', text: 'text-red-600' },
       'Excel': { icon: '📊', bg: 'bg-green-100', text: 'text-green-600' },
-      'Document': { icon: '📝', bg: 'bg-blue-100', text: 'text-blue-600' },
+      'Document': { icon: '📝', bg: 'bg-orange-100', text: 'text-[#ea580c]' },
       'Other': { icon: '📎', bg: 'bg-purple-100', text: 'text-purple-600' }
     };
     return icons[type] || icons['Other'];
@@ -77,7 +77,7 @@ const FilesPage = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 via-purple-500 to-orange-400 flex items-center justify-center shadow-md">
+          <div className="w-12 h-12 rounded-xl bg-[#ea580c] flex items-center justify-center shadow-md">
             <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
             </svg>
@@ -99,7 +99,7 @@ const FilesPage = () => {
               Delete ({selectedFiles.length})
             </button>
           )}
-          <label className="px-5 py-2.5 bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium rounded-lg flex items-center gap-2 cursor-pointer transition-colors">
+          <label className="px-5 py-2.5 bg-[#ea580c] hover:bg-[#c2410c] text-white text-sm font-medium rounded-lg flex items-center gap-2 cursor-pointer transition-colors">
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
             </svg>
@@ -113,8 +113,8 @@ const FilesPage = () => {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="bg-white rounded-xl border border-slate-200 p-5">
           <div className="flex items-center justify-between mb-3">
-            <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center">
-              <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+            <div className="w-10 h-10 rounded-lg bg-orange-100 flex items-center justify-center">
+              <svg className="w-5 h-5 text-[#ea580c]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
             </div>
@@ -172,13 +172,13 @@ const FilesPage = () => {
               placeholder="Search files by name..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
             />
           </div>
           <select
             value={categoryFilter}
             onChange={(e) => setCategoryFilter(e.target.value)}
-            className="px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 min-w-[150px]"
+            className="px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-orange-500 min-w-[150px]"
           >
             {categories.map((cat) => (
               <option key={cat} value={cat}>{cat}</option>
@@ -265,7 +265,7 @@ const FilesPage = () => {
                       <td className="py-4 px-6 text-sm text-slate-600">{file.size}</td>
                       <td className="py-4 px-6 text-sm text-slate-600">{file.uploaded}</td>
                       <td className="py-4 px-6 text-right">
-                        <button className="px-3 py-1.5 bg-blue-50 text-blue-600 text-xs font-medium rounded-lg hover:bg-blue-100 inline-flex items-center gap-1">
+                        <button className="px-3 py-1.5 bg-orange-50 text-[#ea580c] text-xs font-medium rounded-lg hover:bg-orange-100 inline-flex items-center gap-1">
                           <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10" />
                           </svg>

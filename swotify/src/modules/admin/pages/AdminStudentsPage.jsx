@@ -149,7 +149,7 @@ const AdminStudentsPage = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 via-purple-500 to-orange-400 flex items-center justify-center shadow-md">
+          <div className="w-12 h-12 rounded-xl bg-[#ea580c] flex items-center justify-center shadow-md">
             <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
             </svg>
@@ -161,7 +161,7 @@ const AdminStudentsPage = () => {
         </div>
         <button
           onClick={handleAdd}
-          className="px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg transition-colors flex items-center gap-2"
+          className="px-6 py-3 bg-[#ea580c] hover:bg-[#c2410c] text-white font-semibold rounded-lg transition-colors flex items-center gap-2"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
@@ -239,12 +239,12 @@ const AdminStudentsPage = () => {
               placeholder="Search students by name or email..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
             />
           </div>
           <button
             onClick={() => setIsFilterOpen(!isFilterOpen)}
-            className={`px-4 py-3 rounded-lg text-sm font-medium flex items-center gap-2 transition-colors ${isFilterOpen ? 'bg-blue-500 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+            className={`px-4 py-3 rounded-lg text-sm font-medium flex items-center gap-2 transition-colors ${isFilterOpen ? 'bg-[#ea580c] text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
               }`}
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
@@ -260,7 +260,7 @@ const AdminStudentsPage = () => {
               <button
                 key={mode}
                 onClick={() => setViewMode(mode)}
-                className={`p-2 rounded-lg transition-colors ${viewMode === mode ? 'bg-blue-500 text-white' : 'text-slate-600 hover:bg-slate-200'}`}
+                className={`p-2 rounded-lg transition-colors ${viewMode === mode ? 'bg-[#ea580c] text-white' : 'text-slate-600 hover:bg-slate-200'}`}
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                   <path d={mode === 'grid' ? "M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM13 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2h-2z" : "M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"} />
@@ -279,7 +279,7 @@ const AdminStudentsPage = () => {
                 <select
                   value={selectedClass}
                   onChange={(e) => { setSelectedClass(e.target.value); if (e.target.value !== 'All') { setSelectedGrade('All'); setSelectedSection('All'); } }}
-                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
                 >
                   {classes.map(opt => <option key={opt} value={opt}>{opt === 'All' ? 'All Classes' : opt}</option>)}
                 </select>
@@ -290,7 +290,7 @@ const AdminStudentsPage = () => {
                   value={selectedGrade}
                   onChange={(e) => { setSelectedGrade(e.target.value); setSelectedClass('All'); }}
                   disabled={selectedClass !== 'All'}
-                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 disabled:opacity-50"
                 >
                   {grades.map(opt => <option key={opt} value={opt}>{opt === 'All' ? 'All Grades' : opt}</option>)}
                 </select>
@@ -301,7 +301,7 @@ const AdminStudentsPage = () => {
                   value={selectedSection}
                   onChange={(e) => { setSelectedSection(e.target.value); setSelectedClass('All'); }}
                   disabled={selectedClass !== 'All'}
-                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 disabled:opacity-50"
                 >
                   {sections.map(opt => <option key={opt} value={opt}>{opt === 'All' ? 'All Sections' : `Section ${opt}`}</option>)}
                 </select>
@@ -311,7 +311,7 @@ const AdminStudentsPage = () => {
                 <select
                   value={selectedYear}
                   onChange={(e) => setSelectedYear(e.target.value)}
-                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
                 >
                   {Array.from({ length: 15 }, (_, i) => {
                     const startYear = 2024 - i;
@@ -337,7 +337,7 @@ const AdminStudentsPage = () => {
                 </button>
                 <button
                   onClick={() => setIsFilterOpen(false)}
-                  className="px-5 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm font-medium"
+                  className="px-5 py-2 bg-[#ea580c] hover:bg-[#c2410c] text-white rounded-lg text-sm font-medium"
                 >
                   Apply Filters
                 </button>
@@ -491,7 +491,7 @@ const AdminStudentsPage = () => {
                   <input
                     type="text" required value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
                   />
                 </div>
                 <div className="col-span-2">
@@ -499,7 +499,7 @@ const AdminStudentsPage = () => {
                   <input
                     type="email" required value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
                   />
                 </div>
                 <div>
@@ -507,7 +507,7 @@ const AdminStudentsPage = () => {
                   <input
                     type="tel" value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
                   />
                 </div>
                 <div>
@@ -515,7 +515,7 @@ const AdminStudentsPage = () => {
                   <select
                     value={formData.status}
                     onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-                    className="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
                   >
                     <option>Active</option>
                     <option>Inactive</option>
@@ -526,7 +526,7 @@ const AdminStudentsPage = () => {
                   <select
                     value={formData.grade}
                     onChange={(e) => setFormData({ ...formData, grade: e.target.value })}
-                    className="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
                   >
                     {grades.filter(g => g !== 'All').map(g => <option key={g}>{g}</option>)}
                   </select>
@@ -536,7 +536,7 @@ const AdminStudentsPage = () => {
                   <select
                     value={formData.section}
                     onChange={(e) => setFormData({ ...formData, section: e.target.value })}
-                    className="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
                   >
                     {sections.filter(s => s !== 'All').map(s => <option key={s}>{s}</option>)}
                   </select>
@@ -546,7 +546,7 @@ const AdminStudentsPage = () => {
                   <select
                     value={formData.parentId}
                     onChange={(e) => setFormData({ ...formData, parentId: e.target.value })}
-                    className="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
                   >
                     <option value="">Select a Parent (Optional)</option>
                     {parentsList.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
@@ -556,7 +556,7 @@ const AdminStudentsPage = () => {
 
               <div className="flex gap-3 pt-4 border-t border-slate-100">
                 <button type="button" onClick={() => setIsModalOpen(false)} className="flex-1 px-4 py-2.5 text-slate-600 hover:bg-slate-100 rounded-lg font-medium">Cancel</button>
-                <button type="submit" className="flex-1 px-4 py-2.5 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-medium">{currentStudent ? 'Save' : 'Add Student'}</button>
+                <button type="submit" className="flex-1 px-4 py-2.5 bg-[#ea580c] hover:bg-[#c2410c] text-white rounded-lg font-medium">{currentStudent ? 'Save' : 'Add Student'}</button>
               </div>
             </form>
           </div>

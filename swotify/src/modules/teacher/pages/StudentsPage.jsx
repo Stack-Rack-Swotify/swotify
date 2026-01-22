@@ -60,8 +60,8 @@ const StudentsPage = () => {
 
   const filteredStudents = studentList.filter(student => {
     const matchesSearch = searchTerm === '' || student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          student.details.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          student.details.phone.toLowerCase().includes(searchTerm.toLowerCase());
+      student.details.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      student.details.phone.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesGrade = selectedGrade === 'All' || student.grade === selectedGrade;
     const matchesSection = selectedSection === 'All' || student.section === selectedSection;
     const matchesAcademicYear = selectedAcademicYear === 'All' || student.academicYear === selectedAcademicYear;
@@ -150,10 +150,10 @@ const StudentsPage = () => {
       setStudentList(prev => prev.map(s => {
         if (s.id === currentStudent.id) {
           if (s.parentId && s.parentId !== finalParentId) {
-            setParentsList(pList => pList.map(p => p.id === s.parentId ? {...p, childrenIds: p.childrenIds.filter(cid => cid !== s.id)} : p));
+            setParentsList(pList => pList.map(p => p.id === s.parentId ? { ...p, childrenIds: p.childrenIds.filter(cid => cid !== s.id) } : p));
           }
           if (finalParentId && s.parentId !== finalParentId) {
-            setParentsList(pList => pList.map(p => p.id === finalParentId ? {...p, childrenIds: [...p.childrenIds, s.id]} : p));
+            setParentsList(pList => pList.map(p => p.id === finalParentId ? { ...p, childrenIds: [...p.childrenIds, s.id] } : p));
           }
 
           const updatedStudent = {
@@ -197,7 +197,7 @@ const StudentsPage = () => {
       setStudentList(prev => [newStudent, ...prev]);
 
       if (finalParentId) {
-        setParentsList(pList => pList.map(p => p.id === finalParentId ? {...p, childrenIds: [...p.childrenIds, newStudentId]} : p));
+        setParentsList(pList => pList.map(p => p.id === finalParentId ? { ...p, childrenIds: [...p.childrenIds, newStudentId] } : p));
       }
     }
     setIsModalOpen(false);
@@ -215,12 +215,12 @@ const StudentsPage = () => {
       {/* Header */}
       <div className="mb-6 flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-semibold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">All Students</h1>
+          <h1 className="text-3xl font-semibold text-slate-800">All Students</h1>
           <p className="text-slate-600 text-sm mt-1 font-medium">Manage and view student information</p>
         </div>
         <button
           onClick={handleAdd}
-          className="px-6 py-3 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white font-semibold rounded-xl hover:shadow-xl transition-all duration-300 hover:scale-105 flex items-center gap-2"
+          className="px-6 py-3 bg-[#ea580c] text-white font-semibold rounded-xl hover:bg-[#c2410c] hover:shadow-xl transition-all duration-300 hover:scale-105 flex items-center gap-2"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
@@ -236,7 +236,7 @@ const StudentsPage = () => {
             <input
               type="text"
               placeholder="Search students by name, email, or phone..."
-              className="w-full px-4 py-3 pl-11 text-sm font-medium border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all"
+              className="w-full px-4 py-3 pl-11 text-sm font-medium border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -244,15 +244,14 @@ const StudentsPage = () => {
               <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
           </div>
-          
+
           {/* Filter Toggle Button */}
           <button
             onClick={() => setShowFilters(!showFilters)}
-            className={`relative px-5 py-3 font-semibold rounded-xl transition-all duration-300 flex items-center gap-2 ${
-              showFilters 
-                ? 'bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white shadow-lg' 
-                : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-            }`}
+            className={`relative px-5 py-3 font-semibold rounded-xl transition-all duration-300 flex items-center gap-2 ${showFilters
+              ? 'bg-[#ea580c] text-white shadow-lg'
+              : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+              }`}
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
@@ -277,7 +276,7 @@ const StudentsPage = () => {
                   setSelectedSection('All');
                   setSelectedAcademicYear('All');
                 }}
-                className="text-xs text-blue-600 hover:text-purple-600 font-semibold flex items-center gap-1 transition-colors"
+                className="text-xs text-[#ea580c] hover:text-[#c2410c] font-semibold flex items-center gap-1 transition-colors"
               >
                 <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -293,7 +292,7 @@ const StudentsPage = () => {
               <select
                 value={selectedAcademicYear}
                 onChange={(e) => setSelectedAcademicYear(e.target.value)}
-                className="w-full px-4 py-2.5 text-sm font-medium border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                className="w-full px-4 py-2.5 text-sm font-medium border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
               >
                 <option value="All">All Years</option>
                 <option value="2023-2024">2023-2024</option>
@@ -311,7 +310,7 @@ const StudentsPage = () => {
                   setSelectedGrade(e.target.value);
                   setSelectedSection('All');
                 }}
-                className="w-full px-4 py-2.5 text-sm font-medium border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                className="w-full px-4 py-2.5 text-sm font-medium border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
               >
                 {grades.map(grade => (
                   <option key={grade} value={grade}>{grade}</option>
@@ -325,7 +324,7 @@ const StudentsPage = () => {
               <select
                 value={selectedSection}
                 onChange={(e) => setSelectedSection(e.target.value)}
-                className="w-full px-4 py-2.5 text-sm font-medium border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                className="w-full px-4 py-2.5 text-sm font-medium border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
               >
                 {sections.map(section => (
                   <option key={section} value={section}>{section}</option>
@@ -346,7 +345,7 @@ const StudentsPage = () => {
             >
               {/* Menu */}
               <div className="absolute top-4 right-4">
-                <button 
+                <button
                   onClick={() => setActiveMenuId(activeMenuId === student.id ? null : student.id)}
                   className="p-1.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg transition-colors"
                 >
@@ -356,19 +355,28 @@ const StudentsPage = () => {
                 </button>
                 {activeMenuId === student.id && (
                   <div className="absolute right-0 mt-1 w-40 bg-white rounded-xl shadow-2xl border border-slate-200 overflow-hidden z-10">
-                    <Link 
+                    <Link
                       to={`/teacher-dashboard/student-profile/${student.id}`}
                       className="block px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors"
                     >
                       View Profile
                     </Link>
-                    <button 
+                    <Link
+                      to={`/teacher-dashboard/student-report/${student.id}`}
+                      className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-blue-600 hover:bg-blue-50 transition-colors"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                      </svg>
+                      View Report
+                    </Link>
+                    <button
                       onClick={() => handleEdit(student)}
                       className="w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors"
                     >
                       Edit
                     </button>
-                    <button 
+                    <button
                       onClick={() => confirmDelete(student)}
                       className="w-full text-left px-4 py-2.5 text-sm font-medium text-rose-600 hover:bg-rose-50 transition-colors"
                     >
@@ -381,20 +389,19 @@ const StudentsPage = () => {
               <Link to={`/teacher-dashboard/student-profile/${student.id}`} className="flex flex-col items-center text-center">
                 {/* Photo */}
                 <div className="mb-4 relative">
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-full blur-lg opacity-30"></div>
+                  <div className="absolute inset-0 bg-[#ea580c] rounded-full blur-lg opacity-30"></div>
                   <img
                     src={student.photo}
                     alt={student.name}
-                    className="relative w-24 h-24 rounded-full object-cover border-4 border-white shadow-lg ring-2 ring-purple-200"
+                    className="relative w-24 h-24 rounded-full object-cover border-4 border-white shadow-lg ring-2 ring-orange-200"
                   />
                 </div>
 
                 {/* Status */}
-                <span className={`px-3 py-1 rounded-full text-xs font-semibold mb-3 ${
-                  student.status === 'Active' 
-                    ? 'bg-emerald-100 text-emerald-700 border border-emerald-300' 
-                    : 'bg-rose-100 text-rose-700 border border-rose-300'
-                }`}>
+                <span className={`px-3 py-1 rounded-full text-xs font-semibold mb-3 ${student.status === 'Active'
+                  ? 'bg-emerald-100 text-emerald-700 border border-emerald-300'
+                  : 'bg-rose-100 text-rose-700 border border-rose-300'
+                  }`}>
                   {student.status}
                 </span>
 
@@ -405,13 +412,13 @@ const StudentsPage = () => {
 
                 {/* Badges */}
                 <div className="flex flex-wrap items-center justify-center gap-2 mb-4">
-                  <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-lg text-xs font-semibold border border-blue-300">
+                  <span className="bg-orange-100 text-[#ea580c] px-3 py-1 rounded-lg text-xs font-semibold border border-orange-300">
                     {student.grade}
                   </span>
                   <span className="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-lg text-xs font-semibold border border-emerald-300">
                     Sec {student.section}
                   </span>
-                  <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-lg text-xs font-semibold border border-purple-300">
+                  <span className="bg-slate-100 text-slate-700 px-3 py-1 rounded-lg text-xs font-semibold border border-slate-300">
                     {student.academicYear}
                   </span>
                 </div>
@@ -442,8 +449,8 @@ const StudentsPage = () => {
       ) : (
         <div className="bg-white rounded-xl border border-slate-200/60 p-16 text-center shadow-md">
           <div className="relative inline-block mb-6">
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-full blur-xl opacity-20"></div>
-            <div className="relative w-20 h-20 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 rounded-full flex items-center justify-center border-2 border-purple-200 shadow-lg">
+            <div className="absolute inset-0 bg-[#ea580c] rounded-full blur-xl opacity-20"></div>
+            <div className="relative w-20 h-20 bg-orange-50 rounded-full flex items-center justify-center border-2 border-orange-200 shadow-lg">
               <svg className="w-10 h-10 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
               </svg>
@@ -455,7 +462,7 @@ const StudentsPage = () => {
           </p>
           <button
             onClick={clearFilters}
-            className="px-6 py-3 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white font-semibold rounded-xl hover:shadow-xl transition-all duration-300 hover:scale-105 text-sm"
+            className="px-6 py-3 bg-[#ea580c] text-white font-semibold rounded-xl hover:bg-[#c2410c] hover:shadow-xl transition-all duration-300 hover:scale-105 text-sm"
           >
             Reset Filters
           </button>
@@ -481,8 +488,8 @@ const StudentsPage = () => {
                   type="text"
                   required
                   value={formData.name}
-                  onChange={(e) => setFormData({...formData, name: e.target.value})}
-                  className="w-full px-4 py-3 text-sm font-medium border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all"
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  className="w-full px-4 py-3 text-sm font-medium border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
                   placeholder="e.g. Alice Johnson"
                 />
               </div>
@@ -492,8 +499,8 @@ const StudentsPage = () => {
                   type="email"
                   required
                   value={formData.email}
-                  onChange={(e) => setFormData({...formData, email: e.target.value})}
-                  className="w-full px-4 py-3 text-sm font-medium border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all"
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  className="w-full px-4 py-3 text-sm font-medium border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
                   placeholder="e.g. alice@school.com"
                 />
               </div>
@@ -502,8 +509,8 @@ const StudentsPage = () => {
                 <input
                   type="tel"
                   value={formData.phone}
-                  onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                  className="w-full px-4 py-3 text-sm font-medium border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all"
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  className="w-full px-4 py-3 text-sm font-medium border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
                   placeholder="e.g. 555-123-4567"
                 />
               </div>
@@ -512,8 +519,8 @@ const StudentsPage = () => {
                   <label className="block text-sm font-semibold text-slate-700 mb-2">Grade</label>
                   <select
                     value={formData.grade}
-                    onChange={(e) => setFormData({...formData, grade: e.target.value})}
-                    className="w-full px-4 py-3 text-sm font-medium border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                    onChange={(e) => setFormData({ ...formData, grade: e.target.value })}
+                    className="w-full px-4 py-3 text-sm font-medium border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
                   >
                     {grades.filter(g => g !== 'All').map(grade => (
                       <option key={grade} value={grade}>{grade}</option>
@@ -524,8 +531,8 @@ const StudentsPage = () => {
                   <label className="block text-sm font-semibold text-slate-700 mb-2">Section</label>
                   <select
                     value={formData.section}
-                    onChange={(e) => setFormData({...formData, section: e.target.value})}
-                    className="w-full px-4 py-3 text-sm font-medium border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                    onChange={(e) => setFormData({ ...formData, section: e.target.value })}
+                    className="w-full px-4 py-3 text-sm font-medium border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
                   >
                     {sections.filter(s => s !== 'All').map(section => (
                       <option key={section} value={section}>{section}</option>
@@ -538,8 +545,8 @@ const StudentsPage = () => {
                   <label className="block text-sm font-semibold text-slate-700 mb-2">Academic Year</label>
                   <select
                     value={formData.academicYear}
-                    onChange={(e) => setFormData({...formData, academicYear: e.target.value})}
-                    className="w-full px-4 py-3 text-sm font-medium border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                    onChange={(e) => setFormData({ ...formData, academicYear: e.target.value })}
+                    className="w-full px-4 py-3 text-sm font-medium border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
                   >
                     <option value="2023-2024">2023-2024</option>
                     <option value="2024-2025">2024-2025</option>
@@ -550,8 +557,8 @@ const StudentsPage = () => {
                   <label className="block text-sm font-semibold text-slate-700 mb-2">Status</label>
                   <select
                     value={formData.status}
-                    onChange={(e) => setFormData({...formData, status: e.target.value})}
-                    className="w-full px-4 py-3 text-sm font-medium border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                    onChange={(e) => setFormData({ ...formData, status: e.target.value })}
+                    className="w-full px-4 py-3 text-sm font-medium border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
                   >
                     <option value="Active">Active</option>
                     <option value="Inactive">Inactive</option>
@@ -587,8 +594,8 @@ const StudentsPage = () => {
                   <div>
                     <select
                       value={formData.parentId}
-                      onChange={(e) => setFormData({...formData, parentId: e.target.value})}
-                      className="w-full px-4 py-3 text-sm font-medium border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                      onChange={(e) => setFormData({ ...formData, parentId: e.target.value })}
+                      className="w-full px-4 py-3 text-sm font-medium border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
                     >
                       <option value="">Select a Parent</option>
                       {parentsList.map(parent => (
@@ -604,7 +611,7 @@ const StudentsPage = () => {
                       value={newParentFormData.name}
                       onChange={handleNewParentFormChange}
                       name="name"
-                      className="w-full px-4 py-3 text-sm font-medium border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all"
+                      className="w-full px-4 py-3 text-sm font-medium border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
                       placeholder="Parent Name"
                     />
                     <input
@@ -613,7 +620,7 @@ const StudentsPage = () => {
                       value={newParentFormData.email}
                       onChange={handleNewParentFormChange}
                       name="email"
-                      className="w-full px-4 py-3 text-sm font-medium border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all"
+                      className="w-full px-4 py-3 text-sm font-medium border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
                       placeholder="Parent Email"
                     />
                     <input
@@ -622,7 +629,7 @@ const StudentsPage = () => {
                       value={newParentFormData.phone}
                       onChange={handleNewParentFormChange}
                       name="phone"
-                      className="w-full px-4 py-3 text-sm font-medium border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all"
+                      className="w-full px-4 py-3 text-sm font-medium border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
                       placeholder="Parent Phone"
                     />
                   </div>
@@ -639,7 +646,7 @@ const StudentsPage = () => {
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 px-5 py-3 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white font-semibold rounded-xl hover:shadow-xl transition-all duration-300 hover:scale-105 text-sm"
+                  className="flex-1 px-5 py-3 bg-[#ea580c] text-white font-semibold rounded-xl hover:bg-[#c2410c] hover:shadow-xl transition-all duration-300 hover:scale-105 text-sm"
                 >
                   {currentStudent ? 'Save Changes' : 'Add Student'}
                 </button>

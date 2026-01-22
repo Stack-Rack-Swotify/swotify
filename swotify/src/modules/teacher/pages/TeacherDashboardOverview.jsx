@@ -44,13 +44,13 @@ const TeacherDashboardOverview = ({ teacherName }) => {
           <div className="bg-white rounded-2xl shadow-lg border border-slate-200/60 p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
             <div className="flex items-center justify-between mb-4">
               <div className="w-14 h-14 bg-gradient-to-br from-blue-100 to-blue-200 rounded-xl flex items-center justify-center shadow-md">
-                <svg className="w-7 h-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                <svg className="w-7 h-7 text-[#ea580c]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
               </div>
             </div>
             <p className="text-sm text-slate-600 font-semibold mb-2">Total Students</p>
-            <p className="text-3xl font-semibold text-blue-600">{totalStudents}</p>
+            <p className="text-3xl font-semibold text-[#ea580c]">{totalStudents}</p>
           </div>
 
           <div className="bg-white rounded-2xl shadow-lg border border-slate-200/60 p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
@@ -114,13 +114,13 @@ const TeacherDashboardOverview = ({ teacherName }) => {
             <ul className="space-y-3 mb-5">
               {recentStudents.length > 0 ? (
                 recentStudents.map(student => (
-                  <li key={student.id} className="flex items-center gap-4 p-4 rounded-xl bg-gradient-to-r from-slate-50 to-blue-50/30 border border-slate-200 hover:border-blue-300 hover:shadow-md transition-all duration-200">
+                  <li key={student.id} className="flex items-center gap-4 p-4 rounded-xl bg-gradient-to-r from-slate-50 to-orange-50/30 border border-slate-200 hover:border-blue-300 hover:shadow-md transition-all duration-200">
                     <div className="relative flex-shrink-0">
-                      <div className="absolute inset-0 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-full blur-md opacity-30"></div>
-                      <img 
-                        src={student.photo} 
-                        alt={student.name} 
-                        className="relative w-14 h-14 rounded-full object-cover border-2 border-white shadow-lg ring-2 ring-blue-200" 
+                      <div className="absolute inset-0 bg-gradient-to-br from-orange-500 via-purple-500 to-pink-500 rounded-full blur-md opacity-30"></div>
+                      <img
+                        src={student.photo}
+                        alt={student.name}
+                        className="relative w-14 h-14 rounded-full object-cover border-2 border-white shadow-lg ring-2 ring-blue-200"
                       />
                       <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-emerald-600 rounded-full border-2 border-white shadow-md"></div>
                     </div>
@@ -139,8 +139,8 @@ const TeacherDashboardOverview = ({ teacherName }) => {
                 </div>
               )}
             </ul>
-            <Link 
-              to="/teacher-dashboard/students" 
+            <Link
+              to="/teacher-dashboard/students"
               className="flex items-center justify-center gap-2 w-full px-5 py-3 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white hover:shadow-xl rounded-xl transition-all duration-300 font-semibold text-sm hover:scale-105"
             >
               View All Students
@@ -163,7 +163,7 @@ const TeacherDashboardOverview = ({ teacherName }) => {
                     <div className="flex items-start gap-3">
                       <div className="w-12 h-12 bg-gradient-to-br from-cyan-100 to-cyan-200 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm">
                         <svg className="w-6 h-6 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-                           <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
                         </svg>
                       </div>
                       <div className="flex-1 min-w-0">
@@ -176,15 +176,15 @@ const TeacherDashboardOverview = ({ teacherName }) => {
                 ))
               ) : (
                 <div className="text-center py-12">
-                   <svg className="w-16 h-16 text-slate-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                   </svg>
+                  <svg className="w-16 h-16 text-slate-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
                   <p className="text-slate-600 text-sm font-medium">No pending approvals.</p>
                 </div>
               )}
             </ul>
-            <Link 
-              to="/teacher-dashboard/approval" 
+            <Link
+              to="/teacher-dashboard/approval"
               className="flex items-center justify-center gap-2 w-full px-5 py-3 bg-gradient-to-r from-cyan-600 to-blue-600 text-white hover:shadow-xl rounded-xl transition-all duration-300 font-semibold text-sm hover:scale-105"
             >
               Review All Approvals
@@ -226,8 +226,8 @@ const TeacherDashboardOverview = ({ teacherName }) => {
                 </div>
               )}
             </ul>
-            <Link 
-              to="/teacher-dashboard/events" 
+            <Link
+              to="/teacher-dashboard/events"
               className="flex items-center justify-center gap-2 w-full px-5 py-3 bg-gradient-to-r from-amber-600 to-blue-600 text-white hover:shadow-xl rounded-xl transition-all duration-300 font-semibold text-sm hover:scale-105"
             >
               View All Events
@@ -269,8 +269,8 @@ const TeacherDashboardOverview = ({ teacherName }) => {
                 </div>
               )}
             </ul>
-            <Link 
-              to="/teacher-dashboard/ptm-history" 
+            <Link
+              to="/teacher-dashboard/ptm-history"
               className="flex items-center justify-center gap-2 w-full px-5 py-3 bg-gradient-to-r from-emerald-600 to-blue-600 text-white hover:shadow-xl rounded-xl transition-all duration-300 font-semibold text-sm hover:scale-105"
             >
               View PTM History
@@ -281,15 +281,15 @@ const TeacherDashboardOverview = ({ teacherName }) => {
           </div>
 
           {/* AI Chatbot Quick Access */}
-          <div className="bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 rounded-2xl shadow-lg border-2 border-purple-200 p-6 hover:shadow-2xl transition-all duration-300">
+          <div className="bg-gradient-to-br from-orange-50 via-orange-50/50 to-slate-50 rounded-2xl shadow-lg border-2 border-orange-200 p-6 hover:shadow-2xl transition-all duration-300">
             <h2 className="text-xl font-semibold text-slate-900 mb-5 flex items-center">
               <span className="w-1.5 h-7 bg-gradient-to-b from-blue-600 via-purple-600 to-pink-600 rounded-full mr-3"></span>
               AI Chatbot Assistant
             </h2>
             <div className="flex items-start gap-4 mb-6">
               <div className="relative flex-shrink-0">
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-2xl blur-lg opacity-40"></div>
-                <div className="relative w-16 h-16 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 rounded-2xl flex items-center justify-center shadow-xl">
+                <div className="absolute inset-0 bg-[#ea580c] rounded-2xl blur-lg opacity-40"></div>
+                <div className="relative w-16 h-16 bg-[#ea580c] rounded-2xl flex items-center justify-center shadow-xl">
                   <svg className="w-9 h-9 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
                   </svg>
@@ -321,8 +321,8 @@ const TeacherDashboardOverview = ({ teacherName }) => {
                 </ul>
               </div>
             </div>
-            <Link 
-              to="/teacher-dashboard/ai-chatbot" 
+            <Link
+              to="/teacher-dashboard/ai-chatbot"
               className="flex items-center justify-center gap-2 w-full px-5 py-3 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white font-semibold rounded-xl hover:shadow-2xl transition-all duration-300 text-sm hover:scale-105"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">

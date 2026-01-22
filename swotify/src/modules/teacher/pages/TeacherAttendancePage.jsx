@@ -65,7 +65,7 @@ const TeacherAttendancePage = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 via-purple-500 to-orange-400 flex items-center justify-center shadow-md">
+          <div className="w-12 h-12 rounded-xl bg-[#ea580c] flex items-center justify-center shadow-md">
             <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
             </svg>
@@ -87,7 +87,7 @@ const TeacherAttendancePage = () => {
             <select
               value={selectedClassId}
               onChange={(e) => setSelectedClassId(e.target.value)}
-              className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
             >
               {mockClasses.map(classItem => (
                 <option key={classItem.id} value={classItem.id}>
@@ -104,7 +104,7 @@ const TeacherAttendancePage = () => {
               type="date"
               value={selectedDate}
               onChange={(e) => setSelectedDate(e.target.value)}
-              className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
             />
           </div>
         </div>
@@ -182,10 +182,10 @@ const TeacherAttendancePage = () => {
                 <div
                   key={student.id}
                   className={`flex items-center justify-between p-4 rounded-lg transition-all ${status === 'present'
-                      ? 'bg-green-50 border border-green-200'
-                      : status === 'absent'
-                        ? 'bg-red-50 border border-red-200'
-                        : 'bg-slate-50 border border-slate-200'
+                    ? 'bg-green-50 border border-green-200'
+                    : status === 'absent'
+                      ? 'bg-red-50 border border-red-200'
+                      : 'bg-slate-50 border border-slate-200'
                     }`}
                 >
                   <div className="flex items-center gap-4">
@@ -219,8 +219,8 @@ const TeacherAttendancePage = () => {
                     <button
                       onClick={() => handleMarkAttendance(student.id, 'present')}
                       className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 ${status === 'present'
-                          ? 'bg-green-500 text-white'
-                          : 'bg-green-100 text-green-700 hover:bg-green-200'
+                        ? 'bg-green-500 text-white'
+                        : 'bg-green-100 text-green-700 hover:bg-green-200'
                         }`}
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
@@ -231,8 +231,8 @@ const TeacherAttendancePage = () => {
                     <button
                       onClick={() => handleMarkAttendance(student.id, 'absent')}
                       className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 ${status === 'absent'
-                          ? 'bg-red-500 text-white'
-                          : 'bg-red-100 text-red-700 hover:bg-red-200'
+                        ? 'bg-red-500 text-white'
+                        : 'bg-red-100 text-red-700 hover:bg-red-200'
                         }`}
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">

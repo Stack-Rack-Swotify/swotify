@@ -21,7 +21,7 @@ const StaffProfilePage = () => {
           </div>
           <h3 className="text-lg font-semibold text-slate-800 mb-2">Staff Member Not Found</h3>
           <p className="text-slate-500 text-sm mb-4">The requested staff member does not exist</p>
-          <button onClick={() => navigate('/admin-dashboard/staff')} className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm font-medium">
+          <button onClick={() => navigate('/admin-dashboard/staff')} className="px-4 py-2 bg-[#ea580c] hover:bg-[#c2410c] text-white rounded-lg text-sm font-medium">
             Back to Staff Directory
           </button>
         </div>
@@ -56,7 +56,7 @@ const StaffProfilePage = () => {
 
       {/* Profile Header */}
       <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
-        <div className="h-32 bg-gradient-to-r from-blue-500 via-purple-500 to-orange-400"></div>
+        <div className="h-32 bg-gradient-to-r from-[#ea580c] to-[#f97316]"></div>
         <div className="px-6 pb-6">
           <div className="flex flex-col md:flex-row md:items-end gap-6 -mt-16">
             <img
@@ -74,7 +74,7 @@ const StaffProfilePage = () => {
                   <span className={`px-4 py-2 rounded-full text-sm font-medium ${staff.status === 'Active' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
                     {staff.status || 'Active'}
                   </span>
-                  <button className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm font-medium flex items-center gap-2">
+                  <button className="px-4 py-2 bg-[#ea580c] hover:bg-[#c2410c] text-white rounded-lg text-sm font-medium flex items-center gap-2">
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                     </svg>
